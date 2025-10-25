@@ -1,6 +1,6 @@
 /**
  * Bundle of gltf-sample-viewer-example
- * Generated: 2025-10-22
+ * Generated: 2025-10-25
  * Version: 1.0.0
  * License: Apache-2.0
  * Dependencies:
@@ -1091,7 +1091,7 @@
 
 /**
  * Bundle of @khronosgroup/gltf-viewer
- * Generated: 2025-10-22
+ * Generated: 2025-10-25
  * Version: 1.1.0
  * License: Apache-2.0
  * Dependencies:
@@ -21228,32 +21228,6 @@ class UIModel
         this.hdr = merge$1(selectedEnvironment, this.addEnvironment, inputObservables.droppedHdr).pipe(
             startWith(environments[initialEnvironment])
         );
-
-        this.hdr.subscribe(async hdr => {
-            if (hdr.license_path !== undefined) {
-                try {
-                    const response = await fetch(hdr.license_path);
-                    if (!response.ok) {
-                        throw new Error("License file not found");
-                    }
-                    let text = await response.text();
-                    const license = text.split("SPDX-License-Identifier: ")[1];
-                    console.log(license);
-                    text = text.replace("SPDX-FileCopyrightText: ", "");
-                    text = text.replace(/SPDX-License-Identifier:(.)*/g, `, <a href="${hdr.hdr_path}">Source</a>, License: `);
-                    text += `<a href="${hdr.base_path}/LICENSES/${license}.txt">${license}</a>`;
-                    text = "(c) " + text;
-                    text = text.replaceAll("\n","");
-                    text = text.replaceAll(" ,", ",");
-                    this.app.environmentLicense = text;
-                } catch (error) {
-                    this.app.environmentLicense = "N/A";
-                }
-                
-            } else {
-                this.app.environmentLicense = "N/A";
-            }
-        });
 
         merge$1(this.addEnvironment, inputObservables.droppedHdr)
             .subscribe(hdr => {
@@ -60333,15 +60307,23 @@ const appCreated = vue_cjs.createApp({
                 liElement.style.marginTop = "0px";
             }
 
-            // add github logo to tab-bar
-            var a = document.createElement('a');
-            a.href = "https://github.com/KhronosGroup/glTF-Sample-Viewer";
-            var img = document.createElement('img');
-            img.src ="assets/ui/GitHub-Mark-Light-32px.png";
-            img.style.width = "22px";
-            img.style.height = "22px";
-            ulElement.appendChild(a);
-            a.appendChild(img);
+            // add InnoWorks logo linking to website
+            const logoLink = document.createElement("a");
+            logoLink.href = "https://www.inno-works.com/";
+            logoLink.target = "_blank";
+            logoLink.rel = "noopener noreferrer";
+            logoLink.style.display = "flex";
+            logoLink.style.alignItems = "center";
+            logoLink.style.padding = "0.5rem";
+
+            const logoImage = document.createElement("img");
+            logoImage.src = "assets/ui/Innoworks-32px.png";
+            logoImage.alt = "InnoWorks";
+            logoImage.style.width = "60px";
+            logoImage.style.height = "60px";
+
+            logoLink.appendChild(logoImage);
+            ulElement.appendChild(logoLink);
         });
 
     },
@@ -60477,7 +60459,7 @@ const appCreated = vue_cjs.createApp({
         },
         onConfigurableOptionChanged: function(configId, value)
         {
-            const parsed = parseInt(value, 10);
+            const parsed = typeof value === 'number' ? value : parseInt(value, 10);
             if (Number.isNaN(parsed)) {
                 return;
             }
@@ -71754,6 +71736,8 @@ const validateBytes = (data, options) => gltf_validator_dart.validateBytes(data,
  * @returns {Promise} - Promise with Uint8Array data.
  */
 
+const INNOWORKS_EXTENSION = "INNOWORKS_configurables";
+
 var main = async () => {
     const canvas = document.getElementById("canvas");
     const context = canvas.getContext("webgl2", {
@@ -71815,10 +71799,12 @@ var main = async () => {
                         };
                         const response = await fetch(model.mainFile);
                         const buffer = await response.arrayBuffer();
-                        return await validateBytes(new Uint8Array(buffer), {
+                        const result = await validateBytes(new Uint8Array(buffer), {
                             externalResourceFunction: externalRefFunction,
-                            uri: model.mainFile
+                            uri: model.mainFile,
+                            ignoredExtensions: [INNOWORKS_EXTENSION]
                         });
+                        return sanitizeValidatorResult(result);
                     } else if (Array.isArray(model.mainFile)) {
                         const externalRefFunction = (uri) => {
                             uri = "/" + uri;
@@ -71844,11 +71830,13 @@ var main = async () => {
                         };
 
                         const buffer = await model.mainFile[1].arrayBuffer();
-                        return await validateBytes(new Uint8Array(buffer),
+                        const result = await validateBytes(new Uint8Array(buffer),
                             {
                                 externalResourceFunction: externalRefFunction,
-                                uri: model.mainFile[0]
+                                uri: model.mainFile[0],
+                                ignoredExtensions: [INNOWORKS_EXTENSION]
                             });
+                        return sanitizeValidatorResult(result);
                     }
                 } catch (error) {
                     console.error(error);
@@ -72410,6 +72398,48 @@ function extractInnoWorksFromGlbBuffer(buffer) {
     }
 }
 
+function decodeThumbnail(base64) {
+    if (typeof base64 !== "string" || base64.length === 0) {
+        return null;
+    }
+
+    return `data:image/png;base64,${base64}`;
+}
+
+function sanitizeValidatorResult(result) {
+    if (!result || !result.issues || !Array.isArray(result.issues.messages)) {
+        return result;
+    }
+
+    const issues = result.issues;
+    const filtered = [];
+
+    const adjustCounts = (severity) => {
+        switch (severity) {
+        case 2:
+            issues.numErrors = Math.max(0, (issues.numErrors ?? 0) - 1);
+            break;
+        case 1:
+            issues.numWarnings = Math.max(0, (issues.numWarnings ?? 0) - 1);
+            break;
+        case 0:
+            issues.numInfos = Math.max(0, (issues.numInfos ?? 0) - 1);
+            break;
+        }
+    };
+
+    for (const message of issues.messages) {
+        if (message?.code === "UNSUPPORTED_EXTENSION" && message?.message?.includes(INNOWORKS_EXTENSION)) {
+            adjustCounts(message?.severity ?? 0);
+            continue;
+        }
+        filtered.push(message);
+    }
+
+    issues.messages = filtered;
+    return result;
+}
+
 function prepareInnoWorksConfigurables(state, extensionData) {
     if (
         !state ||
@@ -72482,9 +72512,11 @@ function prepareInnoWorksConfigurables(state, extensionData) {
                 type: materialEntry.type,
                 options: materialEntry.options.map((option) => ({
                     index: option.index,
-                    label: option.label
+                    label: option.label,
+                    thumbnail: option.thumbnail
                 })),
-                currentOption: appliedIndex
+                currentOption: appliedIndex,
+                thumbnail: materialEntry.thumbnail
             };
             registerEntry(materialEntry, uiDescriptor);
         }
@@ -72511,9 +72543,11 @@ function prepareInnoWorksConfigurables(state, extensionData) {
                 type: activationEntry.type,
                 options: activationEntry.options.map((option) => ({
                     index: option.index,
-                    label: option.label
+                    label: option.label,
+                    thumbnail: option.thumbnail
                 })),
-                currentOption: appliedIndex
+                currentOption: appliedIndex,
+                thumbnail: activationEntry.thumbnail
             };
             registerEntry(activationEntry, uiDescriptor);
         }
@@ -72542,9 +72576,11 @@ function prepareInnoWorksConfigurables(state, extensionData) {
                 type: transformEntry.type,
                 options: transformEntry.options.map((option) => ({
                     index: option.index,
-                    label: option.label
+                    label: option.label,
+                    thumbnail: option.thumbnail
                 })),
-                currentOption: appliedIndex
+                currentOption: appliedIndex,
+                thumbnail: transformEntry.thumbnail
             };
             registerEntry(transformEntry, uiDescriptor);
         }
@@ -72565,11 +72601,44 @@ function prepareInnoWorksConfigurables(state, extensionData) {
                 type: groupEntry.type,
                 options: groupEntry.options.map((option) => ({
                     index: option.index,
-                    label: option.label
+                    label: option.label,
+                    thumbnail: option.thumbnail
                 })),
-                currentOption: groupEntry.currentOption
+                currentOption: groupEntry.currentOption,
+                thumbnail: groupEntry.thumbnail
             };
             registerEntry(groupEntry, uiDescriptor);
+        }
+
+        const animationEntry = createAnimationRuntimeEntry(
+            container,
+            containerIndex,
+            gltf,
+            rootNodeIndex
+        );
+        if (animationEntry) {
+            animationEntry.containerPath = containerPath;
+            animationEntry.configurableType = configurableType;
+            animationEntry.applyOption = (optionIndex, opts = {}) =>
+                applyAnimationOption(state, animationEntry, optionIndex, opts);
+            const appliedIndex = animationEntry.applyOption(
+                animationEntry.currentOption,
+                { forceImmediate: true, suppressUiUpdate: true }
+            );
+            animationEntry.appliedOptionIndex = appliedIndex;
+            const uiDescriptor = {
+                id: animationEntry.id,
+                name: animationEntry.name,
+                type: animationEntry.type,
+                options: animationEntry.options.map((option) => ({
+                    index: option.index,
+                    label: option.label,
+                    thumbnail: option.thumbnail
+                })),
+                currentOption: appliedIndex,
+                thumbnail: animationEntry.thumbnail
+            };
+            registerEntry(animationEntry, uiDescriptor);
         }
     });
 
@@ -72645,7 +72714,8 @@ function createMaterialRuntimeEntry(container, containerIndex, gltf, rootNodeInd
                             : `Option ${optionIndex}`,
                 materialIndex,
                 transitionDuration: Math.max(0, option?.TransitionDuration ?? 0),
-                easeMode: option?.EaseMode ?? "Linear"
+                easeMode: option?.EaseMode ?? "Linear",
+                thumbnail: decodeThumbnail(option?.ThumbnailBase64)
             });
         });
 
@@ -72672,7 +72742,8 @@ function createMaterialRuntimeEntry(container, containerIndex, gltf, rootNodeInd
         rendererBindings,
         options: optionEntries,
         currentOption: initialOption,
-        applyOption: null
+        applyOption: null,
+        thumbnail: decodeThumbnail(materialData.ThumbnailBase64)
     };
 
     rendererBindings.forEach((binding) => {
@@ -72683,6 +72754,84 @@ function createMaterialRuntimeEntry(container, containerIndex, gltf, rootNodeInd
     });
 
     return runtimeEntry;
+}
+
+function createAnimationRuntimeEntry(container, containerIndex, gltf, rootNodeIndex) {
+    const animationData = container?.Animation;
+    if (
+        !animationData ||
+        !Array.isArray(animationData.Options) ||
+        animationData.Options.length === 0
+    ) {
+        return null;
+    }
+
+    const optionEntries = animationData.Options.map((option, optionIndex) => ({
+        index: optionIndex,
+        label:
+            option?.DisplayName && option.DisplayName.trim().length > 0
+                ? option.DisplayName
+                : `Option ${optionIndex}`,
+        animationIndex: typeof option?.AnimationIndex === "number" ? option.AnimationIndex : -1,
+        speed: typeof option?.Speed === "number" ? option.Speed : 1,
+        loop: option?.Loop !== undefined ? !!option.Loop : true,
+        crossFadeDuration:
+            typeof option?.CrossFadeDuration === "number" ? option.CrossFadeDuration : 0.25,
+        transitionDuration:
+            typeof option?.TransitionDuration === "number" ? option.TransitionDuration : 0.5,
+        thumbnail: decodeThumbnail(option?.ThumbnailBase64)
+    }));
+
+    if (optionEntries.length === 0) {
+        return null;
+    }
+
+    const containerId = `${container.Path || ""}|${containerIndex}|animation`;
+    const displayName =
+        animationData.ConfigurableName ||
+        container.ConfigurableType ||
+        `Animation Configurable ${containerIndex + 1}`;
+    const initialOption = selectInitialOption(animationData.CurrentOption, optionEntries);
+
+    const animationRootPath =
+        (typeof animationData.TargetAnimationPath === "string" && animationData.TargetAnimationPath.length > 0)
+            ? animationData.TargetAnimationPath
+            : container?.Path ?? "";
+
+    const legacyClips = buildLegacyAnimationClips(
+        gltf,
+        rootNodeIndex,
+        animationRootPath,
+        animationData.LegacyClips
+    );
+
+    const resolvedAnimationRootNodeIndexRaw = resolveNodeByPath(
+        gltf,
+        rootNodeIndex,
+        animationRootPath
+    );
+    let animationRootNodeIndex = resolvedAnimationRootNodeIndexRaw;
+    if (animationRootNodeIndex === null || animationRootNodeIndex === undefined) {
+        console.warn(
+            `InnoWorks: Animation target path '${animationRootPath}' could not be resolved. Defaulting to exported root.`
+        );
+        animationRootNodeIndex = rootNodeIndex;
+    }
+
+    return {
+        id: containerId,
+        containerPath: container.Path ?? "",
+        configurableType: container.ConfigurableType ?? "",
+        name: displayName,
+        type: "Animation",
+        options: optionEntries,
+        currentOption: initialOption,
+        thumbnail: decodeThumbnail(animationData.ThumbnailBase64),
+        applyOption: null,
+        legacyClips,
+        animationRootNodeIndex,
+        animationRootPath
+    };
 }
 
 function createActivationRuntimeEntry(container, containerIndex, gltf, rootNodeIndex) {
@@ -72716,7 +72865,8 @@ function createActivationRuntimeEntry(container, containerIndex, gltf, rootNodeI
             index: optionIndex,
             label,
             transitionDuration: Math.max(0, option?.TransitionDuration ?? 0),
-            easeMode: option?.EaseMode ?? "Linear"
+            easeMode: option?.EaseMode ?? "Linear",
+            thumbnail: decodeThumbnail(option?.ThumbnailBase64)
         };
     });
 
@@ -72772,7 +72922,8 @@ function createActivationRuntimeEntry(container, containerIndex, gltf, rootNodeI
         nodeStates,
         currentOption: initialOption,
         appliedOptionIndex: null,
-        applyOption: null
+        applyOption: null,
+        thumbnail: decodeThumbnail(activationData.ThumbnailBase64)
     };
 }
 
@@ -72832,6 +72983,8 @@ function createTransformRuntimeEntry(
                 ? resolveNodeByPath(gltf, rootNodeIndex, parentPath)
                 : null;
 
+        const optionThumbnail = decodeThumbnail(option?.ThumbnailBase64);
+
         options.push({
             index: optionIndex,
             label,
@@ -72842,7 +72995,8 @@ function createTransformRuntimeEntry(
             rotation,
             parentIndex,
             transitionDuration: Math.max(0, option?.TransitionDuration ?? 0),
-            easeMode: option?.EaseMode ?? "Linear"
+            easeMode: option?.EaseMode ?? "Linear",
+            thumbnail: optionThumbnail
         });
     });
 
@@ -72870,7 +73024,8 @@ function createTransformRuntimeEntry(
         defaultTranslation,
         defaultRotation,
         defaultParentIndex: parentLookup.get(nodeIndex) ?? null,
-        applyOption: null
+        applyOption: null,
+        thumbnail: decodeThumbnail(transformData.ThumbnailBase64)
     };
 }
 
@@ -72898,7 +73053,8 @@ function createGroupRuntimeEntry(container, containerIndex) {
                 containerType: target?.ContainerType ?? "",
                 optionIndex: Math.max(0, target?.SelectedOption ?? 0)
             }))
-            : []
+            : [],
+        thumbnail: decodeThumbnail(option?.ThumbnailBase64)
     }));
 
     if (options.length === 0) {
@@ -72921,7 +73077,8 @@ function createGroupRuntimeEntry(container, containerIndex) {
         options,
         currentOption: initialOption,
         appliedOptionIndex: initialOption,
-        applyOption: null
+        applyOption: null,
+        thumbnail: decodeThumbnail(groupData.ThumbnailBase64)
     };
 }
 
@@ -73018,6 +73175,196 @@ function collectSubtreeNodeIndices(gltf, nodeIndex, results) {
     }
 
     node.children.forEach((child) => collectSubtreeNodeIndices(gltf, child, results));
+}
+
+function buildLegacyAnimationClips(gltf, rootNodeIndex, animationRootPath, legacyClipData) {
+    if (!Array.isArray(legacyClipData) || legacyClipData.length === 0) {
+        return [];
+    }
+
+    const clips = [];
+    const basePath = typeof animationRootPath === "string" ? animationRootPath : "";
+
+    legacyClipData.forEach((clipData, clipIndex) => {
+        if (!clipData) {
+            return;
+        }
+
+        const channels = [];
+        let maxTime = 0;
+
+        const curves = Array.isArray(clipData.Curves) ? clipData.Curves : [];
+        curves.forEach((curveData) => {
+            const processed = processLegacyCurve(gltf, rootNodeIndex, basePath, curveData);
+            if (!processed) {
+                return;
+            }
+
+            channels.push(processed.channel);
+            if (processed.maxTime > maxTime) {
+                maxTime = processed.maxTime;
+            }
+        });
+
+        if (channels.length === 0) {
+            return;
+        }
+
+        clips.push({
+            name:
+                typeof clipData.Name === "string" && clipData.Name.length > 0
+                    ? clipData.Name
+                    : `Legacy Animation ${clipIndex}`,
+            duration: Number.isFinite(maxTime) ? maxTime : 0,
+            loop: !!clipData.LoopTime,
+            wrapMode: normalizeLegacyWrapMode(clipData.WrapMode),
+            channels,
+            sampleRate: typeof clipData.SampleRate === "number" ? clipData.SampleRate : 60
+        });
+    });
+
+    return clips;
+}
+
+function processLegacyCurve(gltf, rootNodeIndex, basePath, curveData) {
+    if (!curveData) {
+        return null;
+    }
+
+    const propertyName = typeof curveData.PropertyName === "string"
+        ? curveData.PropertyName
+        : "";
+    if (!propertyName) {
+        return null;
+    }
+
+    const mapping = mapLegacyProperty(propertyName);
+    if (!mapping) {
+        return null;
+    }
+
+    const combinedPath = combineAnimationPath(basePath, curveData.Path);
+    const nodeIndex = resolveNodeByPath(gltf, rootNodeIndex, combinedPath);
+    if (nodeIndex === null || nodeIndex === undefined) {
+        return null;
+    }
+
+    const curve = createLegacyCurve(curveData);
+    if (!curve) {
+        return null;
+    }
+
+    return {
+        channel: {
+            nodeIndex,
+            property: mapping.property,
+            axis: mapping.axis,
+            curve
+        },
+        maxTime: curve.endTime
+    };
+}
+
+function combineAnimationPath(basePath, relativePath) {
+    const base = typeof basePath === "string" ? basePath.trim() : "";
+    const rel = typeof relativePath === "string" ? relativePath.trim() : "";
+
+    if (!base) {
+        return rel;
+    }
+    if (!rel) {
+        return base;
+    }
+
+    return `${base.replace(/\/+$/u, "")}/${rel.replace(/^\/+/u, "")}`;
+}
+
+function mapLegacyProperty(propertyName) {
+    if (typeof propertyName !== "string" || propertyName.length === 0) {
+        return null;
+    }
+
+    const sanitized = propertyName.replace(/^m_/iu, "");
+    const lower = sanitized.toLowerCase();
+
+    const axisChar = sanitized.slice(sanitized.lastIndexOf(".") + 1).toLowerCase();
+    const axis =
+        axisChar === "x"
+            ? 0
+            : axisChar === "y"
+                ? 1
+                : axisChar === "z"
+                    ? 2
+                    : axisChar === "w"
+                        ? 3
+                        : null;
+
+    if (lower.startsWith("localposition.") && axis !== null && axis <= 2) {
+        return { property: "translation", axis };
+    }
+
+    if (lower.startsWith("localscale.") && axis !== null && axis <= 2) {
+        return { property: "scale", axis };
+    }
+
+    if (lower.startsWith("localrotation.") && axis !== null && axis <= 3) {
+        return { property: "rotation", axis };
+    }
+
+    if (lower.startsWith("localeulerangles") && axis !== null && axis <= 2) {
+        return { property: "rotationEuler", axis };
+    }
+
+    return null;
+}
+
+function createLegacyCurve(curveData) {
+    const keyframesSrc = Array.isArray(curveData.Keyframes) ? curveData.Keyframes : [];
+    if (keyframesSrc.length === 0) {
+        return null;
+    }
+
+    const keyframes = keyframesSrc
+        .map((k) => ({
+            time: typeof k.Time === "number" ? k.Time : 0,
+            value: typeof k.Value === "number" ? k.Value : 0,
+            inTangent: typeof k.InTangent === "number" ? k.InTangent : 0,
+            outTangent: typeof k.OutTangent === "number" ? k.OutTangent : 0,
+            inWeight: typeof k.InWeight === "number" ? k.InWeight : 0,
+            outWeight: typeof k.OutWeight === "number" ? k.OutWeight : 0,
+            weightedMode: typeof k.WeightedMode === "number" ? k.WeightedMode : 0
+        }))
+        .sort((a, b) => a.time - b.time);
+
+    const startTime = keyframes[0].time ?? 0;
+    const endTime = keyframes[keyframes.length - 1].time ?? startTime;
+
+    return {
+        keyframes,
+        startTime,
+        endTime,
+        preWrapMode: normalizeLegacyWrapMode(curveData.PreWrapMode),
+        postWrapMode: normalizeLegacyWrapMode(curveData.PostWrapMode)
+    };
+}
+
+function normalizeLegacyWrapMode(value) {
+    if (typeof value === "string") {
+        return value;
+    }
+
+    switch (value) {
+    case 2:
+        return "Loop";
+    case 4:
+        return "PingPong";
+    case 8:
+        return "ClampForever";
+    case 1:
+        return "Once";
+    default:
+        return "Default";
+    }
 }
 
 function createRendererBinding(gltf, nodeIndex) {
@@ -73140,6 +73487,99 @@ function applyMaterialOption(state, entry, requestedIndex, options = {}) {
     entry.currentOption = targetOption.index;
     updateUiSelection(state, entry.id, entry.currentOption, suppressUiUpdate);
     return entry.currentOption;
+}
+
+function applyAnimationOption(state, entry, requestedIndex, options = {}) {
+    if (!entry || !Array.isArray(entry.options) || entry.options.length === 0) {
+        return entry?.currentOption ?? 0;
+    }
+
+    const { suppressUiUpdate = false } = options ?? {};
+
+    const parsedIndex = Number(requestedIndex);
+    const numericIndex = Number.isNaN(parsedIndex) ? entry.currentOption ?? 0 : parsedIndex;
+    const clampedIndex = Math.max(0, Math.min(entry.options.length - 1, numericIndex));
+
+    const option = entry.options[clampedIndex];
+    entry.currentOption = clampedIndex;
+
+    if (!option) {
+        entry.appliedOptionIndex = clampedIndex;
+        updateUiSelection(state, entry.id, entry.currentOption, suppressUiUpdate);
+        return clampedIndex;
+    }
+
+    const legacyClips = Array.isArray(entry.legacyClips) ? entry.legacyClips : [];
+    const legacyClip =
+        option.animationIndex != null &&
+        option.animationIndex >= 0 &&
+        option.animationIndex < legacyClips.length
+            ? legacyClips[option.animationIndex]
+            : null;
+
+    if (legacyClip) {
+        removeInnoWorksAnimation(state, entry.id, "legacy-animation");
+        scheduleLegacyAnimation(state, entry, legacyClip, option);
+        entry.appliedOptionIndex = clampedIndex;
+        state.animationIndices = [];
+
+        const timer = state?.animationTimer;
+        if (timer) {
+            if (typeof timer.pause === "function") {
+                timer.pause();
+            }
+            if (typeof timer.reset === "function") {
+                timer.reset();
+            }
+        }
+
+        updateUiSelection(state, entry.id, entry.currentOption, suppressUiUpdate);
+        return clampedIndex;
+    }
+
+    removeInnoWorksAnimation(state, entry.id, "legacy-animation");
+
+    const gltf = state?.gltf;
+    if (!gltf || !Array.isArray(gltf.animations) || option.animationIndex == null) {
+        entry.appliedOptionIndex = clampedIndex;
+        updateUiSelection(state, entry.id, entry.currentOption, suppressUiUpdate);
+        return clampedIndex;
+    }
+
+    if (option.animationIndex < 0 || option.animationIndex >= gltf.animations.length) {
+        entry.appliedOptionIndex = clampedIndex;
+        updateUiSelection(state, entry.id, entry.currentOption, suppressUiUpdate);
+        return clampedIndex;
+    }
+
+    state.animationIndices = [option.animationIndex];
+
+    const timer = state?.animationTimer;
+    if (timer) {
+        if (typeof timer.reset === "function") {
+            timer.reset();
+        }
+        if (typeof timer.start === "function") {
+            timer.start();
+        }
+        if (typeof timer.unpause === "function") {
+            timer.unpause();
+        }
+
+        if (typeof timer.setSpeed === "function") {
+            timer.setSpeed(option.speed ?? 1);
+        } else if (Object.prototype.hasOwnProperty.call(timer, "speed")) {
+            timer.speed = option.speed ?? 1;
+        }
+
+        if (Object.prototype.hasOwnProperty.call(timer, "loop")) {
+            timer.loop = option.loop ?? true;
+        }
+    }
+
+    entry.appliedOptionIndex = clampedIndex;
+    updateUiSelection(state, entry.id, entry.currentOption, suppressUiUpdate);
+    return clampedIndex;
 }
 
 function applyActivationOption(state, entry, requestedIndex, options = {}) {
@@ -73416,6 +73856,24 @@ function removeInnoWorksAnimation(state, entryId, type) {
             state.innoWorksActiveAnimations.splice(i, 1);
         }
     }
+}
+
+function scheduleLegacyAnimation(state, entry, clip, option) {
+    ensureAnimationState(state);
+    if (!state || !entry || !clip) {
+        return;
+    }
+
+    state.innoWorksActiveAnimations.push({
+        type: "legacy-animation",
+        entry,
+        clip,
+        option,
+        time: 0,
+        speed: typeof option?.speed === "number" ? option.speed : 1,
+        loop: option?.loop !== undefined ? !!option.loop : !!clip.loop,
+        wrapMode: clip.wrapMode ?? "Default"
+    });
 }
 
 function scheduleMaterialAnimation(state, entry, fromOption, toOption, duration, easeMode) {
@@ -73723,6 +74181,143 @@ function updateInnoWorksAnimations(state, deltaSeconds) {
                 animations.splice(i, 1);
                 continue;
             }
+        } else if (animation.type === "legacy-animation") {
+            const entry = animation.entry;
+            const clip = animation.clip;
+            if (!clip || !Array.isArray(clip.channels) || clip.channels.length === 0) {
+                animations.splice(i, 1);
+                continue;
+            }
+
+            const loops = animation.loop ?? clip.loop ?? false;
+            animation.loop = loops;
+
+            const speed = Number.isFinite(animation.speed) ? animation.speed : 1;
+            animation.time = (animation.time ?? 0) + dt * speed;
+
+            const clipDuration = Number.isFinite(clip.duration) ? Math.max(0, clip.duration) : 0;
+            let localTime = animation.time;
+            let finished = false;
+
+            if (clipDuration > 0) {
+                if (loops) {
+                    const span = clipDuration > 0 ? clipDuration : 1;
+                    localTime = ((localTime % span) + span) % span;
+                } else if (localTime >= clipDuration) {
+                    localTime = clipDuration;
+                    finished = true;
+                } else if (localTime < 0) {
+                    localTime = 0;
+                }
+            } else {
+                finished = !loops;
+                localTime = 0;
+            }
+
+            animation.currentTime = localTime;
+
+            const nodeUpdates = new Map();
+
+            clip.channels.forEach((channel) => {
+                if (!channel) {
+                    return;
+                }
+
+                const nodeIndex = channel.nodeIndex;
+                if (!Number.isInteger(nodeIndex) || nodeIndex < 0 || nodeIndex >= gltf.nodes.length) {
+                    return;
+                }
+
+                const node = gltf.nodes[nodeIndex];
+                if (!node) {
+                    return;
+                }
+
+                let info = nodeUpdates.get(nodeIndex);
+                if (!info) {
+                    info = {
+                        node,
+                        translation: Array.isArray(node.translation) ? [...node.translation] : [0, 0, 0],
+                        rotation: Array.isArray(node.rotation) ? [...node.rotation] : [0, 0, 0, 1],
+                        scale: Array.isArray(node.scale) ? [...node.scale] : [1, 1, 1],
+                        euler: [0, 0, 0],
+                        updatedTranslation: false,
+                        updatedRotation: false,
+                        updatedScale: false,
+                        updatedRotationEuler: false
+                    };
+                    nodeUpdates.set(nodeIndex, info);
+                }
+
+                const value = evaluateLegacyCurve(
+                    channel.curve,
+                    localTime,
+                    loops,
+                    clipDuration,
+                    animation.wrapMode
+                );
+
+                if (channel.property === "translation" && channel.axis !== null && channel.axis <= 2) {
+                    info.translation[channel.axis] = value;
+                    info.updatedTranslation = true;
+                } else if (channel.property === "scale" && channel.axis !== null && channel.axis <= 2) {
+                    info.scale[channel.axis] = value;
+                    info.updatedScale = true;
+                } else if (channel.property === "rotation" && channel.axis !== null && channel.axis <= 3) {
+                    info.rotation[channel.axis] = value;
+                    info.updatedRotation = true;
+                } else if (channel.property === "rotationEuler" && channel.axis !== null && channel.axis <= 2) {
+                    info.euler[channel.axis] = value;
+                    info.updatedRotationEuler = true;
+                }
+            });
+
+            if (nodeUpdates.size > 0) {
+                nodeUpdates.forEach((info) => {
+                    const node = info.node;
+                    if (!node) {
+                        return;
+                    }
+
+                    if (node.matrix) {
+                        delete node.matrix;
+                    }
+
+                    if (info.updatedTranslation) {
+                        node.translation = [...info.translation];
+                        changed = true;
+                        needsHierarchyRefresh = true;
+                    }
+
+                    if (info.updatedScale) {
+                        node.scale = [...info.scale];
+                        changed = true;
+                        needsHierarchyRefresh = true;
+                    }
+
+                    if (info.updatedRotation) {
+                        node.rotation = normalizeQuaternion(info.rotation);
+                        changed = true;
+                        needsHierarchyRefresh = true;
+                    }
+
+                    if (info.updatedRotationEuler) {
+                        node.rotation = quaternionFromEulerDegrees(info.euler);
+                        changed = true;
+                        needsHierarchyRefresh = true;
+                    }
+                });
+
+                entry.appliedOptionIndex = animation.option?.index ?? entry.currentOption;
+            }
+            else {
+                entry.appliedOptionIndex = animation.option?.index ?? entry.currentOption;
+            }
+
+            if (finished) {
+                animations.splice(i, 1);
+                continue;
+            }
         }
     }
 
@@ -73892,6 +74487,102 @@ function normalizeQuaternion(quaternion) {
     }
 
     return quaternion.map((value) => value / length);
+}
+
+function quaternionFromEulerDegrees(euler) {
+    if (!Array.isArray(euler) || euler.length < 3) {
+        return [0, 0, 0, 1];
+    }
+
+    const halfToRad = 0.5 * Math.PI / 180;
+    const x = (euler[0] ?? 0) * halfToRad;
+    const y = (euler[1] ?? 0) * halfToRad;
+    const z = (euler[2] ?? 0) * halfToRad;
+
+    const sx = Math.sin(x);
+    const cx = Math.cos(x);
+    const sy = Math.sin(y);
+    const cy = Math.cos(y);
+    const sz = Math.sin(z);
+    const cz = Math.cos(z);
+
+    const qx = sx * cy * cz - cx * sy * sz;
+    const qy = cx * sy * cz + sx * cy * sz;
+    const qz = cx * cy * sz - sx * sy * cz;
+    const qw = cx * cy * cz + sx * sy * sz;
+
+    return normalizeQuaternion([qx, qy, qz, qw]);
+}
+
+function evaluateLegacyCurve(curve, time, loop, duration, wrapMode) {
+    if (!curve || !Array.isArray(curve.keyframes) || curve.keyframes.length === 0) {
+        return 0;
+    }
+
+    if (curve.keyframes.length === 1) {
+        return curve.keyframes[0].value ?? 0;
+    }
+
+    const start = Number.isFinite(curve.startTime) ? curve.startTime : curve.keyframes[0].time ?? 0;
+    const end = Number.isFinite(curve.endTime) ? curve.endTime : curve.keyframes[curve.keyframes.length - 1].time ?? start;
+    const length = Math.max(0, end - start);
+    let localTime = Number.isFinite(time) ? time : 0;
+
+    const isLooping = loop || normalizeLegacyWrapMode(wrapMode) === "Loop";
+    const span = duration > 0 ? duration : length;
+
+    if (isLooping && span > 0) {
+        localTime = start + ((localTime - start) % span + span) % span;
+    } else {
+        if (localTime <= start) {
+            return curve.keyframes[0].value ?? 0;
+        }
+        if (localTime >= end) {
+            return curve.keyframes[curve.keyframes.length - 1].value ?? 0;
+        }
+    }
+
+    let segmentIndex = 0;
+    for (let i = 0; i < curve.keyframes.length - 1; i++) {
+        if (localTime >= curve.keyframes[i].time && localTime <= curve.keyframes[i + 1].time) {
+            segmentIndex = i;
+            break;
+        }
+    }
+
+    const k0 = curve.keyframes[segmentIndex];
+    const k1 = curve.keyframes[Math.min(segmentIndex + 1, curve.keyframes.length - 1)];
+
+    if (!k0 || !k1) {
+        return k0?.value ?? k1?.value ?? 0;
+    }
+
+    if (localTime <= k0.time) {
+        return k0.value ?? 0;
+    }
+
+    if (localTime >= k1.time) {
+        return k1.value ?? 0;
+    }
+
+    const dt = k1.time - k0.time;
+    if (!Number.isFinite(dt) || dt === 0) {
+        return k1.value ?? k0.value ?? 0;
+    }
+
+    const t = (localTime - k0.time) / dt;
+    const t2 = t * t;
+    const t3 = t2 * t;
+
+    const v0 = k0.value ?? 0;
+    const v1 = k1.value ?? 0;
+    const m0 = (k0.outTangent ?? 0) * dt;
+    const m1 = (k1.inTangent ?? 0) * dt;
+
+    return (2 * t3 - 3 * t2 + 1) * v0 +
+        (t3 - 2 * t2 + t) * m0 +
+        (-2 * t3 + 3 * t2) * v1 +
+        (t3 - t2) * m1;
 }
 
 export { main as default };
