@@ -234,7 +234,7 @@
                                                     <span>{{ config.name }}</span>
                                                 </div>
                                             </template>
-                                            <div class="select is-fullwidth">
+                                            <div class="select is-fullwidth" v-if="!config.options.some(option => option.thumbnail)">
                                                 <select
                                                     v-model="selectedConfigurableOptions[config.id]"
                                                     @change="onConfigurableOptionChanged(config.id, $event.target.value)">
@@ -263,8 +263,6 @@
                                     ref="animationState"
                                     v-bind:style="[animations.length == 0 ? {'display': 'none'} : {}]"></toggle-button>
                                 
-                                <label class="subtitle" v-bind:style="[animations.length != 0 ? {'display': 'none'} : {}]">No Animations available</label>
-
                                 <b-field label="Animations"
                                     v-bind:style="[animations.length == 0 ? {'display': 'none'} : {}]">
                                     <b-field v-for="animation in animations" v-bind:key="animation.index">

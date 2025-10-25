@@ -72965,18 +72965,46 @@ function createTransformRuntimeEntry(
         Array.isArray(node.rotation) ? [...node.rotation] : [0, 0, 0, 1]
     );
 
+    console.log(
+        `InnoWorks: Transform default for '${container?.Transform?.ConfigurableName ?? container?.Path ?? "<unnamed>"}'`,
+        {
+            defaultTranslation,
+            defaultRotation
+        }
+    );
+
     const options = [];
     transformData.Options.forEach((option, optionIndex) => {
         const label =
             option?.DisplayName && option.DisplayName.trim().length > 0
                 ? option.DisplayName
                 : `Option ${optionIndex}`;
-        const translation = option?.LocalPosition
+
+        const unityTranslation = option?.LocalPosition
             ? vectorFromData(option.LocalPosition)
             : null;
-        const rotation = option?.LocalRotation
+        const translation = unityTranslation
+            ? unityVectorToGltf(unityTranslation)
+            : null;
+
+        const unityRotation = option?.LocalRotation
             ? quaternionFromData(option.LocalRotation)
             : null;
+        const rotation = unityRotation
+            ? unityQuaternionToGltf(unityRotation)
+            : null;
+
+        if (unityTranslation || unityRotation) {
+            console.log(
+                `InnoWorks: Transform option '${label}' Unity -> GLTF`,
+                {
+                    unityTranslation,
+                    unityRotation,
+                    gltfTranslation: translation,
+                    gltfRotation: rotation
+                }
+            );
+        }
         const parentPath = option?.ParentPath ?? "";
         const parentIndex =
             option?.ApplyParent && parentPath !== null
@@ -73796,6 +73824,20 @@ function quaternionFromData(data) {
     const z = data.Z ?? 0;
     const w = data.W ?? 1;
     return [x, y, z, w];
+}
+
+function unityVectorToGltf(vec) {
+    if (!Array.isArray(vec)) {
+        return vec;
+    }
+    return [-vec[0], vec[1], vec[2]];
+}
+
+function unityQuaternionToGltf(quat) {
+    if (!Array.isArray(quat) || quat.length !== 4) {
+        return Array.isArray(quat) ? [...quat] : [0, 0, 0, 1];
+    }
+    return [quat[0], -quat[1], -quat[2], quat[3]];
 }
 
 function buildParentLookup(gltf) {
