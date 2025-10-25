@@ -21126,14 +21126,41 @@ var normalizeWheel$1 = /*@__PURE__*/getDefaultExportFromCjs$1(normalizeWheel);
 // as close as possible
 class UIModel
 {
-    constructor(app, modelPathProvider, environments) {
+    constructor(app, modelPathProviders, environments) {
         this.app = app;
 
-        this.app.models = modelPathProvider.getAllKeys();
+        const {
+            providersByName,
+            providerByModel,
+            referenceModels,
+            innoWorksModels
+        } = this.initializeModelProviders(modelPathProviders);
+
+        this.modelProvidersByName = providersByName;
+        this.modelProviderByModel = providerByModel;
+
+        this.app.models = referenceModels;
+        this.app.innoWorksModels = innoWorksModels;
+
+        if (!this.modelProviderByModel.has(this.app.selectedModel)) {
+            if (this.app.innoWorksModels.length > 0) {
+                this.app.selectedModel = this.app.innoWorksModels[0];
+            } else if (this.app.models.length > 0) {
+                this.app.selectedModel = this.app.models[0];
+            } else {
+                this.app.selectedModel = "";
+            }
+        }
 
         const queryString = window.location.search;
         const urlParams = new URLSearchParams(queryString);
         const modelURL = urlParams.get("model");
+
+        if (modelURL === null && this.app.innoWorksModels.length > 0) {
+            this.app.selectedModel = this.app.innoWorksModels[0];
+        }
+
+        const initialModelSelection = modelURL === null ? (this.app.selectedModel ?? null) : null;
 
         this.scene = app.sceneChanged.pipe();
         this.camera = app.cameraChanged.pipe();
@@ -21204,22 +21231,16 @@ class UIModel
         const inputObservables = getInputObservables(canvas, this.app);
 
         const dropdownGltfChanged = app.modelChanged.pipe(
-            startWith(modelURL === null ? "DamagedHelmet" : null),
-            filter(value => value !== null),
-            map(value => {
-                app.flavours = modelPathProvider.getModelFlavours(value);
-                if (app.flavours.includes("glTF")){
-                    app.selectedFlavour = "glTF";
-                } else {
-                    app.selectedFlavour = app.flavours[0];
-                }
-                return modelPathProvider.resolve(value, app.selectedFlavour);
-            }),
+            startWith(initialModelSelection),
+            filter(value => value !== null && value !== undefined && value !== ""),
+            map(value => this.resolveModelSelection(value)),
+            filter(value => value !== undefined),
             map(value => ({mainFile: value})),
         );
 
         const dropdownFlavourChanged = app.flavourChanged.pipe(
-            map(value => modelPathProvider.resolve(app.selectedModel, value)),
+            map(value => this.resolveModelFlavour(app.selectedModel, value)),
+            filter(value => value !== undefined),
             map(value => ({mainFile: value})),
         );
 
@@ -21275,6 +21296,88 @@ class UIModel
         this.orbit = inputObservables.orbit;
         this.pan = inputObservables.pan;
         this.zoom = inputObservables.zoom;
+    }
+
+    initializeModelProviders(modelPathProviders) {
+        const providersByName = new Map();
+        if (modelPathProviders) {
+            if (typeof modelPathProviders.getAllKeys === 'function') {
+                providersByName.set('reference', modelPathProviders);
+            } else if (typeof modelPathProviders === 'object') {
+                for (const [name, provider] of Object.entries(modelPathProviders)) {
+                    if (provider && typeof provider.getAllKeys === 'function') {
+                        providersByName.set(name, provider);
+                    }
+                }
+            }
+        }
+
+        const providerByModel = new Map();
+        let referenceModels = [];
+        let innoWorksModels = [];
+
+        providersByName.forEach((provider, name) => {
+            const keys = typeof provider.getAllKeys === 'function' ? provider.getAllKeys() : [];
+            keys.forEach(modelName => providerByModel.set(modelName, provider));
+            if (name === 'reference') {
+                referenceModels = keys.slice();
+            } else if (name === 'innoworks') {
+                innoWorksModels = keys.slice();
+            }
+        });
+
+        if (referenceModels.length === 0) {
+            const firstProvider = providersByName.values().next().value;
+            if (firstProvider && typeof firstProvider.getAllKeys === 'function') {
+                const keys = firstProvider.getAllKeys();
+                referenceModels = keys.slice();
+                keys.forEach(modelName => providerByModel.set(modelName, firstProvider));
+            }
+        }
+
+        return {
+            providersByName,
+            providerByModel,
+            referenceModels,
+            innoWorksModels
+        };
+    }
+
+    getProviderForModel(modelKey) {
+        if (modelKey === null || modelKey === undefined || modelKey === "") {
+            return undefined;
+        }
+        return this.modelProviderByModel.get(modelKey);
+    }
+
+    resolveModelSelection(modelKey) {
+        const provider = this.getProviderForModel(modelKey);
+        if (!provider) {
+            return undefined;
+        }
+
+        const flavours = provider.getModelFlavours(modelKey) ?? [];
+        this.app.flavours = flavours;
+
+        if (flavours.length === 0) {
+            return undefined;
+        }
+
+        if (flavours.includes("glTF")) {
+            this.app.selectedFlavour = "glTF";
+        } else if (!flavours.includes(this.app.selectedFlavour)) {
+            this.app.selectedFlavour = flavours[0];
+        }
+
+        return provider.resolve(modelKey, this.app.selectedFlavour);
+    }
+
+    resolveModelFlavour(modelKey, flavourKey) {
+        const provider = this.getProviderForModel(modelKey);
+        if (!provider || flavourKey === undefined || flavourKey === null || flavourKey === "") {
+            return undefined;
+        }
+        return provider.resolve(modelKey, flavourKey);
     }
 
     attachGltfLoaded(gltfLoaded)
@@ -60169,6 +60272,7 @@ const appCreated = vue_cjs.createApp({
             fullheight: true,
             right: true,
             models: ["DamagedHelmet"],
+            innoWorksModels: [],
             flavours: ["glTF", "glTF-Binary", "glTF-Quantized", "glTF-Draco", "glTF-pbrSpecularGlossiness"],
             scenes: [{title: "0"}, {title: "1"}],
             cameras: [{title: "User Camera", index: -1}],
@@ -71753,10 +71857,20 @@ var main = async () => {
     state.innoWorksActiveAnimations = [];
     state.innoWorksUiModel = null;
 
-    const pathProvider = new GltfModelPathProvider(
+    const referenceModelProvider = new GltfModelPathProvider(
         "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/main"
     );
-    await pathProvider.initialize();
+    await referenceModelProvider.initialize();
+
+    let innoWorksModelProvider = null;
+    try {
+        innoWorksModelProvider = new GltfModelPathProvider("./assets/InnoWorks");
+        await innoWorksModelProvider.initialize();
+    } catch (error) {
+        console.warn("InnoWorks: Failed to load custom model index.", error);
+        innoWorksModelProvider = null;
+    }
+
     const environmentPaths = fillEnvironmentWithPaths(
         {
             Cannon_Exterior: "Cannon Exterior",
@@ -71774,7 +71888,11 @@ var main = async () => {
         "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Environments/low_resolution_hdrs/"
     );
 
-    const uiModel = new UIModel(app, pathProvider, environmentPaths);
+    const modelProviders = innoWorksModelProvider
+        ? { reference: referenceModelProvider, innoworks: innoWorksModelProvider }
+        : referenceModelProvider;
+
+    const uiModel = new UIModel(app, modelProviders, environmentPaths);
     state.innoWorksUiModel = uiModel;
 
     const validation = uiModel.model.pipe(

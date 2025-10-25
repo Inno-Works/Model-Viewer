@@ -159,9 +159,16 @@
                                 <h2 class="title is-spaced">Models</h2>
                                 <b-field label="Models" class="subtitle">
                                     <b-select v-model="selectedModel" v-on:input="modelChanged.next($event.target.value);">
-                                        <option v-for="(item) in models" v-bind:value="item">
-                                            {{ item }}
-                                        </option>
+                                        <optgroup label="InnoWorks Models" v-if="innoWorksModels.length > 0">
+                                            <option v-for="item in innoWorksModels" v-bind:value="item" v-bind:key="'innoworks-' + item">
+                                                {{ item }}
+                                            </option>
+                                        </optgroup>
+                                        <optgroup label="Reference Models" v-if="models.length > 0">
+                                            <option v-for="item in models" v-bind:value="item" v-bind:key="'reference-' + item">
+                                                {{ item }}
+                                            </option>
+                                        </optgroup>
                                     </b-select>
                                 </b-field>
                                 <b-field label="Flavor">
