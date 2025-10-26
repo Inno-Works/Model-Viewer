@@ -1,6 +1,6 @@
 /**
  * Bundle of gltf-sample-viewer-example
- * Generated: 2025-10-25
+ * Generated: 2025-10-26
  * Version: 1.0.0
  * License: Apache-2.0
  * Dependencies:
@@ -209,6 +209,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
+ *
+ * gl-matrix -- 3.4.3 -- MIT
+ * Copyright (c) 2015-2021, Brandon Jones, Colin MacKenzie IV.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
  *
  * tslib -- 1.14.1 -- 0BSD
  * Copyright (c) Microsoft Corporation.
@@ -453,27 +474,6 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- *
- * gl-matrix -- 3.4.3 -- MIT
- * Copyright (c) 2015-2021, Brandon Jones, Colin MacKenzie IV.
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
  *
  * gltf-sample-viewer-example -- 1.0.0 -- Apache-2.0
  * 
@@ -1091,7 +1091,7 @@
 
 /**
  * Bundle of @khronosgroup/gltf-viewer
- * Generated: 2025-10-25
+ * Generated: 2025-10-26
  * Version: 1.1.0
  * License: Apache-2.0
  * Dependencies:
@@ -1233,7 +1233,7 @@
  * @module glMatrix
  */
 // Configuration Constants
-var EPSILON = 0.000001;
+var EPSILON$1 = 0.000001;
 var ARRAY_TYPE$1 = typeof Float32Array !== 'undefined' ? Float32Array : Array;
 if (!Math.hypot) Math.hypot = function () {
   var y = 0,
@@ -1257,7 +1257,7 @@ if (!Math.hypot) Math.hypot = function () {
  * @returns {mat3} a new 3x3 matrix
  */
 
-function create$4() {
+function create$4$1() {
   var out = new ARRAY_TYPE$1(9);
 
   if (ARRAY_TYPE$1 != Float32Array) {
@@ -1345,7 +1345,7 @@ function multiply$2(out, a, b) {
  * @returns {mat4} a new 4x4 matrix
  */
 
-function create$3() {
+function create$3$1() {
   var out = new ARRAY_TYPE$1(16);
 
   if (ARRAY_TYPE$1 != Float32Array) {
@@ -1757,7 +1757,7 @@ function fromYRotation(out, rad) {
  * @return {vec3} out
  */
 
-function getTranslation(out, mat) {
+function getTranslation$1(out, mat) {
   out[0] = mat[12];
   out[1] = mat[13];
   out[2] = mat[14];
@@ -1774,7 +1774,7 @@ function getTranslation(out, mat) {
  * @return {vec3} out
  */
 
-function getScaling(out, mat) {
+function getScaling$1(out, mat) {
   var m11 = mat[0];
   var m12 = mat[1];
   var m13 = mat[2];
@@ -1799,9 +1799,9 @@ function getScaling(out, mat) {
  * @return {quat} out
  */
 
-function getRotation(out, mat) {
+function getRotation$1(out, mat) {
   var scaling = new ARRAY_TYPE$1(3);
-  getScaling(scaling, mat);
+  getScaling$1(scaling, mat);
   var is1 = 1 / scaling[0];
   var is2 = 1 / scaling[1];
   var is3 = 1 / scaling[2];
@@ -1863,7 +1863,7 @@ function getRotation(out, mat) {
  * @returns {mat4} out
  */
 
-function fromRotationTranslationScale(out, q, v, s) {
+function fromRotationTranslationScale$1(out, q, v, s) {
   // Quaternion math
   var x = q[0],
       y = q[1],
@@ -1974,7 +1974,7 @@ function lookAt(out, eye, center, up) {
   var centery = center[1];
   var centerz = center[2];
 
-  if (Math.abs(eyex - centerx) < EPSILON && Math.abs(eyey - centery) < EPSILON && Math.abs(eyez - centerz) < EPSILON) {
+  if (Math.abs(eyex - centerx) < EPSILON$1 && Math.abs(eyey - centery) < EPSILON$1 && Math.abs(eyez - centerz) < EPSILON$1) {
     return identity$1(out);
   }
 
@@ -2053,7 +2053,7 @@ var mul = multiply$1;
  * @returns {vec3} a new 3D vector
  */
 
-function create$2() {
+function create$2$1() {
   var out = new ARRAY_TYPE$1(3);
 
   if (ARRAY_TYPE$1 != Float32Array) {
@@ -2085,7 +2085,7 @@ function clone(a) {
  * @returns {Number} length of a
  */
 
-function length(a) {
+function length$1(a) {
   var x = a[0];
   var y = a[1];
   var z = a[2];
@@ -2100,7 +2100,7 @@ function length(a) {
  * @returns {vec3} a new 3D vector
  */
 
-function fromValues$2(x, y, z) {
+function fromValues$2$1(x, y, z) {
   var out = new ARRAY_TYPE$1(3);
   out[0] = x;
   out[1] = y;
@@ -2116,7 +2116,7 @@ function fromValues$2(x, y, z) {
  * @returns {vec3} out
  */
 
-function add$1(out, a, b) {
+function add$2(out, a, b) {
   out[0] = a[0] + b[0];
   out[1] = a[1] + b[1];
   out[2] = a[2] + b[2];
@@ -2131,7 +2131,7 @@ function add$1(out, a, b) {
  * @returns {vec3} out
  */
 
-function subtract(out, a, b) {
+function subtract$1(out, a, b) {
   out[0] = a[0] - b[0];
   out[1] = a[1] - b[1];
   out[2] = a[2] - b[2];
@@ -2146,7 +2146,7 @@ function subtract(out, a, b) {
  * @returns {vec3} out
  */
 
-function scale(out, a, b) {
+function scale$1(out, a, b) {
   out[0] = a[0] * b;
   out[1] = a[1] * b;
   out[2] = a[2] * b;
@@ -2174,7 +2174,7 @@ function distance$1(a, b) {
  * @returns {vec3} out
  */
 
-function normalize$2(out, a) {
+function normalize$2$1(out, a) {
   var x = a[0];
   var y = a[1];
   var z = a[2];
@@ -2198,7 +2198,7 @@ function normalize$2(out, a) {
  * @returns {Number} dot product of a and b
  */
 
-function dot(a, b) {
+function dot$1(a, b) {
   return a[0] * b[0] + a[1] * b[1] + a[2] * b[2];
 }
 /**
@@ -2210,7 +2210,7 @@ function dot(a, b) {
  * @returns {vec3} out
  */
 
-function cross(out, a, b) {
+function cross$1(out, a, b) {
   var ax = a[0],
       ay = a[1],
       az = a[2];
@@ -2291,13 +2291,13 @@ function transformQuat(out, a, q) {
  * @function
  */
 
-var sub = subtract;
+var sub = subtract$1;
 /**
  * Alias for {@link vec3.length}
  * @function
  */
 
-var len = length;
+var len$1 = length$1;
 /**
  * Perform some operation over an array of vec3s.
  *
@@ -2312,7 +2312,7 @@ var len = length;
  */
 
 (function () {
-  var vec = create$2();
+  var vec = create$2$1();
   return function (a, stride, offset, count, fn, arg) {
     var i, l;
 
@@ -2355,7 +2355,7 @@ var len = length;
  * @returns {vec4} a new 4D vector
  */
 
-function create$1() {
+function create$1$1() {
   var out = new ARRAY_TYPE$1(4);
 
   if (ARRAY_TYPE$1 != Float32Array) {
@@ -2377,7 +2377,7 @@ function create$1() {
  * @returns {vec4} a new 4D vector
  */
 
-function fromValues$1(x, y, z, w) {
+function fromValues$1$1(x, y, z, w) {
   var out = new ARRAY_TYPE$1(4);
   out[0] = x;
   out[1] = y;
@@ -2393,7 +2393,7 @@ function fromValues$1(x, y, z, w) {
  * @returns {vec4} out
  */
 
-function normalize$1(out, a) {
+function normalize$1$1(out, a) {
   var x = a[0];
   var y = a[1];
   var z = a[2];
@@ -2424,7 +2424,7 @@ function normalize$1(out, a) {
  */
 
 (function () {
-  var vec = create$1();
+  var vec = create$1$1();
   return function (a, stride, offset, count, fn, arg) {
     var i, l;
 
@@ -2469,7 +2469,7 @@ function normalize$1(out, a) {
  * @returns {quat} a new quaternion
  */
 
-function create$5() {
+function create$6() {
   var out = new ARRAY_TYPE$1(4);
 
   if (ARRAY_TYPE$1 != Float32Array) {
@@ -2491,7 +2491,7 @@ function create$5() {
  * @returns {quat} out
  **/
 
-function setAxisAngle(out, axis, rad) {
+function setAxisAngle$1(out, axis, rad) {
   rad = rad * 0.5;
   var s = Math.sin(rad);
   out[0] = s * axis[0];
@@ -2509,7 +2509,7 @@ function setAxisAngle(out, axis, rad) {
  * @returns {quat} out
  */
 
-function multiply(out, a, b) {
+function multiply$3(out, a, b) {
   var ax = a[0],
       ay = a[1],
       az = a[2],
@@ -2534,7 +2534,7 @@ function multiply(out, a, b) {
  * @returns {quat} out
  */
 
-function slerp$1(out, a, b, t) {
+function slerp$2(out, a, b, t) {
   // benchmarks:
   //    http://jsperf.com/quaternion-slerp-implementations
   var ax = a[0],
@@ -2558,7 +2558,7 @@ function slerp$1(out, a, b, t) {
   } // calculate coefficients
 
 
-  if (1.0 - cosom > EPSILON) {
+  if (1.0 - cosom > EPSILON$1) {
     // standard case (slerp)
     omega = Math.acos(cosom);
     sinom = Math.sin(omega);
@@ -2590,7 +2590,7 @@ function slerp$1(out, a, b, t) {
  * @function
  */
 
-function fromMat3(out, m) {
+function fromMat3$1(out, m) {
   // Algorithm in Ken Shoemake's article in 1987 SIGGRAPH course notes
   // article "Quaternion Calculus and Fast Animation".
   var fTrace = m[0] + m[4] + m[8];
@@ -2634,7 +2634,7 @@ function fromMat3(out, m) {
  * @function
  */
 
-var fromValues$3 = fromValues$1;
+var fromValues$5 = fromValues$1$1;
 /**
  * Normalize a quat
  *
@@ -2644,7 +2644,7 @@ var fromValues$3 = fromValues$1;
  * @function
  */
 
-var normalize = normalize$1;
+var normalize$3 = normalize$1$1;
 /**
  * Sets a quaternion to represent the shortest rotation from one
  * vector to another.
@@ -2658,31 +2658,31 @@ var normalize = normalize$1;
  */
 
 (function () {
-  var tmpvec3 = create$2();
-  var xUnitVec3 = fromValues$2(1, 0, 0);
-  var yUnitVec3 = fromValues$2(0, 1, 0);
+  var tmpvec3 = create$2$1();
+  var xUnitVec3 = fromValues$2$1(1, 0, 0);
+  var yUnitVec3 = fromValues$2$1(0, 1, 0);
   return function (out, a, b) {
-    var dot$1 = dot(a, b);
+    var dot$1$1 = dot$1(a, b);
 
-    if (dot$1 < -0.999999) {
-      cross(tmpvec3, xUnitVec3, a);
-      if (len(tmpvec3) < 0.000001) cross(tmpvec3, yUnitVec3, a);
-      normalize$2(tmpvec3, tmpvec3);
-      setAxisAngle(out, tmpvec3, Math.PI);
+    if (dot$1$1 < -0.999999) {
+      cross$1(tmpvec3, xUnitVec3, a);
+      if (len$1(tmpvec3) < 0.000001) cross$1(tmpvec3, yUnitVec3, a);
+      normalize$2$1(tmpvec3, tmpvec3);
+      setAxisAngle$1(out, tmpvec3, Math.PI);
       return out;
-    } else if (dot$1 > 0.999999) {
+    } else if (dot$1$1 > 0.999999) {
       out[0] = 0;
       out[1] = 0;
       out[2] = 0;
       out[3] = 1;
       return out;
     } else {
-      cross(tmpvec3, a, b);
+      cross$1(tmpvec3, a, b);
       out[0] = tmpvec3[0];
       out[1] = tmpvec3[1];
       out[2] = tmpvec3[2];
-      out[3] = 1 + dot$1;
-      return normalize(out, out);
+      out[3] = 1 + dot$1$1;
+      return normalize$3(out, out);
     }
   };
 })();
@@ -2699,12 +2699,12 @@ var normalize = normalize$1;
  */
 
 (function () {
-  var temp1 = create$5();
-  var temp2 = create$5();
+  var temp1 = create$6();
+  var temp2 = create$6();
   return function (out, a, b, c, d, t) {
-    slerp$1(temp1, a, d, t);
-    slerp$1(temp2, b, c, t);
-    slerp$1(out, temp1, temp2, 2 * t * (1 - t));
+    slerp$2(temp1, a, d, t);
+    slerp$2(temp2, b, c, t);
+    slerp$2(out, temp1, temp2, 2 * t * (1 - t));
     return out;
   };
 })();
@@ -2720,7 +2720,7 @@ var normalize = normalize$1;
  */
 
 (function () {
-  var matr = create$4();
+  var matr = create$4$1();
   return function (out, view, right, up) {
     matr[0] = right[0];
     matr[3] = right[1];
@@ -2731,7 +2731,7 @@ var normalize = normalize$1;
     matr[2] = -view[0];
     matr[5] = -view[1];
     matr[8] = -view[2];
-    return normalize(out, fromMat3(out, matr));
+    return normalize$3(out, fromMat3$1(out, matr));
   };
 })();
 
@@ -3000,11 +3000,11 @@ class gltfCamera extends GltfObject
         // Precompute the distances to avoid their computation during sorting.
         for (const drawable of drawables)
         {
-            const modelView = create$3();
+            const modelView = create$3$1();
             multiply$1(modelView, this.getViewMatrix(gltf), drawable.node.worldTransform);
 
             // Transform primitive centroid to find the primitive's depth.
-            const pos = transformMat4(create$2(), clone(drawable.primitive.centroid), modelView);
+            const pos = transformMat4(create$2$1(), clone(drawable.primitive.centroid), modelView);
 
             drawable.depth = pos[2];
         }
@@ -3019,7 +3019,7 @@ class gltfCamera extends GltfObject
 
     getProjectionMatrix(aspectRatio)
     {
-        const projection = create$3();
+        const projection = create$3$1();
 
         if (this.type === "perspective")
         {
@@ -3046,33 +3046,33 @@ class gltfCamera extends GltfObject
 
     getViewMatrix(gltf)
     {
-        let result = create$3();
+        let result = create$3$1();
         invert(result, this.getTransformMatrix(gltf));
         return result;
     }
 
     getTarget(gltf)
     {
-        const target = create$2();
+        const target = create$2$1();
         const position = this.getPosition(gltf);
         const lookDirection = this.getLookDirection(gltf);
-        add$1(target, lookDirection, position);
+        add$2(target, lookDirection, position);
         return target;
     }
 
     getPosition(gltf)
     {
-        const position = create$2();
+        const position = create$2$1();
         const node = this.getNode(gltf);
-        getTranslation(position, node.worldTransform);
+        getTranslation$1(position, node.worldTransform);
         return position;
     }
 
     getLookDirection(gltf)
     {
-        const direction = create$2();
+        const direction = create$2$1();
         const rotation = this.getRotation(gltf);
-        transformQuat(direction, fromValues$2(0, 0, -1), rotation);
+        transformQuat(direction, fromValues$2$1(0, 0, -1), rotation);
         return direction;
     }
 
@@ -3108,15 +3108,15 @@ class gltfCamera extends GltfObject
     {
         const node = this.getNode(gltf);
         if (node === undefined || node.worldTransform === undefined){
-            return create$3();
+            return create$3$1();
         }
 
         // Compose transform from rotation and position as we want to ignore scale
-        return fromRotationTranslationScale(
-            create$3(),
+        return fromRotationTranslationScale$1(
+            create$3$1(),
             this.getRotation(gltf),
             this.getPosition(gltf),
-            fromValues$2(1, 1, 1)
+            fromValues$2$1(1, 1, 1)
         );
 
     }
@@ -3920,8 +3920,8 @@ function getSceneExtents(gltf, sceneIndex, outMin, outMax)
             }
 
             const accessor = gltf.accessors[attribute.accessor];
-            const assetMin = create$2();
-            const assetMax = create$2();
+            const assetMin = create$2$1();
+            const assetMax = create$2$1();
             getExtentsFromAccessor(accessor, node.worldTransform, assetMin, assetMax);
 
             for (const i of [0, 1, 2])
@@ -3945,15 +3945,15 @@ function getExtentsFromAccessor(accessor, worldTransform, outMin, outMax)
 
     // Construct all eight corners from min and max values
     let boxVertices = [
-        fromValues$2(min[0], min[1], min[2]),
-        fromValues$2(min[0], min[1], max[2]),
-        fromValues$2(min[0], max[1], min[2]),
-        fromValues$2(min[0], max[1], max[2]),
+        fromValues$2$1(min[0], min[1], min[2]),
+        fromValues$2$1(min[0], min[1], max[2]),
+        fromValues$2$1(min[0], max[1], min[2]),
+        fromValues$2$1(min[0], max[1], max[2]),
 
-        fromValues$2(max[0], min[1], min[2]),
-        fromValues$2(max[0], min[1], max[2]),
-        fromValues$2(max[0], max[1], min[2]),
-        fromValues$2(max[0], max[1], max[2])];
+        fromValues$2$1(max[0], min[1], min[2]),
+        fromValues$2$1(max[0], min[1], max[2]),
+        fromValues$2$1(max[0], max[1], min[2]),
+        fromValues$2$1(max[0], max[1], max[2])];
 
 
     // Transform all bounding box vertices
@@ -3972,14 +3972,14 @@ function getExtentsFromAccessor(accessor, worldTransform, outMin, outMax)
         }
     }
 
-    const center = create$2();
-    add$1(center, boxMax, boxMin);
-    scale(center, center, 0.5);
+    const center = create$2$1();
+    add$2(center, boxMax, boxMin);
+    scale$1(center, center, 0.5);
 
-    const centerToSurface = create$2();
+    const centerToSurface = create$2$1();
     sub(centerToSurface, boxMax, center);
 
-    const radius = length(centerToSurface);
+    const radius = length$1(centerToSurface);
 
     for (const i of [0, 1, 2])
     {
@@ -4000,7 +4000,7 @@ class UserCamera extends gltfCamera
     {
         super();
 
-        this.transform = create$3();
+        this.transform = create$3$1();
         this.rotAroundY = 0;
         this.rotAroundX = 0;
         this.distance = 1;
@@ -4010,8 +4010,8 @@ class UserCamera extends gltfCamera
         this.orbitSpeed = 1 / 180;
         this.panSpeed = 1;
         this.sceneExtents = {
-            min: create$2(),
-            max: create$2()
+            min: create$2$1(),
+            max: create$2$1()
         };
     }
 
@@ -4034,8 +4034,8 @@ class UserCamera extends gltfCamera
      */
     getPosition()
     {
-        let pos = create$2();
-        getTranslation(pos, this.transform);
+        let pos = create$2$1();
+        getTranslation$1(pos, this.transform);
         return pos;
     }
 
@@ -4044,8 +4044,8 @@ class UserCamera extends gltfCamera
      */
     getRotation()
     {
-        let rot = create$5();
-        getRotation(rot, this.transform);
+        let rot = create$6();
+        getRotation$1(rot, this.transform);
         return rot;
     }
 
@@ -4055,7 +4055,7 @@ class UserCamera extends gltfCamera
     getLookDirection()
     {
         let dir = [-this.transform[8], -this.transform[9], -this.transform[10]];
-        normalize$2(dir, dir);
+        normalize$2$1(dir, dir);
         return dir;
     }
 
@@ -4066,14 +4066,14 @@ class UserCamera extends gltfCamera
      */
     getTarget()
     {
-        const target = create$2();
+        const target = create$2$1();
         const position = this.getPosition();
         let lookDirection = this.getLookDirection();
         if (this.distance != 0 && this.distance != 1)
         {
             lookDirection = lookDirection.map(x => x * this.distance);
         }
-        add$1(target, lookDirection, position);
+        add$2(target, lookDirection, position);
         return target;
     }
 
@@ -4085,8 +4085,8 @@ class UserCamera extends gltfCamera
      */
     lookAt(from, to)
     {
-        this.transform = create$3();
-        lookAt(this.transform, from, to, fromValues$2(0, 1, 0));
+        this.transform = create$3$1();
+        lookAt(this.transform, from, to, fromValues$2$1(0, 1, 0));
     }
 
     /**
@@ -4107,10 +4107,10 @@ class UserCamera extends gltfCamera
      */
     setTarget(target)
     {
-        let pos = create$2();
-        getTranslation(pos, this.transform);
-        this.transform = create$3();
-        lookAt(this.transform, pos, target, fromValues$2(0, 1, 0));
+        let pos = create$2$1();
+        getTranslation$1(pos, this.transform);
+        this.transform = create$3$1();
+        lookAt(this.transform, pos, target, fromValues$2$1(0, 1, 0));
         this.setDistanceFromTarget(this.distance, target);
     }
 
@@ -4123,8 +4123,8 @@ class UserCamera extends gltfCamera
     setRotation(yaw, pitch)
     {
         const tmpPos = this.getPosition();
-        let mat4x = create$3();
-        let mat4y = create$3();
+        let mat4x = create$3$1();
+        let mat4y = create$3$1();
         fromXRotation(mat4x, pitch);
         fromYRotation(mat4y, yaw);
         this.transform = mat4y;
@@ -4143,8 +4143,8 @@ class UserCamera extends gltfCamera
     {
         const lookDirection = this.getLookDirection();
         const distVec = lookDirection.map(x => x * -distance);
-        let pos = create$2();
-        add$1(pos, target, distVec);
+        let pos = create$2$1();
+        add$2(pos, target, distVec);
         this.setPosition(pos);
         this.distance = distance;
     }
@@ -4195,18 +4195,18 @@ class UserCamera extends gltfCamera
      */
     pan(x, y)
     {
-        const right = fromValues$2(this.transform[0], this.transform[1], this.transform[2]);
-        normalize$2(right, right);
-        scale(right, right, -x * this.panSpeed * (this.distance / this.baseDistance));
+        const right = fromValues$2$1(this.transform[0], this.transform[1], this.transform[2]);
+        normalize$2$1(right, right);
+        scale$1(right, right, -x * this.panSpeed * (this.distance / this.baseDistance));
 
-        const up = fromValues$2(this.transform[4], this.transform[5], this.transform[6]);
-        normalize$2(up, up);
-        scale(up, up, -y * this.panSpeed * (this.distance / this.baseDistance));
+        const up = fromValues$2$1(this.transform[4], this.transform[5], this.transform[6]);
+        normalize$2$1(up, up);
+        scale$1(up, up, -y * this.panSpeed * (this.distance / this.baseDistance));
 
         let pos = this.getPosition();
 
-        add$1(pos, pos, up);
-        add$1(pos, pos, right);
+        add$2(pos, pos, up);
+        add$2(pos, pos, right);
 
         this.setPosition(pos);
     }
@@ -4219,7 +4219,7 @@ class UserCamera extends gltfCamera
 
     reset()
     {
-        this.transform = create$3();
+        this.transform = create$3$1();
         this.rotAroundX = 0;
         this.rotAroundY = 0;
         this.fitDistanceToExtents(this.sceneExtents.min, this.sceneExtents.max);
@@ -4239,7 +4239,7 @@ class UserCamera extends gltfCamera
             return;
         }
 
-        this.transform = create$3();
+        this.transform = create$3$1();
         this.rotAroundX = 0;
         this.rotAroundY = 0;
         getSceneExtents(gltf, sceneIndex, this.sceneExtents.min, this.sceneExtents.max);
@@ -4263,7 +4263,7 @@ class UserCamera extends gltfCamera
             return;
         }
 
-        this.transform = create$3();
+        this.transform = create$3$1();
         getSceneExtents(gltf, sceneIndex, this.sceneExtents.min, this.sceneExtents.max);
         this.fitDistanceToExtents(this.sceneExtents.min, this.sceneExtents.max);
         this.fitCameraTargetToExtents(this.sceneExtents.min, this.sceneExtents.max);
@@ -4916,9 +4916,9 @@ class EnvironmentRenderer
         shader.updateUniform("u_ViewProjectionMatrix", viewProjectionMatrix);
         shader.updateUniform("u_Exposure", state.renderingParameters.exposure, false);
 
-        let rotMatrix4 = create$3();
+        let rotMatrix4 = create$3$1();
         rotateY(rotMatrix4, rotMatrix4,  state.renderingParameters.environmentRotation / 180.0 * Math.PI);
-        let rotMatrix3 = create$4();
+        let rotMatrix3 = create$4$1();
         fromMat4(rotMatrix3, rotMatrix4);
         shader.updateUniform("u_EnvRotation", rotMatrix3);
 
@@ -5000,26 +5000,26 @@ class gltfLight extends GltfObject
         const matrix = node?.worldTransform ?? identity$1;
 
         // To extract a correct rotation, the scaling component must be eliminated.
-        var scale = fromValues$2(1, 1, 1);
-        getScaling(scale, matrix);
-        const mn = create$3();
+        var scale = fromValues$2$1(1, 1, 1);
+        getScaling$1(scale, matrix);
+        const mn = create$3$1();
         for(const col of [0, 1, 2])
         {
             mn[col] = matrix[col] / scale[0];
             mn[col + 4] = matrix[col + 4] / scale[1];
             mn[col + 8] = matrix[col + 8] / scale[2];
         }
-        var rotation = create$5();
-        getRotation(rotation, mn);
-        normalize(rotation, rotation);
+        var rotation = create$6();
+        getRotation$1(rotation, mn);
+        normalize$3(rotation, rotation);
 
         const uLight = new UniformLight();
 
-        const alongNegativeZ = fromValues$2(0, 0, -1);
+        const alongNegativeZ = fromValues$2$1(0, 0, -1);
         transformQuat(uLight.direction, alongNegativeZ, rotation);
 
-        var translation = fromValues$2(0, 0, 0);
-        getTranslation(translation, matrix);
+        var translation = fromValues$2$1(0, 0, 0);
+        getTranslation$1(translation, matrix);
         uLight.position = translation;
 
         if (this.direction !== undefined)
@@ -5062,7 +5062,7 @@ class UniformLight extends UniformStruct
     {
         super();
 
-        const defaultDirection = fromValues$2(-0.7399, -0.6428, -0.1983);
+        const defaultDirection = fromValues$2$1(-0.7399, -0.6428, -0.1983);
         this.direction = defaultDirection;
         this.range = -1;
 
@@ -5208,7 +5208,7 @@ class gltfMaterial extends GltfObject
         this.normalTexture = undefined;
         this.occlusionTexture = undefined;
         this.emissiveTexture = undefined;
-        this.emissiveFactor = fromValues$2(0, 0, 0);
+        this.emissiveFactor = fromValues$2$1(0, 0, 0);
         this.alphaMode = "OPAQUE";
         this.alphaCutoff = 0.5;
         this.doubleSided = false;
@@ -5303,9 +5303,9 @@ class gltfMaterial extends GltfObject
     updateTextureTransforms(shader)
     {
         for (const { key, uv } of this.textureTransforms) {
-            let rotation = create$4();
-            let scale = create$4();
-            let translation = create$4();
+            let rotation = create$4$1();
+            let scale = create$4$1();
+            let translation = create$4$1();
 
             if (uv.rotation !== undefined)
             {
@@ -5335,7 +5335,7 @@ class gltfMaterial extends GltfObject
                 ]);
             }
 
-            let uvMatrix = create$4();
+            let uvMatrix = create$4$1();
             multiply$2(uvMatrix, translation, rotation);
             multiply$2(uvMatrix, uvMatrix, scale);
             shader.updateUniform("u_" + key + "UVTransform", jsToGl(uvMatrix));
@@ -5885,7 +5885,7 @@ class PbrMetallicRoughness extends GltfObject {
     constructor()
     {
         super();
-        this.baseColorFactor = fromValues$1(1, 1, 1, 1);
+        this.baseColorFactor = fromValues$1$1(1, 1, 1, 1);
         this.baseColorTexture = undefined;
         this.metallicFactor = 1;
         this.roughnessFactor = 1;
@@ -6032,7 +6032,7 @@ class KHR_materials_sheen extends GltfObject {
     {
         super();
         this.sheenRoughnessFactor = 0;
-        this.sheenColorFactor = fromValues$2(0, 0, 0);
+        this.sheenColorFactor = fromValues$2$1(0, 0, 0);
         this.sheenColorTexture = undefined;
         this.sheenRoughnessTexture = undefined;
     }
@@ -6061,7 +6061,7 @@ class KHR_materials_specular extends GltfObject {
     {
         super();
         this.specularFactor = 1;
-        this.specularColorFactor = fromValues$2(1, 1, 1);
+        this.specularColorFactor = fromValues$2$1(1, 1, 1);
         this.specularTexture = undefined;
         this.specularColorTexture = undefined;
     }
@@ -6112,7 +6112,7 @@ class KHR_materials_volume extends GltfObject {
         this.thicknessFactor = 0;
         this.thicknessTexture = undefined;
         this.attenuationDistance = 0; // 0 means infinite distance
-        this.attenuationColor = fromValues$2(1, 1, 1);
+        this.attenuationColor = fromValues$2$1(1, 1, 1);
     }
 
     fromJson(jsonVolume) {
@@ -6131,7 +6131,7 @@ class KHR_materials_volume_scatter extends GltfObject {
     constructor()
     {
         super();
-        this.multiscatterColor = fromValues$2(0, 0, 0);
+        this.multiscatterColor = fromValues$2$1(0, 0, 0);
         this.scatterAnisotropy = 0;
     }
 }
@@ -6144,7 +6144,7 @@ class KHR_materials_diffuse_transmission extends GltfObject {
     {
         super();
         this.diffuseTransmissionFactor = 0;
-        this.diffuseTransmissionColorFactor = fromValues$2(1, 1, 1);
+        this.diffuseTransmissionColorFactor = fromValues$2$1(1, 1, 1);
         this.diffuseTransmissionTexture = undefined;
         this.diffuseTransmissionColorTexture = undefined;
     }
@@ -6172,9 +6172,9 @@ class KHR_materials_pbrSpecularGlossiness extends GltfObject {
     constructor()
     {
         super();
-        this.diffuseFactor = fromValues$1(1, 1, 1, 1);
+        this.diffuseFactor = fromValues$1$1(1, 1, 1, 1);
         this.diffuseTexture = undefined;
-        this.specularFactor = fromValues$2(1, 1, 1);
+        this.specularFactor = fromValues$2$1(1, 1, 1);
         this.specularGlossinessTexture = undefined;
         this.glossinessFactor = 1;
     }
@@ -6244,27 +6244,27 @@ class gltfRenderer
 
         this.visibleLights = [];
 
-        this.viewMatrix = create$3();
-        this.projMatrix = create$3();
-        this.viewProjectionMatrix = create$3();
+        this.viewMatrix = create$3$1();
+        this.projMatrix = create$3$1();
+        this.viewProjectionMatrix = create$3$1();
 
-        this.currentCameraPosition = create$2();
+        this.currentCameraPosition = create$2$1();
 
         this.lightKey = new gltfLight();
         this.lightFill = new gltfLight();
         this.lightFill.intensity = 0.5;
-        const quatKey = fromValues$3(
+        const quatKey = fromValues$5(
             -0.3535534,
             -0.353553385,
             -0.146446586,
             0.8535534);
-        const quatFill = fromValues$3(
+        const quatFill = fromValues$5(
             -0.8535534,
             0.146446645,
             -0.353553325,
             -0.353553444);
-        this.lightKey.direction = create$2();
-        this.lightFill.direction = create$2();
+        this.lightKey.direction = create$2$1();
+        this.lightFill.direction = create$2$1();
         transformQuat(this.lightKey.direction, [0, 0, -1], quatKey);
         transformQuat(this.lightFill.direction, [0, 0, -1], quatFill);
         
@@ -6924,7 +6924,7 @@ class gltfRenderer
 
         const factor = material.extensions?.KHR_materials_anisotropy?.anisotropyStrength;
         const rotation = material.extensions?.KHR_materials_anisotropy?.anisotropyRotation;
-        const anisotropy =  fromValues$2(Math.cos(rotation ?? 0), Math.sin(rotation ?? 0), factor ?? 0.0);
+        const anisotropy =  fromValues$2$1(Math.cos(rotation ?? 0), Math.sin(rotation ?? 0), factor ?? 0.0);
         this.shader.updateUniform("u_Anisotropy", anisotropy);
 
         this.shader.updateUniform("u_ClearcoatFactor", material.extensions?.KHR_materials_clearcoat?.clearcoatFactor);
@@ -7275,9 +7275,9 @@ class gltfRenderer
 
         this.shader.updateUniform("u_MipCount", environment.mipCount);
 
-        let rotMatrix4 = create$3();
+        let rotMatrix4 = create$3$1();
         rotateY(rotMatrix4, rotMatrix4,  state.renderingParameters.environmentRotation / 180.0 * Math.PI);
-        let rotMatrix3 = create$4();
+        let rotMatrix3 = create$4$1();
         fromMat4(rotMatrix3, rotMatrix4);
         this.shader.updateUniform("u_EnvRotation", rotMatrix3);
 
@@ -15288,10 +15288,10 @@ class gltfNode extends GltfObject
         this.weights = undefined;
 
         // non gltf
-        this.worldTransform = create$3();
-        this.worldQuaternion = create$5();
-        this.inverseWorldTransform = create$3();
-        this.normalMatrix = create$3();
+        this.worldTransform = create$3$1();
+        this.worldQuaternion = create$6();
+        this.inverseWorldTransform = create$3$1();
+        this.normalMatrix = create$3$1();
         this.light = undefined;
         this.instanceMatrices = undefined;
         this.instanceWorldTransforms = undefined;
@@ -15319,11 +15319,11 @@ class gltfNode extends GltfObject
             }
             this.instanceMatrices = [];
             for (let i = 0; i < count; i++) {
-                const translation = translationData ? jsToGlSlice(translationData, i * 3, 3) : create$2();
-                const rotation = rotationData ? jsToGlSlice(rotationData, i * 4, 4) : create$5();
-                const scale = scaleData ? jsToGlSlice(scaleData, i * 3, 3) : fromValues$2(1, 1, 1);
-                this.instanceMatrices.push(fromRotationTranslationScale(
-                    create$3(),
+                const translation = translationData ? jsToGlSlice(translationData, i * 3, 3) : create$2$1();
+                const rotation = rotationData ? jsToGlSlice(rotationData, i * 4, 4) : create$6();
+                const scale = scaleData ? jsToGlSlice(scaleData, i * 3, 3) : fromValues$2$1(1, 1, 1);
+                this.instanceMatrices.push(fromRotationTranslationScale$1(
+                    create$3$1(),
                     rotation,
                     translation,
                     scale
@@ -15353,26 +15353,26 @@ class gltfNode extends GltfObject
     {
         this.matrix = jsToGl(matrixData);
 
-        getScaling(this.scale, this.matrix);
+        getScaling$1(this.scale, this.matrix);
 
         // To extract a correct rotation, the scaling component must be eliminated.
-        const mn = create$3();
+        const mn = create$3$1();
         for(const col of [0, 1, 2])
         {
             mn[col] = this.matrix[col] / this.scale[0];
             mn[col + 4] = this.matrix[col + 4] / this.scale[1];
             mn[col + 8] = this.matrix[col + 8] / this.scale[2];
         }
-        getRotation(this.rotation, mn);
-        normalize(this.rotation, this.rotation);
+        getRotation$1(this.rotation, mn);
+        normalize$3(this.rotation, this.rotation);
 
-        getTranslation(this.translation, this.matrix);
+        getTranslation$1(this.translation, this.matrix);
     }
 
     getLocalTransform()
     {
-        return fromRotationTranslationScale(
-            create$3(),
+        return fromRotationTranslationScale$1(
+            create$3$1(),
             this.rotation,
             this.translation,
             this.scale
@@ -15405,7 +15405,7 @@ class gltfScene extends GltfObject
         }
     }
 
-    applyTransformHierarchy(gltf, rootTransform = create$3())
+    applyTransformHierarchy(gltf, rootTransform = create$3$1())
     {
         function applyTransform(gltf, node, parentTransform)
         {
@@ -15417,7 +15417,7 @@ class gltfScene extends GltfObject
                 node.instanceWorldTransforms = [];
                 for (let i = 0; i < node.instanceMatrices.length; i++) {
                     const instanceTransform = node.instanceMatrices[i];
-                    const instanceWorldTransform = create$3();
+                    const instanceWorldTransform = create$3$1();
                     multiply$1(instanceWorldTransform, node.worldTransform, instanceTransform);
                     node.instanceWorldTransforms.push(instanceWorldTransform);
                 }
@@ -15436,7 +15436,7 @@ class gltfScene extends GltfObject
 
         function applyWorldRotation(gltf, node, parentRotation) 
         {
-            multiply(node.worldQuaternion, parentRotation,  node.rotation);
+            multiply$3(node.worldQuaternion, parentRotation,  node.rotation);
 
             // Recurse into children
             for (const child of node.children) {
@@ -15446,7 +15446,7 @@ class gltfScene extends GltfObject
 
         for (const node of this.nodes)
         {  
-            applyWorldRotation(gltf, gltf.nodes[node], create$5());
+            applyWorldRotation(gltf, gltf.nodes[node], create$6());
         }
     }
 
@@ -15573,16 +15573,16 @@ class gltfInterpolator
 
     slerpQuat(q1, q2, t)
     {
-        const qn1 = create$5();
-        const qn2 = create$5();
+        const qn1 = create$6();
+        const qn2 = create$6();
 
-        normalize(qn1, q1);
-        normalize(qn2, q2);
+        normalize$3(qn1, q1);
+        normalize$3(qn2, q2);
 
-        const quatResult = create$5();
+        const quatResult = create$6();
 
-        slerp$1(quatResult, qn1, qn2, t);
-        normalize(quatResult, quatResult);
+        slerp$2(quatResult, qn1, qn2, t);
+        normalize$3(quatResult, quatResult);
 
         return quatResult;
     }
@@ -15697,7 +15697,7 @@ class gltfInterpolator
                 // GLTF requires cubic spline interpolation for quaternions.
                 // https://github.com/KhronosGroup/glTF/issues/1386
                 const result = this.cubicSpline(this.prevKey, nextKey, output, keyDelta, tn, 4);
-                normalize(result, result);
+                normalize$3(result, result);
                 return result;
             }
             else if(sampler.interpolation === InterpolationModes.LINEAR)
@@ -15730,7 +15730,7 @@ class gltfInterpolator
         const y = output[4 * index + 1];
         const z = output[4 * index + 2];
         const w = output[4 * index + 3];
-        return fromValues$3(x, y, z, w);
+        return fromValues$5(x, y, z, w);
     }
 }
 
@@ -16865,7 +16865,7 @@ class gltfSkin extends GltfObject
                 mul(jointMatrix, jointMatrix, ibm);
             }
 
-            let normalMatrix = create$3();
+            let normalMatrix = create$3$1();
             invert(normalMatrix, jointMatrix);
             transpose(normalMatrix, normalMatrix);
             
@@ -18755,6 +18755,1189 @@ class GltfView
     }
 }
 
+/**
+ * Common utilities
+ * @module glMatrix
+ */
+// Configuration Constants
+var EPSILON = 0.000001;
+var ARRAY_TYPE = typeof Float32Array !== 'undefined' ? Float32Array : Array;
+if (!Math.hypot) Math.hypot = function () {
+  var y = 0,
+      i = arguments.length;
+
+  while (i--) {
+    y += arguments[i] * arguments[i];
+  }
+
+  return Math.sqrt(y);
+};
+
+/**
+ * 3x3 Matrix
+ * @module mat3
+ */
+
+/**
+ * Creates a new identity mat3
+ *
+ * @returns {mat3} a new 3x3 matrix
+ */
+
+function create$5() {
+  var out = new ARRAY_TYPE(9);
+
+  if (ARRAY_TYPE != Float32Array) {
+    out[1] = 0;
+    out[2] = 0;
+    out[3] = 0;
+    out[5] = 0;
+    out[6] = 0;
+    out[7] = 0;
+  }
+
+  out[0] = 1;
+  out[4] = 1;
+  out[8] = 1;
+  return out;
+}
+
+/**
+ * 4x4 Matrix<br>Format: column-major, when typed out it looks like row-major<br>The matrices are being post multiplied.
+ * @module mat4
+ */
+
+/**
+ * Creates a new identity mat4
+ *
+ * @returns {mat4} a new 4x4 matrix
+ */
+
+function create$4() {
+  var out = new ARRAY_TYPE(16);
+
+  if (ARRAY_TYPE != Float32Array) {
+    out[1] = 0;
+    out[2] = 0;
+    out[3] = 0;
+    out[4] = 0;
+    out[6] = 0;
+    out[7] = 0;
+    out[8] = 0;
+    out[9] = 0;
+    out[11] = 0;
+    out[12] = 0;
+    out[13] = 0;
+    out[14] = 0;
+  }
+
+  out[0] = 1;
+  out[5] = 1;
+  out[10] = 1;
+  out[15] = 1;
+  return out;
+}
+/**
+ * Copy the values from one mat4 to another
+ *
+ * @param {mat4} out the receiving matrix
+ * @param {ReadonlyMat4} a the source matrix
+ * @returns {mat4} out
+ */
+
+function copy(out, a) {
+  out[0] = a[0];
+  out[1] = a[1];
+  out[2] = a[2];
+  out[3] = a[3];
+  out[4] = a[4];
+  out[5] = a[5];
+  out[6] = a[6];
+  out[7] = a[7];
+  out[8] = a[8];
+  out[9] = a[9];
+  out[10] = a[10];
+  out[11] = a[11];
+  out[12] = a[12];
+  out[13] = a[13];
+  out[14] = a[14];
+  out[15] = a[15];
+  return out;
+}
+/**
+ * Create a new mat4 with the given values
+ *
+ * @param {Number} m00 Component in column 0, row 0 position (index 0)
+ * @param {Number} m01 Component in column 0, row 1 position (index 1)
+ * @param {Number} m02 Component in column 0, row 2 position (index 2)
+ * @param {Number} m03 Component in column 0, row 3 position (index 3)
+ * @param {Number} m10 Component in column 1, row 0 position (index 4)
+ * @param {Number} m11 Component in column 1, row 1 position (index 5)
+ * @param {Number} m12 Component in column 1, row 2 position (index 6)
+ * @param {Number} m13 Component in column 1, row 3 position (index 7)
+ * @param {Number} m20 Component in column 2, row 0 position (index 8)
+ * @param {Number} m21 Component in column 2, row 1 position (index 9)
+ * @param {Number} m22 Component in column 2, row 2 position (index 10)
+ * @param {Number} m23 Component in column 2, row 3 position (index 11)
+ * @param {Number} m30 Component in column 3, row 0 position (index 12)
+ * @param {Number} m31 Component in column 3, row 1 position (index 13)
+ * @param {Number} m32 Component in column 3, row 2 position (index 14)
+ * @param {Number} m33 Component in column 3, row 3 position (index 15)
+ * @returns {mat4} A new mat4
+ */
+
+function fromValues$4(m00, m01, m02, m03, m10, m11, m12, m13, m20, m21, m22, m23, m30, m31, m32, m33) {
+  var out = new ARRAY_TYPE(16);
+  out[0] = m00;
+  out[1] = m01;
+  out[2] = m02;
+  out[3] = m03;
+  out[4] = m10;
+  out[5] = m11;
+  out[6] = m12;
+  out[7] = m13;
+  out[8] = m20;
+  out[9] = m21;
+  out[10] = m22;
+  out[11] = m23;
+  out[12] = m30;
+  out[13] = m31;
+  out[14] = m32;
+  out[15] = m33;
+  return out;
+}
+/**
+ * Multiplies two mat4s
+ *
+ * @param {mat4} out the receiving matrix
+ * @param {ReadonlyMat4} a the first operand
+ * @param {ReadonlyMat4} b the second operand
+ * @returns {mat4} out
+ */
+
+function multiply(out, a, b) {
+  var a00 = a[0],
+      a01 = a[1],
+      a02 = a[2],
+      a03 = a[3];
+  var a10 = a[4],
+      a11 = a[5],
+      a12 = a[6],
+      a13 = a[7];
+  var a20 = a[8],
+      a21 = a[9],
+      a22 = a[10],
+      a23 = a[11];
+  var a30 = a[12],
+      a31 = a[13],
+      a32 = a[14],
+      a33 = a[15]; // Cache only the current line of the second matrix
+
+  var b0 = b[0],
+      b1 = b[1],
+      b2 = b[2],
+      b3 = b[3];
+  out[0] = b0 * a00 + b1 * a10 + b2 * a20 + b3 * a30;
+  out[1] = b0 * a01 + b1 * a11 + b2 * a21 + b3 * a31;
+  out[2] = b0 * a02 + b1 * a12 + b2 * a22 + b3 * a32;
+  out[3] = b0 * a03 + b1 * a13 + b2 * a23 + b3 * a33;
+  b0 = b[4];
+  b1 = b[5];
+  b2 = b[6];
+  b3 = b[7];
+  out[4] = b0 * a00 + b1 * a10 + b2 * a20 + b3 * a30;
+  out[5] = b0 * a01 + b1 * a11 + b2 * a21 + b3 * a31;
+  out[6] = b0 * a02 + b1 * a12 + b2 * a22 + b3 * a32;
+  out[7] = b0 * a03 + b1 * a13 + b2 * a23 + b3 * a33;
+  b0 = b[8];
+  b1 = b[9];
+  b2 = b[10];
+  b3 = b[11];
+  out[8] = b0 * a00 + b1 * a10 + b2 * a20 + b3 * a30;
+  out[9] = b0 * a01 + b1 * a11 + b2 * a21 + b3 * a31;
+  out[10] = b0 * a02 + b1 * a12 + b2 * a22 + b3 * a32;
+  out[11] = b0 * a03 + b1 * a13 + b2 * a23 + b3 * a33;
+  b0 = b[12];
+  b1 = b[13];
+  b2 = b[14];
+  b3 = b[15];
+  out[12] = b0 * a00 + b1 * a10 + b2 * a20 + b3 * a30;
+  out[13] = b0 * a01 + b1 * a11 + b2 * a21 + b3 * a31;
+  out[14] = b0 * a02 + b1 * a12 + b2 * a22 + b3 * a32;
+  out[15] = b0 * a03 + b1 * a13 + b2 * a23 + b3 * a33;
+  return out;
+}
+/**
+ * Creates a matrix from a given angle around a given axis
+ * This is equivalent to (but much faster than):
+ *
+ *     mat4.identity(dest);
+ *     mat4.rotate(dest, dest, rad, axis);
+ *
+ * @param {mat4} out mat4 receiving operation result
+ * @param {Number} rad the angle to rotate the matrix by
+ * @param {ReadonlyVec3} axis the axis to rotate around
+ * @returns {mat4} out
+ */
+
+function fromRotation(out, rad, axis) {
+  var x = axis[0],
+      y = axis[1],
+      z = axis[2];
+  var len = Math.hypot(x, y, z);
+  var s, c, t;
+
+  if (len < EPSILON) {
+    return null;
+  }
+
+  len = 1 / len;
+  x *= len;
+  y *= len;
+  z *= len;
+  s = Math.sin(rad);
+  c = Math.cos(rad);
+  t = 1 - c; // Perform rotation-specific matrix multiplication
+
+  out[0] = x * x * t + c;
+  out[1] = y * x * t + z * s;
+  out[2] = z * x * t - y * s;
+  out[3] = 0;
+  out[4] = x * y * t - z * s;
+  out[5] = y * y * t + c;
+  out[6] = z * y * t + x * s;
+  out[7] = 0;
+  out[8] = x * z * t + y * s;
+  out[9] = y * z * t - x * s;
+  out[10] = z * z * t + c;
+  out[11] = 0;
+  out[12] = 0;
+  out[13] = 0;
+  out[14] = 0;
+  out[15] = 1;
+  return out;
+}
+/**
+ * Creates a matrix from a quaternion rotation and vector translation
+ * This is equivalent to (but much faster than):
+ *
+ *     mat4.identity(dest);
+ *     mat4.translate(dest, vec);
+ *     let quatMat = mat4.create();
+ *     quat4.toMat4(quat, quatMat);
+ *     mat4.multiply(dest, quatMat);
+ *
+ * @param {mat4} out mat4 receiving operation result
+ * @param {quat4} q Rotation quaternion
+ * @param {ReadonlyVec3} v Translation vector
+ * @returns {mat4} out
+ */
+
+function fromRotationTranslation(out, q, v) {
+  // Quaternion math
+  var x = q[0],
+      y = q[1],
+      z = q[2],
+      w = q[3];
+  var x2 = x + x;
+  var y2 = y + y;
+  var z2 = z + z;
+  var xx = x * x2;
+  var xy = x * y2;
+  var xz = x * z2;
+  var yy = y * y2;
+  var yz = y * z2;
+  var zz = z * z2;
+  var wx = w * x2;
+  var wy = w * y2;
+  var wz = w * z2;
+  out[0] = 1 - (yy + zz);
+  out[1] = xy + wz;
+  out[2] = xz - wy;
+  out[3] = 0;
+  out[4] = xy - wz;
+  out[5] = 1 - (xx + zz);
+  out[6] = yz + wx;
+  out[7] = 0;
+  out[8] = xz + wy;
+  out[9] = yz - wx;
+  out[10] = 1 - (xx + yy);
+  out[11] = 0;
+  out[12] = v[0];
+  out[13] = v[1];
+  out[14] = v[2];
+  out[15] = 1;
+  return out;
+}
+/**
+ * Returns the translation vector component of a transformation
+ *  matrix. If a matrix is built with fromRotationTranslation,
+ *  the returned vector will be the same as the translation vector
+ *  originally supplied.
+ * @param  {vec3} out Vector to receive translation component
+ * @param  {ReadonlyMat4} mat Matrix to be decomposed (input)
+ * @return {vec3} out
+ */
+
+function getTranslation(out, mat) {
+  out[0] = mat[12];
+  out[1] = mat[13];
+  out[2] = mat[14];
+  return out;
+}
+/**
+ * Returns the scaling factor component of a transformation
+ *  matrix. If a matrix is built with fromRotationTranslationScale
+ *  with a normalized Quaternion paramter, the returned vector will be
+ *  the same as the scaling vector
+ *  originally supplied.
+ * @param  {vec3} out Vector to receive scaling factor component
+ * @param  {ReadonlyMat4} mat Matrix to be decomposed (input)
+ * @return {vec3} out
+ */
+
+function getScaling(out, mat) {
+  var m11 = mat[0];
+  var m12 = mat[1];
+  var m13 = mat[2];
+  var m21 = mat[4];
+  var m22 = mat[5];
+  var m23 = mat[6];
+  var m31 = mat[8];
+  var m32 = mat[9];
+  var m33 = mat[10];
+  out[0] = Math.hypot(m11, m12, m13);
+  out[1] = Math.hypot(m21, m22, m23);
+  out[2] = Math.hypot(m31, m32, m33);
+  return out;
+}
+/**
+ * Returns a quaternion representing the rotational component
+ *  of a transformation matrix. If a matrix is built with
+ *  fromRotationTranslation, the returned quaternion will be the
+ *  same as the quaternion originally supplied.
+ * @param {quat} out Quaternion to receive the rotation component
+ * @param {ReadonlyMat4} mat Matrix to be decomposed (input)
+ * @return {quat} out
+ */
+
+function getRotation(out, mat) {
+  var scaling = new ARRAY_TYPE(3);
+  getScaling(scaling, mat);
+  var is1 = 1 / scaling[0];
+  var is2 = 1 / scaling[1];
+  var is3 = 1 / scaling[2];
+  var sm11 = mat[0] * is1;
+  var sm12 = mat[1] * is2;
+  var sm13 = mat[2] * is3;
+  var sm21 = mat[4] * is1;
+  var sm22 = mat[5] * is2;
+  var sm23 = mat[6] * is3;
+  var sm31 = mat[8] * is1;
+  var sm32 = mat[9] * is2;
+  var sm33 = mat[10] * is3;
+  var trace = sm11 + sm22 + sm33;
+  var S = 0;
+
+  if (trace > 0) {
+    S = Math.sqrt(trace + 1.0) * 2;
+    out[3] = 0.25 * S;
+    out[0] = (sm23 - sm32) / S;
+    out[1] = (sm31 - sm13) / S;
+    out[2] = (sm12 - sm21) / S;
+  } else if (sm11 > sm22 && sm11 > sm33) {
+    S = Math.sqrt(1.0 + sm11 - sm22 - sm33) * 2;
+    out[3] = (sm23 - sm32) / S;
+    out[0] = 0.25 * S;
+    out[1] = (sm12 + sm21) / S;
+    out[2] = (sm31 + sm13) / S;
+  } else if (sm22 > sm33) {
+    S = Math.sqrt(1.0 + sm22 - sm11 - sm33) * 2;
+    out[3] = (sm31 - sm13) / S;
+    out[0] = (sm12 + sm21) / S;
+    out[1] = 0.25 * S;
+    out[2] = (sm23 + sm32) / S;
+  } else {
+    S = Math.sqrt(1.0 + sm33 - sm11 - sm22) * 2;
+    out[3] = (sm12 - sm21) / S;
+    out[0] = (sm31 + sm13) / S;
+    out[1] = (sm23 + sm32) / S;
+    out[2] = 0.25 * S;
+  }
+
+  return out;
+}
+/**
+ * Creates a matrix from a quaternion rotation, vector translation and vector scale
+ * This is equivalent to (but much faster than):
+ *
+ *     mat4.identity(dest);
+ *     mat4.translate(dest, vec);
+ *     let quatMat = mat4.create();
+ *     quat4.toMat4(quat, quatMat);
+ *     mat4.multiply(dest, quatMat);
+ *     mat4.scale(dest, scale)
+ *
+ * @param {mat4} out mat4 receiving operation result
+ * @param {quat4} q Rotation quaternion
+ * @param {ReadonlyVec3} v Translation vector
+ * @param {ReadonlyVec3} s Scaling vector
+ * @returns {mat4} out
+ */
+
+function fromRotationTranslationScale(out, q, v, s) {
+  // Quaternion math
+  var x = q[0],
+      y = q[1],
+      z = q[2],
+      w = q[3];
+  var x2 = x + x;
+  var y2 = y + y;
+  var z2 = z + z;
+  var xx = x * x2;
+  var xy = x * y2;
+  var xz = x * z2;
+  var yy = y * y2;
+  var yz = y * z2;
+  var zz = z * z2;
+  var wx = w * x2;
+  var wy = w * y2;
+  var wz = w * z2;
+  var sx = s[0];
+  var sy = s[1];
+  var sz = s[2];
+  out[0] = (1 - (yy + zz)) * sx;
+  out[1] = (xy + wz) * sx;
+  out[2] = (xz - wy) * sx;
+  out[3] = 0;
+  out[4] = (xy - wz) * sy;
+  out[5] = (1 - (xx + zz)) * sy;
+  out[6] = (yz + wx) * sy;
+  out[7] = 0;
+  out[8] = (xz + wy) * sz;
+  out[9] = (yz - wx) * sz;
+  out[10] = (1 - (xx + yy)) * sz;
+  out[11] = 0;
+  out[12] = v[0];
+  out[13] = v[1];
+  out[14] = v[2];
+  out[15] = 1;
+  return out;
+}
+/**
+ * Calculates a 4x4 matrix from the given quaternion
+ *
+ * @param {mat4} out mat4 receiving operation result
+ * @param {ReadonlyQuat} q Quaternion to create matrix from
+ *
+ * @returns {mat4} out
+ */
+
+function fromQuat(out, q) {
+  var x = q[0],
+      y = q[1],
+      z = q[2],
+      w = q[3];
+  var x2 = x + x;
+  var y2 = y + y;
+  var z2 = z + z;
+  var xx = x * x2;
+  var yx = y * x2;
+  var yy = y * y2;
+  var zx = z * x2;
+  var zy = z * y2;
+  var zz = z * z2;
+  var wx = w * x2;
+  var wy = w * y2;
+  var wz = w * z2;
+  out[0] = 1 - yy - zz;
+  out[1] = yx + wz;
+  out[2] = zx - wy;
+  out[3] = 0;
+  out[4] = yx - wz;
+  out[5] = 1 - xx - zz;
+  out[6] = zy + wx;
+  out[7] = 0;
+  out[8] = zx + wy;
+  out[9] = zy - wx;
+  out[10] = 1 - xx - yy;
+  out[11] = 0;
+  out[12] = 0;
+  out[13] = 0;
+  out[14] = 0;
+  out[15] = 1;
+  return out;
+}
+
+/**
+ * 3 Dimensional Vector
+ * @module vec3
+ */
+
+/**
+ * Creates a new, empty vec3
+ *
+ * @returns {vec3} a new 3D vector
+ */
+
+function create$3() {
+  var out = new ARRAY_TYPE(3);
+
+  if (ARRAY_TYPE != Float32Array) {
+    out[0] = 0;
+    out[1] = 0;
+    out[2] = 0;
+  }
+
+  return out;
+}
+/**
+ * Calculates the length of a vec3
+ *
+ * @param {ReadonlyVec3} a vector to calculate length of
+ * @returns {Number} length of a
+ */
+
+function length(a) {
+  var x = a[0];
+  var y = a[1];
+  var z = a[2];
+  return Math.hypot(x, y, z);
+}
+/**
+ * Creates a new vec3 initialized with the given values
+ *
+ * @param {Number} x X component
+ * @param {Number} y Y component
+ * @param {Number} z Z component
+ * @returns {vec3} a new 3D vector
+ */
+
+function fromValues$3(x, y, z) {
+  var out = new ARRAY_TYPE(3);
+  out[0] = x;
+  out[1] = y;
+  out[2] = z;
+  return out;
+}
+/**
+ * Adds two vec3's
+ *
+ * @param {vec3} out the receiving vector
+ * @param {ReadonlyVec3} a the first operand
+ * @param {ReadonlyVec3} b the second operand
+ * @returns {vec3} out
+ */
+
+function add$1(out, a, b) {
+  out[0] = a[0] + b[0];
+  out[1] = a[1] + b[1];
+  out[2] = a[2] + b[2];
+  return out;
+}
+/**
+ * Subtracts vector b from vector a
+ *
+ * @param {vec3} out the receiving vector
+ * @param {ReadonlyVec3} a the first operand
+ * @param {ReadonlyVec3} b the second operand
+ * @returns {vec3} out
+ */
+
+function subtract(out, a, b) {
+  out[0] = a[0] - b[0];
+  out[1] = a[1] - b[1];
+  out[2] = a[2] - b[2];
+  return out;
+}
+/**
+ * Scales a vec3 by a scalar number
+ *
+ * @param {vec3} out the receiving vector
+ * @param {ReadonlyVec3} a the vector to scale
+ * @param {Number} b amount to scale the vector by
+ * @returns {vec3} out
+ */
+
+function scale(out, a, b) {
+  out[0] = a[0] * b;
+  out[1] = a[1] * b;
+  out[2] = a[2] * b;
+  return out;
+}
+/**
+ * Normalize a vec3
+ *
+ * @param {vec3} out the receiving vector
+ * @param {ReadonlyVec3} a vector to normalize
+ * @returns {vec3} out
+ */
+
+function normalize$2(out, a) {
+  var x = a[0];
+  var y = a[1];
+  var z = a[2];
+  var len = x * x + y * y + z * z;
+
+  if (len > 0) {
+    //TODO: evaluate use of glm_invsqrt here?
+    len = 1 / Math.sqrt(len);
+  }
+
+  out[0] = a[0] * len;
+  out[1] = a[1] * len;
+  out[2] = a[2] * len;
+  return out;
+}
+/**
+ * Calculates the dot product of two vec3's
+ *
+ * @param {ReadonlyVec3} a the first operand
+ * @param {ReadonlyVec3} b the second operand
+ * @returns {Number} dot product of a and b
+ */
+
+function dot(a, b) {
+  return a[0] * b[0] + a[1] * b[1] + a[2] * b[2];
+}
+/**
+ * Computes the cross product of two vec3's
+ *
+ * @param {vec3} out the receiving vector
+ * @param {ReadonlyVec3} a the first operand
+ * @param {ReadonlyVec3} b the second operand
+ * @returns {vec3} out
+ */
+
+function cross(out, a, b) {
+  var ax = a[0],
+      ay = a[1],
+      az = a[2];
+  var bx = b[0],
+      by = b[1],
+      bz = b[2];
+  out[0] = ay * bz - az * by;
+  out[1] = az * bx - ax * bz;
+  out[2] = ax * by - ay * bx;
+  return out;
+}
+/**
+ * Alias for {@link vec3.length}
+ * @function
+ */
+
+var len = length;
+/**
+ * Perform some operation over an array of vec3s.
+ *
+ * @param {Array} a the array of vectors to iterate over
+ * @param {Number} stride Number of elements between the start of each vec3. If 0 assumes tightly packed
+ * @param {Number} offset Number of elements to skip at the beginning of the array
+ * @param {Number} count Number of vec3s to iterate over. If 0 iterates over entire array
+ * @param {Function} fn Function to call for each vector in the array
+ * @param {Object} [arg] additional argument to pass to fn
+ * @returns {Array} a
+ * @function
+ */
+
+(function () {
+  var vec = create$3();
+  return function (a, stride, offset, count, fn, arg) {
+    var i, l;
+
+    if (!stride) {
+      stride = 3;
+    }
+
+    if (!offset) {
+      offset = 0;
+    }
+
+    if (count) {
+      l = Math.min(count * stride + offset, a.length);
+    } else {
+      l = a.length;
+    }
+
+    for (i = offset; i < l; i += stride) {
+      vec[0] = a[i];
+      vec[1] = a[i + 1];
+      vec[2] = a[i + 2];
+      fn(vec, vec, arg);
+      a[i] = vec[0];
+      a[i + 1] = vec[1];
+      a[i + 2] = vec[2];
+    }
+
+    return a;
+  };
+})();
+
+/**
+ * 4 Dimensional Vector
+ * @module vec4
+ */
+
+/**
+ * Creates a new, empty vec4
+ *
+ * @returns {vec4} a new 4D vector
+ */
+
+function create$2() {
+  var out = new ARRAY_TYPE(4);
+
+  if (ARRAY_TYPE != Float32Array) {
+    out[0] = 0;
+    out[1] = 0;
+    out[2] = 0;
+    out[3] = 0;
+  }
+
+  return out;
+}
+/**
+ * Creates a new vec4 initialized with the given values
+ *
+ * @param {Number} x X component
+ * @param {Number} y Y component
+ * @param {Number} z Z component
+ * @param {Number} w W component
+ * @returns {vec4} a new 4D vector
+ */
+
+function fromValues$2(x, y, z, w) {
+  var out = new ARRAY_TYPE(4);
+  out[0] = x;
+  out[1] = y;
+  out[2] = z;
+  out[3] = w;
+  return out;
+}
+/**
+ * Normalize a vec4
+ *
+ * @param {vec4} out the receiving vector
+ * @param {ReadonlyVec4} a vector to normalize
+ * @returns {vec4} out
+ */
+
+function normalize$1(out, a) {
+  var x = a[0];
+  var y = a[1];
+  var z = a[2];
+  var w = a[3];
+  var len = x * x + y * y + z * z + w * w;
+
+  if (len > 0) {
+    len = 1 / Math.sqrt(len);
+  }
+
+  out[0] = x * len;
+  out[1] = y * len;
+  out[2] = z * len;
+  out[3] = w * len;
+  return out;
+}
+/**
+ * Perform some operation over an array of vec4s.
+ *
+ * @param {Array} a the array of vectors to iterate over
+ * @param {Number} stride Number of elements between the start of each vec4. If 0 assumes tightly packed
+ * @param {Number} offset Number of elements to skip at the beginning of the array
+ * @param {Number} count Number of vec4s to iterate over. If 0 iterates over entire array
+ * @param {Function} fn Function to call for each vector in the array
+ * @param {Object} [arg] additional argument to pass to fn
+ * @returns {Array} a
+ * @function
+ */
+
+(function () {
+  var vec = create$2();
+  return function (a, stride, offset, count, fn, arg) {
+    var i, l;
+
+    if (!stride) {
+      stride = 4;
+    }
+
+    if (!offset) {
+      offset = 0;
+    }
+
+    if (count) {
+      l = Math.min(count * stride + offset, a.length);
+    } else {
+      l = a.length;
+    }
+
+    for (i = offset; i < l; i += stride) {
+      vec[0] = a[i];
+      vec[1] = a[i + 1];
+      vec[2] = a[i + 2];
+      vec[3] = a[i + 3];
+      fn(vec, vec, arg);
+      a[i] = vec[0];
+      a[i + 1] = vec[1];
+      a[i + 2] = vec[2];
+      a[i + 3] = vec[3];
+    }
+
+    return a;
+  };
+})();
+
+/**
+ * Quaternion
+ * @module quat
+ */
+
+/**
+ * Creates a new identity quat
+ *
+ * @returns {quat} a new quaternion
+ */
+
+function create$1() {
+  var out = new ARRAY_TYPE(4);
+
+  if (ARRAY_TYPE != Float32Array) {
+    out[0] = 0;
+    out[1] = 0;
+    out[2] = 0;
+  }
+
+  out[3] = 1;
+  return out;
+}
+/**
+ * Sets a quat from the given angle and rotation axis,
+ * then returns it.
+ *
+ * @param {quat} out the receiving quaternion
+ * @param {ReadonlyVec3} axis the axis around which to rotate
+ * @param {Number} rad the angle in radians
+ * @returns {quat} out
+ **/
+
+function setAxisAngle(out, axis, rad) {
+  rad = rad * 0.5;
+  var s = Math.sin(rad);
+  out[0] = s * axis[0];
+  out[1] = s * axis[1];
+  out[2] = s * axis[2];
+  out[3] = Math.cos(rad);
+  return out;
+}
+/**
+ * Performs a spherical linear interpolation between two quat
+ *
+ * @param {quat} out the receiving quaternion
+ * @param {ReadonlyQuat} a the first operand
+ * @param {ReadonlyQuat} b the second operand
+ * @param {Number} t interpolation amount, in the range [0-1], between the two inputs
+ * @returns {quat} out
+ */
+
+function slerp$1(out, a, b, t) {
+  // benchmarks:
+  //    http://jsperf.com/quaternion-slerp-implementations
+  var ax = a[0],
+      ay = a[1],
+      az = a[2],
+      aw = a[3];
+  var bx = b[0],
+      by = b[1],
+      bz = b[2],
+      bw = b[3];
+  var omega, cosom, sinom, scale0, scale1; // calc cosine
+
+  cosom = ax * bx + ay * by + az * bz + aw * bw; // adjust signs (if necessary)
+
+  if (cosom < 0.0) {
+    cosom = -cosom;
+    bx = -bx;
+    by = -by;
+    bz = -bz;
+    bw = -bw;
+  } // calculate coefficients
+
+
+  if (1.0 - cosom > EPSILON) {
+    // standard case (slerp)
+    omega = Math.acos(cosom);
+    sinom = Math.sin(omega);
+    scale0 = Math.sin((1.0 - t) * omega) / sinom;
+    scale1 = Math.sin(t * omega) / sinom;
+  } else {
+    // "from" and "to" quaternions are very close
+    //  ... so we can do a linear interpolation
+    scale0 = 1.0 - t;
+    scale1 = t;
+  } // calculate final values
+
+
+  out[0] = scale0 * ax + scale1 * bx;
+  out[1] = scale0 * ay + scale1 * by;
+  out[2] = scale0 * az + scale1 * bz;
+  out[3] = scale0 * aw + scale1 * bw;
+  return out;
+}
+/**
+ * Creates a quaternion from the given 3x3 rotation matrix.
+ *
+ * NOTE: The resultant quaternion is not normalized, so you should be sure
+ * to renormalize the quaternion yourself where necessary.
+ *
+ * @param {quat} out the receiving quaternion
+ * @param {ReadonlyMat3} m rotation matrix
+ * @returns {quat} out
+ * @function
+ */
+
+function fromMat3(out, m) {
+  // Algorithm in Ken Shoemake's article in 1987 SIGGRAPH course notes
+  // article "Quaternion Calculus and Fast Animation".
+  var fTrace = m[0] + m[4] + m[8];
+  var fRoot;
+
+  if (fTrace > 0.0) {
+    // |w| > 1/2, may as well choose w > 1/2
+    fRoot = Math.sqrt(fTrace + 1.0); // 2w
+
+    out[3] = 0.5 * fRoot;
+    fRoot = 0.5 / fRoot; // 1/(4w)
+
+    out[0] = (m[5] - m[7]) * fRoot;
+    out[1] = (m[6] - m[2]) * fRoot;
+    out[2] = (m[1] - m[3]) * fRoot;
+  } else {
+    // |w| <= 1/2
+    var i = 0;
+    if (m[4] > m[0]) i = 1;
+    if (m[8] > m[i * 3 + i]) i = 2;
+    var j = (i + 1) % 3;
+    var k = (i + 2) % 3;
+    fRoot = Math.sqrt(m[i * 3 + i] - m[j * 3 + j] - m[k * 3 + k] + 1.0);
+    out[i] = 0.5 * fRoot;
+    fRoot = 0.5 / fRoot;
+    out[3] = (m[j * 3 + k] - m[k * 3 + j]) * fRoot;
+    out[j] = (m[j * 3 + i] + m[i * 3 + j]) * fRoot;
+    out[k] = (m[k * 3 + i] + m[i * 3 + k]) * fRoot;
+  }
+
+  return out;
+}
+/**
+ * Creates a new quat initialized with the given values
+ *
+ * @param {Number} x X component
+ * @param {Number} y Y component
+ * @param {Number} z Z component
+ * @param {Number} w W component
+ * @returns {quat} a new quaternion
+ * @function
+ */
+
+var fromValues$1 = fromValues$2;
+/**
+ * Normalize a quat
+ *
+ * @param {quat} out the receiving quaternion
+ * @param {ReadonlyQuat} a quaternion to normalize
+ * @returns {quat} out
+ * @function
+ */
+
+var normalize = normalize$1;
+/**
+ * Sets a quaternion to represent the shortest rotation from one
+ * vector to another.
+ *
+ * Both vectors are assumed to be unit length.
+ *
+ * @param {quat} out the receiving quaternion.
+ * @param {ReadonlyVec3} a the initial vector
+ * @param {ReadonlyVec3} b the destination vector
+ * @returns {quat} out
+ */
+
+(function () {
+  var tmpvec3 = create$3();
+  var xUnitVec3 = fromValues$3(1, 0, 0);
+  var yUnitVec3 = fromValues$3(0, 1, 0);
+  return function (out, a, b) {
+    var dot$1 = dot(a, b);
+
+    if (dot$1 < -0.999999) {
+      cross(tmpvec3, xUnitVec3, a);
+      if (len(tmpvec3) < 0.000001) cross(tmpvec3, yUnitVec3, a);
+      normalize$2(tmpvec3, tmpvec3);
+      setAxisAngle(out, tmpvec3, Math.PI);
+      return out;
+    } else if (dot$1 > 0.999999) {
+      out[0] = 0;
+      out[1] = 0;
+      out[2] = 0;
+      out[3] = 1;
+      return out;
+    } else {
+      cross(tmpvec3, a, b);
+      out[0] = tmpvec3[0];
+      out[1] = tmpvec3[1];
+      out[2] = tmpvec3[2];
+      out[3] = 1 + dot$1;
+      return normalize(out, out);
+    }
+  };
+})();
+/**
+ * Performs a spherical linear interpolation with two control points
+ *
+ * @param {quat} out the receiving quaternion
+ * @param {ReadonlyQuat} a the first operand
+ * @param {ReadonlyQuat} b the second operand
+ * @param {ReadonlyQuat} c the third operand
+ * @param {ReadonlyQuat} d the fourth operand
+ * @param {Number} t interpolation amount, in the range [0-1], between the two inputs
+ * @returns {quat} out
+ */
+
+(function () {
+  var temp1 = create$1();
+  var temp2 = create$1();
+  return function (out, a, b, c, d, t) {
+    slerp$1(temp1, a, d, t);
+    slerp$1(temp2, b, c, t);
+    slerp$1(out, temp1, temp2, 2 * t * (1 - t));
+    return out;
+  };
+})();
+/**
+ * Sets the specified quaternion with values corresponding to the given
+ * axes. Each axis is a vec3 and is expected to be unit length and
+ * perpendicular to all other specified axes.
+ *
+ * @param {ReadonlyVec3} view  the vector representing the viewing direction
+ * @param {ReadonlyVec3} right the vector representing the local "right" direction
+ * @param {ReadonlyVec3} up    the vector representing the local "up" direction
+ * @returns {quat} out
+ */
+
+(function () {
+  var matr = create$5();
+  return function (out, view, right, up) {
+    matr[0] = right[0];
+    matr[3] = right[1];
+    matr[6] = right[2];
+    matr[1] = up[0];
+    matr[4] = up[1];
+    matr[7] = up[2];
+    matr[2] = -view[0];
+    matr[5] = -view[1];
+    matr[8] = -view[2];
+    return normalize(out, fromMat3(out, matr));
+  };
+})();
+
+/**
+ * 2 Dimensional Vector
+ * @module vec2
+ */
+
+/**
+ * Creates a new, empty vec2
+ *
+ * @returns {vec2} a new 2D vector
+ */
+
+function create() {
+  var out = new ARRAY_TYPE(2);
+
+  if (ARRAY_TYPE != Float32Array) {
+    out[0] = 0;
+    out[1] = 0;
+  }
+
+  return out;
+}
+/**
+ * Creates a new vec2 initialized with the given values
+ *
+ * @param {Number} x X component
+ * @param {Number} y Y component
+ * @returns {vec2} a new 2D vector
+ */
+
+function fromValues(x, y) {
+  var out = new ARRAY_TYPE(2);
+  out[0] = x;
+  out[1] = y;
+  return out;
+}
+/**
+ * Calculates the euclidian distance between two vec2's
+ *
+ * @param {ReadonlyVec2} a the first operand
+ * @param {ReadonlyVec2} b the second operand
+ * @returns {Number} distance between a and b
+ */
+
+function distance(a, b) {
+  var x = b[0] - a[0],
+      y = b[1] - a[1];
+  return Math.hypot(x, y);
+}
+/**
+ * Alias for {@link vec2.distance}
+ * @function
+ */
+
+var dist = distance;
+/**
+ * Perform some operation over an array of vec2s.
+ *
+ * @param {Array} a the array of vectors to iterate over
+ * @param {Number} stride Number of elements between the start of each vec2. If 0 assumes tightly packed
+ * @param {Number} offset Number of elements to skip at the beginning of the array
+ * @param {Number} count Number of vec2s to iterate over. If 0 iterates over entire array
+ * @param {Function} fn Function to call for each vector in the array
+ * @param {Object} [arg] additional argument to pass to fn
+ * @returns {Array} a
+ * @function
+ */
+
+(function () {
+  var vec = create();
+  return function (a, stride, offset, count, fn, arg) {
+    var i, l;
+
+    if (!stride) {
+      stride = 2;
+    }
+
+    if (!offset) {
+      offset = 0;
+    }
+
+    if (count) {
+      l = Math.min(count * stride + offset, a.length);
+    } else {
+      l = a.length;
+    }
+
+    for (i = offset; i < l; i += stride) {
+      vec[0] = a[i];
+      vec[1] = a[i + 1];
+      fn(vec, vec, arg);
+      a[i] = vec[0];
+      a[i + 1] = vec[1];
+    }
+
+    return a;
+  };
+})();
+
 /*! *****************************************************************************
 Copyright (c) Microsoft Corporation.
 
@@ -20407,121 +21590,6 @@ var TakeUntilSubscriber = /*@__PURE__*/ (function (_super) {
 }(SimpleOuterSubscriber));
 
 var e=[0,1,2,3,4,4,5,5,6,6,6,6,7,7,7,7,8,8,8,8,8,8,8,8,9,9,9,9,9,9,9,9,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,0,0,16,17,18,18,19,19,20,20,20,20,21,21,21,21,22,22,22,22,22,22,22,22,23,23,23,23,23,23,23,23,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,29,29,29,29,29,29,29,29,29,29,29,29,29,29,29,29,29,29,29,29,29,29,29,29,29,29,29,29,29,29,29,29,29,29,29,29,29,29,29,29,29,29,29,29,29,29,29,29,29,29,29,29,29,29,29,29,29,29,29,29,29,29,29,29];function t(){var e=this;function t(e,t){var n=0;do{n|=1&e,e>>>=1,n<<=1;}while(--t>0);return n>>>1}e.build_tree=function(n){var i,r,a,o=e.dyn_tree,s=e.stat_desc.static_tree,l=e.stat_desc.elems,f=-1;for(n.heap_len=0,n.heap_max=573,i=0;i<l;i++)0!==o[2*i]?(n.heap[++n.heap_len]=f=i,n.depth[i]=0):o[2*i+1]=0;for(;n.heap_len<2;)o[2*(a=n.heap[++n.heap_len]=f<2?++f:0)]=1,n.depth[a]=0,n.opt_len--,s&&(n.static_len-=s[2*a+1]);for(e.max_code=f,i=Math.floor(n.heap_len/2);i>=1;i--)n.pqdownheap(o,i);a=l;do{i=n.heap[1],n.heap[1]=n.heap[n.heap_len--],n.pqdownheap(o,1),r=n.heap[1],n.heap[--n.heap_max]=i,n.heap[--n.heap_max]=r,o[2*a]=o[2*i]+o[2*r],n.depth[a]=Math.max(n.depth[i],n.depth[r])+1,o[2*i+1]=o[2*r+1]=a,n.heap[1]=a++,n.pqdownheap(o,1);}while(n.heap_len>=2);n.heap[--n.heap_max]=n.heap[1],function(t){var n,i,r,a,o,s,l=e.dyn_tree,f=e.stat_desc.static_tree,u=e.stat_desc.extra_bits,d=e.stat_desc.extra_base,c=e.stat_desc.max_length,_=0;for(a=0;a<=15;a++)t.bl_count[a]=0;for(l[2*t.heap[t.heap_max]+1]=0,n=t.heap_max+1;n<573;n++)(a=l[2*l[2*(i=t.heap[n])+1]+1]+1)>c&&(a=c,_++),l[2*i+1]=a,i>e.max_code||(t.bl_count[a]++,o=0,i>=d&&(o=u[i-d]),t.opt_len+=(s=l[2*i])*(a+o),f&&(t.static_len+=s*(f[2*i+1]+o)));if(0!==_){do{for(a=c-1;0===t.bl_count[a];)a--;t.bl_count[a]--,t.bl_count[a+1]+=2,t.bl_count[c]--,_-=2;}while(_>0);for(a=c;0!==a;a--)for(i=t.bl_count[a];0!==i;)(r=t.heap[--n])>e.max_code||(l[2*r+1]!=a&&(t.opt_len+=(a-l[2*r+1])*l[2*r],l[2*r+1]=a),i--);}}(n),function(e,n,i){var r,a,o,s=[],l=0;for(r=1;r<=15;r++)s[r]=l=l+i[r-1]<<1;for(a=0;a<=n;a++)0!==(o=e[2*a+1])&&(e[2*a]=t(s[o]++,o));}(o,e.max_code,n.bl_count);};}function n(e,t,n,i,r){var a=this;a.static_tree=e,a.extra_bits=t,a.extra_base=n,a.elems=i,a.max_length=r;}function i(e,t,n,i,r){var a=this;a.good_length=e,a.max_lazy=t,a.nice_length=n,a.max_chain=i,a.func=r;}t._length_code=[0,1,2,3,4,5,6,7,8,8,9,9,10,10,11,11,12,12,12,12,13,13,13,13,14,14,14,14,15,15,15,15,16,16,16,16,16,16,16,16,17,17,17,17,17,17,17,17,18,18,18,18,18,18,18,18,19,19,19,19,19,19,19,19,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,22,22,22,22,22,22,22,22,22,22,22,22,22,22,22,22,23,23,23,23,23,23,23,23,23,23,23,23,23,23,23,23,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,28],t.base_length=[0,1,2,3,4,5,6,7,8,10,12,14,16,20,24,28,32,40,48,56,64,80,96,112,128,160,192,224,0],t.base_dist=[0,1,2,3,4,6,8,12,16,24,32,48,64,96,128,192,256,384,512,768,1024,1536,2048,3072,4096,6144,8192,12288,16384,24576],t.d_code=function(t){return t<256?e[t]:e[256+(t>>>7)]},t.extra_lbits=[0,0,0,0,0,0,0,0,1,1,1,1,2,2,2,2,3,3,3,3,4,4,4,4,5,5,5,5,0],t.extra_dbits=[0,0,0,0,1,1,2,2,3,3,4,4,5,5,6,6,7,7,8,8,9,9,10,10,11,11,12,12,13,13],t.extra_blbits=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,3,7],t.bl_order=[16,17,18,0,8,7,9,6,10,5,11,4,12,3,13,2,14,1,15],n.static_ltree=[12,8,140,8,76,8,204,8,44,8,172,8,108,8,236,8,28,8,156,8,92,8,220,8,60,8,188,8,124,8,252,8,2,8,130,8,66,8,194,8,34,8,162,8,98,8,226,8,18,8,146,8,82,8,210,8,50,8,178,8,114,8,242,8,10,8,138,8,74,8,202,8,42,8,170,8,106,8,234,8,26,8,154,8,90,8,218,8,58,8,186,8,122,8,250,8,6,8,134,8,70,8,198,8,38,8,166,8,102,8,230,8,22,8,150,8,86,8,214,8,54,8,182,8,118,8,246,8,14,8,142,8,78,8,206,8,46,8,174,8,110,8,238,8,30,8,158,8,94,8,222,8,62,8,190,8,126,8,254,8,1,8,129,8,65,8,193,8,33,8,161,8,97,8,225,8,17,8,145,8,81,8,209,8,49,8,177,8,113,8,241,8,9,8,137,8,73,8,201,8,41,8,169,8,105,8,233,8,25,8,153,8,89,8,217,8,57,8,185,8,121,8,249,8,5,8,133,8,69,8,197,8,37,8,165,8,101,8,229,8,21,8,149,8,85,8,213,8,53,8,181,8,117,8,245,8,13,8,141,8,77,8,205,8,45,8,173,8,109,8,237,8,29,8,157,8,93,8,221,8,61,8,189,8,125,8,253,8,19,9,275,9,147,9,403,9,83,9,339,9,211,9,467,9,51,9,307,9,179,9,435,9,115,9,371,9,243,9,499,9,11,9,267,9,139,9,395,9,75,9,331,9,203,9,459,9,43,9,299,9,171,9,427,9,107,9,363,9,235,9,491,9,27,9,283,9,155,9,411,9,91,9,347,9,219,9,475,9,59,9,315,9,187,9,443,9,123,9,379,9,251,9,507,9,7,9,263,9,135,9,391,9,71,9,327,9,199,9,455,9,39,9,295,9,167,9,423,9,103,9,359,9,231,9,487,9,23,9,279,9,151,9,407,9,87,9,343,9,215,9,471,9,55,9,311,9,183,9,439,9,119,9,375,9,247,9,503,9,15,9,271,9,143,9,399,9,79,9,335,9,207,9,463,9,47,9,303,9,175,9,431,9,111,9,367,9,239,9,495,9,31,9,287,9,159,9,415,9,95,9,351,9,223,9,479,9,63,9,319,9,191,9,447,9,127,9,383,9,255,9,511,9,0,7,64,7,32,7,96,7,16,7,80,7,48,7,112,7,8,7,72,7,40,7,104,7,24,7,88,7,56,7,120,7,4,7,68,7,36,7,100,7,20,7,84,7,52,7,116,7,3,8,131,8,67,8,195,8,35,8,163,8,99,8,227,8],n.static_dtree=[0,5,16,5,8,5,24,5,4,5,20,5,12,5,28,5,2,5,18,5,10,5,26,5,6,5,22,5,14,5,30,5,1,5,17,5,9,5,25,5,5,5,21,5,13,5,29,5,3,5,19,5,11,5,27,5,7,5,23,5],n.static_l_desc=new n(n.static_ltree,t.extra_lbits,257,286,15),n.static_d_desc=new n(n.static_dtree,t.extra_dbits,0,30,15),n.static_bl_desc=new n(null,t.extra_blbits,0,19,7);var r=[new i(0,0,0,0,0),new i(4,4,8,4,1),new i(4,5,16,8,1),new i(4,6,32,32,1),new i(4,4,16,16,2),new i(8,16,32,32,2),new i(8,16,128,128,2),new i(8,32,128,256,2),new i(32,128,258,1024,2),new i(32,258,258,4096,2)],a=["need dictionary","stream end","","","stream error","data error","","buffer error","",""];function o(e,t,n,i){var r=e[2*t],a=e[2*n];return r<a||r==a&&i[t]<=i[n]}function s(){var e,i,s,l,f,u,d,c,_,h,p,w,v,b,x,m,g,y,k,U,z,E,D,A,S,R,F,T,W,M,B,I,C,L,P,Z,N,j,O,V,q,$=this,G=new t,H=new t,Y=new t;function J(){var e;for(e=0;e<286;e++)B[2*e]=0;for(e=0;e<30;e++)I[2*e]=0;for(e=0;e<19;e++)C[2*e]=0;B[512]=1,$.opt_len=$.static_len=0,Z=j=0;}function K(e,t){var n,i,r=-1,a=e[1],o=0,s=7,l=4;for(0===a&&(s=138,l=3),e[2*(t+1)+1]=65535,n=0;n<=t;n++)i=a,a=e[2*(n+1)+1],++o<s&&i==a||(o<l?C[2*i]+=o:0!==i?(i!=r&&C[2*i]++,C[32]++):o<=10?C[34]++:C[36]++,o=0,r=i,0===a?(s=138,l=3):i==a?(s=6,l=3):(s=7,l=4));}function Q(e){$.pending_buf[$.pending++]=e;}function X(e){Q(255&e),Q(e>>>8&255);}function ee(e,t){var n,i=t;q>16-i?(X(V|=(n=e)<<q&65535),V=n>>>16-q,q+=i-16):(V|=e<<q&65535,q+=i);}function te(e,t){var n=2*e;ee(65535&t[n],65535&t[n+1]);}function ne(e,t){var n,i,r=-1,a=e[1],o=0,s=7,l=4;for(0===a&&(s=138,l=3),n=0;n<=t;n++)if(i=a,a=e[2*(n+1)+1],!(++o<s&&i==a)){if(o<l)do{te(i,C);}while(0!=--o);else 0!==i?(i!=r&&(te(i,C),o--),te(16,C),ee(o-3,2)):o<=10?(te(17,C),ee(o-3,3)):(te(18,C),ee(o-11,7));o=0,r=i,0===a?(s=138,l=3):i==a?(s=6,l=3):(s=7,l=4);}}function ie(){16==q?(X(V),V=0,q=0):q>=8&&(Q(255&V),V>>>=8,q-=8);}function re(e,n){var i,r,a;if($.pending_buf[N+2*Z]=e>>>8&255,$.pending_buf[N+2*Z+1]=255&e,$.pending_buf[L+Z]=255&n,Z++,0===e?B[2*n]++:(j++,e--,B[2*(t._length_code[n]+256+1)]++,I[2*t.d_code(e)]++),0==(8191&Z)&&F>2){for(i=8*Z,r=z-g,a=0;a<30;a++)i+=I[2*a]*(5+t.extra_dbits[a]);if(i>>>=3,j<Math.floor(Z/2)&&i<Math.floor(r/2))return !0}return Z==P-1}function ae(e,n){var i,r,a,o,s=0;if(0!==Z)do{i=$.pending_buf[N+2*s]<<8&65280|255&$.pending_buf[N+2*s+1],r=255&$.pending_buf[L+s],s++,0===i?te(r,e):(te((a=t._length_code[r])+256+1,e),0!==(o=t.extra_lbits[a])&&ee(r-=t.base_length[a],o),i--,te(a=t.d_code(i),n),0!==(o=t.extra_dbits[a])&&ee(i-=t.base_dist[a],o));}while(s<Z);te(256,e),O=e[513];}function oe(){q>8?X(V):q>0&&Q(255&V),V=0,q=0;}function se(e,t,n){ee(0+(n?1:0),3),function(e,t,n){oe(),O=8,X(t),X(~t),$.pending_buf.set(c.subarray(e,e+t),$.pending),$.pending+=t;}(e,t);}function le(i){((function(e,i,r){var a,o,s=0;F>0?(G.build_tree($),H.build_tree($),s=function(){var e;for(K(B,G.max_code),K(I,H.max_code),Y.build_tree($),e=18;e>=3&&0===C[2*t.bl_order[e]+1];e--);return $.opt_len+=3*(e+1)+5+5+4,e}(),(o=$.static_len+3+7>>>3)<=(a=$.opt_len+3+7>>>3)&&(a=o)):a=o=i+5,i+4<=a&&-1!=e?se(e,i,r):o==a?(ee(2+(r?1:0),3),ae(n.static_ltree,n.static_dtree)):(ee(4+(r?1:0),3),function(e,n,i){var r;for(ee(e-257,5),ee(n-1,5),ee(i-4,4),r=0;r<i;r++)ee(C[2*t.bl_order[r]+1],3);ne(B,e-1),ne(I,n-1);}(G.max_code+1,H.max_code+1,s+1),ae(B,I)),J(),r&&oe();}))(g>=0?g:-1,z-g,i),g=z,e.flush_pending();}function fe(){var t,n,i,r;do{if(0==(r=_-D-z)&&0===z&&0===D)r=f;else if(-1==r)r--;else if(z>=f+f-262){c.set(c.subarray(f,f+f),0),E-=f,z-=f,g-=f,i=t=v;do{n=65535&p[--i],p[i]=n>=f?n-f:0;}while(0!=--t);i=t=f;do{n=65535&h[--i],h[i]=n>=f?n-f:0;}while(0!=--t);r+=f;}if(0===e.avail_in)return;t=e.read_buf(c,z+D,r),(D+=t)>=3&&(w=((w=255&c[z])<<m^255&c[z+1])&x);}while(D<262&&0!==e.avail_in)}function ue(e){var t,n,i=S,r=z,a=A,o=z>f-262?z-(f-262):0,s=M,l=d,u=z+258,_=c[r+a-1],p=c[r+a];A>=W&&(i>>=2),s>D&&(s=D);do{if(c[(t=e)+a]==p&&c[t+a-1]==_&&c[t]==c[r]&&c[++t]==c[r+1]){r+=2,t++;do{}while(c[++r]==c[++t]&&c[++r]==c[++t]&&c[++r]==c[++t]&&c[++r]==c[++t]&&c[++r]==c[++t]&&c[++r]==c[++t]&&c[++r]==c[++t]&&c[++r]==c[++t]&&r<u);if(n=258-(u-r),r=u-258,n>a){if(E=e,a=n,n>=s)break;_=c[r+a-1],p=c[r+a];}}}while((e=65535&h[e&l])>o&&0!=--i);return a<=D?a:D}$.depth=[],$.bl_count=[],$.heap=[],B=[],I=[],C=[],$.pqdownheap=function(e,t){for(var n=$.heap,i=n[t],r=t<<1;r<=$.heap_len&&(r<$.heap_len&&o(e,n[r+1],n[r],$.depth)&&r++,!o(e,i,n[r],$.depth));)n[t]=n[r],t=r,r<<=1;n[t]=i;},$.deflateInit=function(e,t,a,o,k,E){return o||(o=8),k||(k=8),E||(E=0),e.msg=null,-1==t&&(t=6),k<1||k>9||8!=o||a<9||a>15||t<0||t>9||E<0||E>2?-2:(e.dstate=$,d=(f=1<<(u=a))-1,x=(v=1<<(b=k+7))-1,m=Math.floor((b+3-1)/3),c=new Uint8Array(2*f),h=[],p=[],P=1<<k+6,$.pending_buf=new Uint8Array(4*P),s=4*P,N=Math.floor(P/2),L=3*P,F=t,T=E,function(e){return e.total_in=e.total_out=0,e.msg=null,$.pending=0,$.pending_out=0,i=113,l=0,G.dyn_tree=B,G.stat_desc=n.static_l_desc,H.dyn_tree=I,H.stat_desc=n.static_d_desc,Y.dyn_tree=C,Y.stat_desc=n.static_bl_desc,V=0,q=0,O=8,J(),function(){var e;for(_=2*f,p[v-1]=0,e=0;e<v-1;e++)p[e]=0;R=r[F].max_lazy,W=r[F].good_length,M=r[F].nice_length,S=r[F].max_chain,z=0,g=0,D=0,y=A=2,U=0,w=0;}(),0}(e))},$.deflateEnd=function(){return 42!=i&&113!=i&&666!=i?-2:($.pending_buf=null,p=null,h=null,c=null,$.dstate=null,113==i?-3:0)},$.deflateParams=function(e,t,n){var i=0;return -1==t&&(t=6),t<0||t>9||n<0||n>2?-2:(r[F].func!=r[t].func&&0!==e.total_in&&(i=e.deflate(1)),F!=t&&(R=r[F=t].max_lazy,W=r[F].good_length,M=r[F].nice_length,S=r[F].max_chain),T=n,i)},$.deflateSetDictionary=function(e,t,n){var r,a=n,o=0;if(!t||42!=i)return -2;if(a<3)return 0;for(a>f-262&&(o=n-(a=f-262)),c.set(t.subarray(o,o+a),0),z=a,g=a,w=((w=255&c[0])<<m^255&c[1])&x,r=0;r<=a-3;r++)h[r&d]=p[w=(w<<m^255&c[r+2])&x],p[w]=r;return 0},$.deflate=function(t,o){var _,b,S,W,M,B;if(o>4||o<0)return -2;if(!t.next_out||!t.next_in&&0!==t.avail_in||666==i&&4!=o)return t.msg=a[4],-2;if(0===t.avail_out)return t.msg=a[7],-5;if(e=t,W=l,l=o,42==i&&(b=8+(u-8<<4)<<8,(S=(F-1&255)>>1)>3&&(S=3),b|=S<<6,0!==z&&(b|=32),i=113,Q((B=b+=31-b%31)>>8&255),Q(255&B)),0!==$.pending){if(e.flush_pending(),0===e.avail_out)return l=-1,0}else if(0===e.avail_in&&o<=W&&4!=o)return e.msg=a[7],-5;if(666==i&&0!==e.avail_in)return t.msg=a[7],-5;if(0!==e.avail_in||0!==D||0!=o&&666!=i){switch(M=-1,r[F].func){case 0:M=function(t){var n,i=65535;for(i>s-5&&(i=s-5);;){if(D<=1){if(fe(),0===D&&0==t)return 0;if(0===D)break}if(z+=D,D=0,n=g+i,(0===z||z>=n)&&(D=z-n,z=n,le(!1),0===e.avail_out))return 0;if(z-g>=f-262&&(le(!1),0===e.avail_out))return 0}return le(4==t),0===e.avail_out?4==t?2:0:4==t?3:1}(o);break;case 1:M=function(t){for(var n,i=0;;){if(D<262){if(fe(),D<262&&0==t)return 0;if(0===D)break}if(D>=3&&(i=65535&p[w=(w<<m^255&c[z+2])&x],h[z&d]=p[w],p[w]=z),0!==i&&(z-i&65535)<=f-262&&2!=T&&(y=ue(i)),y>=3)if(n=re(z-E,y-3),D-=y,y<=R&&D>=3){y--;do{z++,i=65535&p[w=(w<<m^255&c[z+2])&x],h[z&d]=p[w],p[w]=z;}while(0!=--y);z++;}else z+=y,y=0,w=((w=255&c[z])<<m^255&c[z+1])&x;else n=re(0,255&c[z]),D--,z++;if(n&&(le(!1),0===e.avail_out))return 0}return le(4==t),0===e.avail_out?4==t?2:0:4==t?3:1}(o);break;case 2:M=function(t){for(var n,i,r=0;;){if(D<262){if(fe(),D<262&&0==t)return 0;if(0===D)break}if(D>=3&&(r=65535&p[w=(w<<m^255&c[z+2])&x],h[z&d]=p[w],p[w]=z),A=y,k=E,y=2,0!==r&&A<R&&(z-r&65535)<=f-262&&(2!=T&&(y=ue(r)),y<=5&&(1==T||3==y&&z-E>4096)&&(y=2)),A>=3&&y<=A){i=z+D-3,n=re(z-1-k,A-3),D-=A-1,A-=2;do{++z<=i&&(r=65535&p[w=(w<<m^255&c[z+2])&x],h[z&d]=p[w],p[w]=z);}while(0!=--A);if(U=0,y=2,z++,n&&(le(!1),0===e.avail_out))return 0}else if(0!==U){if((n=re(0,255&c[z-1]))&&le(!1),z++,D--,0===e.avail_out)return 0}else U=1,z++,D--;}return 0!==U&&(n=re(0,255&c[z-1]),U=0),le(4==t),0===e.avail_out?4==t?2:0:4==t?3:1}(o);}if(2!=M&&3!=M||(i=666),0==M||2==M)return 0===e.avail_out&&(l=-1),0;if(1==M){if(1==o)ee(2,3),te(256,n.static_ltree),ie(),1+O+10-q<9&&(ee(2,3),te(256,n.static_ltree),ie()),O=7;else if(se(0,0,!1),3==o)for(_=0;_<v;_++)p[_]=0;if(e.flush_pending(),0===e.avail_out)return l=-1,0}}return 4!=o?0:1};}function l(){var e=this;e.next_in_index=0,e.next_out_index=0,e.avail_in=0,e.total_in=0,e.avail_out=0,e.total_out=0;}function f(e){var t=new l,n=512,i=new Uint8Array(n),r=e?e.level:-1;void 0===r&&(r=-1),t.deflateInit(r),t.next_out=i,this.append=function(e,r){var a,o=[],s=0,l=0,f=0;if(e.length){t.next_in_index=0,t.next_in=e,t.avail_in=e.length;do{if(t.next_out_index=0,t.avail_out=n,0!=t.deflate(0))throw new Error("deflating: "+t.msg);t.next_out_index&&o.push(t.next_out_index==n?new Uint8Array(i):new Uint8Array(i.subarray(0,t.next_out_index))),f+=t.next_out_index,r&&t.next_in_index>0&&t.next_in_index!=s&&(r(t.next_in_index),s=t.next_in_index);}while(t.avail_in>0||0===t.avail_out);return a=new Uint8Array(f),o.forEach(function(e){a.set(e,l),l+=e.length;}),a}},this.flush=function(){var e,r,a=[],o=0,s=0;do{if(t.next_out_index=0,t.avail_out=n,1!=(e=t.deflate(4))&&0!=e)throw new Error("deflating: "+t.msg);n-t.avail_out>0&&a.push(new Uint8Array(i.subarray(0,t.next_out_index))),s+=t.next_out_index;}while(t.avail_in>0||0===t.avail_out);return t.deflateEnd(),r=new Uint8Array(s),a.forEach(function(e){r.set(e,o),o+=e.length;}),r};}l.prototype={deflateInit:function(e,t){var n=this;return n.dstate=new s,t||(t=15),n.dstate.deflateInit(n,e,t)},deflate:function(e){var t=this;return t.dstate?t.dstate.deflate(t,e):-2},deflateEnd:function(){var e=this;if(!e.dstate)return -2;var t=e.dstate.deflateEnd();return e.dstate=null,t},deflateParams:function(e,t){var n=this;return n.dstate?n.dstate.deflateParams(n,e,t):-2},deflateSetDictionary:function(e,t){var n=this;return n.dstate?n.dstate.deflateSetDictionary(n,e,t):-2},read_buf:function(e,t,n){var i=this,r=i.avail_in;return r>n&&(r=n),0===r?0:(i.avail_in-=r,e.set(i.next_in.subarray(i.next_in_index,i.next_in_index+r),t),i.next_in_index+=r,i.total_in+=r,r)},flush_pending:function(){var e=this,t=e.dstate.pending;t>e.avail_out&&(t=e.avail_out),0!==t&&(e.next_out.set(e.dstate.pending_buf.subarray(e.dstate.pending_out,e.dstate.pending_out+t),e.next_out_index),e.next_out_index+=t,e.dstate.pending_out+=t,e.total_out+=t,e.avail_out-=t,e.dstate.pending-=t,0===e.dstate.pending&&(e.dstate.pending_out=0));}},self._zipjs_Deflater=f;var u=[0,1,3,7,15,31,63,127,255,511,1023,2047,4095,8191,16383,32767,65535],d=[96,7,256,0,8,80,0,8,16,84,8,115,82,7,31,0,8,112,0,8,48,0,9,192,80,7,10,0,8,96,0,8,32,0,9,160,0,8,0,0,8,128,0,8,64,0,9,224,80,7,6,0,8,88,0,8,24,0,9,144,83,7,59,0,8,120,0,8,56,0,9,208,81,7,17,0,8,104,0,8,40,0,9,176,0,8,8,0,8,136,0,8,72,0,9,240,80,7,4,0,8,84,0,8,20,85,8,227,83,7,43,0,8,116,0,8,52,0,9,200,81,7,13,0,8,100,0,8,36,0,9,168,0,8,4,0,8,132,0,8,68,0,9,232,80,7,8,0,8,92,0,8,28,0,9,152,84,7,83,0,8,124,0,8,60,0,9,216,82,7,23,0,8,108,0,8,44,0,9,184,0,8,12,0,8,140,0,8,76,0,9,248,80,7,3,0,8,82,0,8,18,85,8,163,83,7,35,0,8,114,0,8,50,0,9,196,81,7,11,0,8,98,0,8,34,0,9,164,0,8,2,0,8,130,0,8,66,0,9,228,80,7,7,0,8,90,0,8,26,0,9,148,84,7,67,0,8,122,0,8,58,0,9,212,82,7,19,0,8,106,0,8,42,0,9,180,0,8,10,0,8,138,0,8,74,0,9,244,80,7,5,0,8,86,0,8,22,192,8,0,83,7,51,0,8,118,0,8,54,0,9,204,81,7,15,0,8,102,0,8,38,0,9,172,0,8,6,0,8,134,0,8,70,0,9,236,80,7,9,0,8,94,0,8,30,0,9,156,84,7,99,0,8,126,0,8,62,0,9,220,82,7,27,0,8,110,0,8,46,0,9,188,0,8,14,0,8,142,0,8,78,0,9,252,96,7,256,0,8,81,0,8,17,85,8,131,82,7,31,0,8,113,0,8,49,0,9,194,80,7,10,0,8,97,0,8,33,0,9,162,0,8,1,0,8,129,0,8,65,0,9,226,80,7,6,0,8,89,0,8,25,0,9,146,83,7,59,0,8,121,0,8,57,0,9,210,81,7,17,0,8,105,0,8,41,0,9,178,0,8,9,0,8,137,0,8,73,0,9,242,80,7,4,0,8,85,0,8,21,80,8,258,83,7,43,0,8,117,0,8,53,0,9,202,81,7,13,0,8,101,0,8,37,0,9,170,0,8,5,0,8,133,0,8,69,0,9,234,80,7,8,0,8,93,0,8,29,0,9,154,84,7,83,0,8,125,0,8,61,0,9,218,82,7,23,0,8,109,0,8,45,0,9,186,0,8,13,0,8,141,0,8,77,0,9,250,80,7,3,0,8,83,0,8,19,85,8,195,83,7,35,0,8,115,0,8,51,0,9,198,81,7,11,0,8,99,0,8,35,0,9,166,0,8,3,0,8,131,0,8,67,0,9,230,80,7,7,0,8,91,0,8,27,0,9,150,84,7,67,0,8,123,0,8,59,0,9,214,82,7,19,0,8,107,0,8,43,0,9,182,0,8,11,0,8,139,0,8,75,0,9,246,80,7,5,0,8,87,0,8,23,192,8,0,83,7,51,0,8,119,0,8,55,0,9,206,81,7,15,0,8,103,0,8,39,0,9,174,0,8,7,0,8,135,0,8,71,0,9,238,80,7,9,0,8,95,0,8,31,0,9,158,84,7,99,0,8,127,0,8,63,0,9,222,82,7,27,0,8,111,0,8,47,0,9,190,0,8,15,0,8,143,0,8,79,0,9,254,96,7,256,0,8,80,0,8,16,84,8,115,82,7,31,0,8,112,0,8,48,0,9,193,80,7,10,0,8,96,0,8,32,0,9,161,0,8,0,0,8,128,0,8,64,0,9,225,80,7,6,0,8,88,0,8,24,0,9,145,83,7,59,0,8,120,0,8,56,0,9,209,81,7,17,0,8,104,0,8,40,0,9,177,0,8,8,0,8,136,0,8,72,0,9,241,80,7,4,0,8,84,0,8,20,85,8,227,83,7,43,0,8,116,0,8,52,0,9,201,81,7,13,0,8,100,0,8,36,0,9,169,0,8,4,0,8,132,0,8,68,0,9,233,80,7,8,0,8,92,0,8,28,0,9,153,84,7,83,0,8,124,0,8,60,0,9,217,82,7,23,0,8,108,0,8,44,0,9,185,0,8,12,0,8,140,0,8,76,0,9,249,80,7,3,0,8,82,0,8,18,85,8,163,83,7,35,0,8,114,0,8,50,0,9,197,81,7,11,0,8,98,0,8,34,0,9,165,0,8,2,0,8,130,0,8,66,0,9,229,80,7,7,0,8,90,0,8,26,0,9,149,84,7,67,0,8,122,0,8,58,0,9,213,82,7,19,0,8,106,0,8,42,0,9,181,0,8,10,0,8,138,0,8,74,0,9,245,80,7,5,0,8,86,0,8,22,192,8,0,83,7,51,0,8,118,0,8,54,0,9,205,81,7,15,0,8,102,0,8,38,0,9,173,0,8,6,0,8,134,0,8,70,0,9,237,80,7,9,0,8,94,0,8,30,0,9,157,84,7,99,0,8,126,0,8,62,0,9,221,82,7,27,0,8,110,0,8,46,0,9,189,0,8,14,0,8,142,0,8,78,0,9,253,96,7,256,0,8,81,0,8,17,85,8,131,82,7,31,0,8,113,0,8,49,0,9,195,80,7,10,0,8,97,0,8,33,0,9,163,0,8,1,0,8,129,0,8,65,0,9,227,80,7,6,0,8,89,0,8,25,0,9,147,83,7,59,0,8,121,0,8,57,0,9,211,81,7,17,0,8,105,0,8,41,0,9,179,0,8,9,0,8,137,0,8,73,0,9,243,80,7,4,0,8,85,0,8,21,80,8,258,83,7,43,0,8,117,0,8,53,0,9,203,81,7,13,0,8,101,0,8,37,0,9,171,0,8,5,0,8,133,0,8,69,0,9,235,80,7,8,0,8,93,0,8,29,0,9,155,84,7,83,0,8,125,0,8,61,0,9,219,82,7,23,0,8,109,0,8,45,0,9,187,0,8,13,0,8,141,0,8,77,0,9,251,80,7,3,0,8,83,0,8,19,85,8,195,83,7,35,0,8,115,0,8,51,0,9,199,81,7,11,0,8,99,0,8,35,0,9,167,0,8,3,0,8,131,0,8,67,0,9,231,80,7,7,0,8,91,0,8,27,0,9,151,84,7,67,0,8,123,0,8,59,0,9,215,82,7,19,0,8,107,0,8,43,0,9,183,0,8,11,0,8,139,0,8,75,0,9,247,80,7,5,0,8,87,0,8,23,192,8,0,83,7,51,0,8,119,0,8,55,0,9,207,81,7,15,0,8,103,0,8,39,0,9,175,0,8,7,0,8,135,0,8,71,0,9,239,80,7,9,0,8,95,0,8,31,0,9,159,84,7,99,0,8,127,0,8,63,0,9,223,82,7,27,0,8,111,0,8,47,0,9,191,0,8,15,0,8,143,0,8,79,0,9,255],c=[80,5,1,87,5,257,83,5,17,91,5,4097,81,5,5,89,5,1025,85,5,65,93,5,16385,80,5,3,88,5,513,84,5,33,92,5,8193,82,5,9,90,5,2049,86,5,129,192,5,24577,80,5,2,87,5,385,83,5,25,91,5,6145,81,5,7,89,5,1537,85,5,97,93,5,24577,80,5,4,88,5,769,84,5,49,92,5,12289,82,5,13,90,5,3073,86,5,193,192,5,24577],_=[3,4,5,6,7,8,9,10,11,13,15,17,19,23,27,31,35,43,51,59,67,83,99,115,131,163,195,227,258,0,0],h$1=[0,0,0,0,0,0,0,0,1,1,1,1,2,2,2,2,3,3,3,3,4,4,4,4,5,5,5,5,0,112,112],p$1=[1,2,3,4,5,7,9,13,17,25,33,49,65,97,129,193,257,385,513,769,1025,1537,2049,3073,4097,6145,8193,12289,16385,24577],w=[0,0,0,0,1,1,2,2,3,3,4,4,5,5,6,6,7,7,8,8,9,9,10,10,11,11,12,12,13,13];function v(){var e,t,n,i,r,a;function o(e,t,o,s,l,f,u,d,c,_,h){var p,w,v,b,x,m,g,y,k,U,z,E,D,A,S;U=0,x=o;do{n[e[t+U]]++,U++,x--;}while(0!==x);if(n[0]==o)return u[0]=-1,d[0]=0,0;for(y=d[0],m=1;m<=15&&0===n[m];m++);for(g=m,y<m&&(y=m),x=15;0!==x&&0===n[x];x--);for(v=x,y>x&&(y=x),d[0]=y,A=1<<m;m<x;m++,A<<=1)if((A-=n[m])<0)return -3;if((A-=n[x])<0)return -3;for(n[x]+=A,a[1]=m=0,U=1,D=2;0!=--x;)a[D]=m+=n[U],D++,U++;x=0,U=0;do{0!==(m=e[t+U])&&(h[a[m]++]=x),U++;}while(++x<o);for(o=a[v],a[0]=x=0,U=0,b=-1,E=-y,r[0]=0,z=0,S=0;g<=v;g++)for(p=n[g];0!=p--;){for(;g>E+y;){if(b++,S=(S=v-(E+=y))>y?y:S,(w=1<<(m=g-E))>p+1&&(w-=p+1,D=g,m<S))for(;++m<S&&!((w<<=1)<=n[++D]);)w-=n[D];if(_[0]+(S=1<<m)>1440)return -3;r[b]=z=_[0],_[0]+=S,0!==b?(a[b]=x,i[0]=m,i[1]=y,i[2]=z-r[b-1]-(m=x>>>E-y),c.set(i,3*(r[b-1]+m))):u[0]=z;}for(i[1]=g-E,U>=o?i[0]=192:h[U]<s?(i[0]=h[U]<256?0:96,i[2]=h[U++]):(i[0]=f[h[U]-s]+16+64,i[2]=l[h[U++]-s]),w=1<<g-E,m=x>>>E;m<S;m+=w)c.set(i,3*(z+m));for(m=1<<g-1;0!=(x&m);m>>>=1)x^=m;for(x^=m,k=(1<<E)-1;(x&k)!=a[b];)b--,k=(1<<(E-=y))-1;}return 0!==A&&1!=v?-5:0}function s(o){var s;for(e||(e=[],t=[],n=new Int32Array(16),i=[],r=new Int32Array(15),a=new Int32Array(16)),t.length<o&&(t=[]),s=0;s<o;s++)t[s]=0;for(s=0;s<16;s++)n[s]=0;for(s=0;s<3;s++)i[s]=0;r.set(n.subarray(0,15),0),a.set(n.subarray(0,16),0);}this.inflate_trees_bits=function(n,i,r,a,l){var f;return s(19),e[0]=0,-3==(f=o(n,0,19,19,null,null,r,i,a,e,t))?l.msg="oversubscribed dynamic bit lengths tree":-5!=f&&0!==i[0]||(l.msg="incomplete dynamic bit lengths tree",f=-3),f},this.inflate_trees_dynamic=function(n,i,r,a,l,f,u,d,c){var v;return s(288),e[0]=0,0!=(v=o(r,0,n,257,_,h$1,f,a,d,e,t))||0===a[0]?(-3==v?c.msg="oversubscribed literal/length tree":-4!=v&&(c.msg="incomplete literal/length tree",v=-3),v):(s(288),0!=(v=o(r,n,i,0,p$1,w,u,l,d,e,t))||0===l[0]&&n>257?(-3==v?c.msg="oversubscribed distance tree":-5==v?(c.msg="incomplete distance tree",v=-3):-4!=v&&(c.msg="empty distance tree with lengths",v=-3),v):0)};}function b(){var e,t,n,i,r=this,a=0,o=0,s=0,l=0,f=0,d=0,c=0,_=0,h=0,p=0;function w(e,t,n,i,r,a,o,s){var l,f,d,c,_,h,p,w,v,b,x,m,g,y,k,U;p=s.next_in_index,w=s.avail_in,_=o.bitb,h=o.bitk,b=(v=o.write)<o.read?o.read-v-1:o.end-v,x=u[e],m=u[t];do{for(;h<20;)w--,_|=(255&s.read_byte(p++))<<h,h+=8;if(0!==(c=(f=n)[U=3*((d=i)+(l=_&x))]))for(;;){if(_>>=f[U+1],h-=f[U+1],0!=(16&c)){for(g=f[U+2]+(_&u[c&=15]),_>>=c,h-=c;h<15;)w--,_|=(255&s.read_byte(p++))<<h,h+=8;for(c=(f=r)[U=3*((d=a)+(l=_&m))];;){if(_>>=f[U+1],h-=f[U+1],0!=(16&c)){for(c&=15;h<c;)w--,_|=(255&s.read_byte(p++))<<h,h+=8;if(y=f[U+2]+(_&u[c]),_>>=c,h-=c,b-=g,v>=y)v-(k=v-y)>0&&2>v-k?(o.window[v++]=o.window[k++],o.window[v++]=o.window[k++],g-=2):(o.window.set(o.window.subarray(k,k+2),v),v+=2,k+=2,g-=2);else {k=v-y;do{k+=o.end;}while(k<0);if(g>(c=o.end-k)){if(g-=c,v-k>0&&c>v-k)do{o.window[v++]=o.window[k++];}while(0!=--c);else o.window.set(o.window.subarray(k,k+c),v),v+=c,k+=c,c=0;k=0;}}if(v-k>0&&g>v-k)do{o.window[v++]=o.window[k++];}while(0!=--g);else o.window.set(o.window.subarray(k,k+g),v),v+=g,k+=g,g=0;break}if(0!=(64&c))return s.msg="invalid distance code",w+=g=h>>3<(g=s.avail_in-w)?h>>3:g,p-=g,h-=g<<3,o.bitb=_,o.bitk=h,s.avail_in=w,s.total_in+=p-s.next_in_index,s.next_in_index=p,o.write=v,-3;l+=f[U+2],c=f[U=3*(d+(l+=_&u[c]))];}break}if(0!=(64&c))return 0!=(32&c)?(w+=g=h>>3<(g=s.avail_in-w)?h>>3:g,p-=g,h-=g<<3,o.bitb=_,o.bitk=h,s.avail_in=w,s.total_in+=p-s.next_in_index,s.next_in_index=p,o.write=v,1):(s.msg="invalid literal/length code",w+=g=h>>3<(g=s.avail_in-w)?h>>3:g,p-=g,h-=g<<3,o.bitb=_,o.bitk=h,s.avail_in=w,s.total_in+=p-s.next_in_index,s.next_in_index=p,o.write=v,-3);if(l+=f[U+2],0===(c=f[U=3*(d+(l+=_&u[c]))])){_>>=f[U+1],h-=f[U+1],o.window[v++]=f[U+2],b--;break}}else _>>=f[U+1],h-=f[U+1],o.window[v++]=f[U+2],b--;}while(b>=258&&w>=10);return w+=g=h>>3<(g=s.avail_in-w)?h>>3:g,p-=g,h-=g<<3,o.bitb=_,o.bitk=h,s.avail_in=w,s.total_in+=p-s.next_in_index,s.next_in_index=p,o.write=v,0}r.init=function(r,a,o,s,l,f){e=0,c=r,_=a,n=o,h=s,i=l,p=f,t=null;},r.proc=function(r,v,b){var x,m,g,y,k,U,z,E=0,D=0,A=0;for(A=v.next_in_index,y=v.avail_in,E=r.bitb,D=r.bitk,U=(k=r.write)<r.read?r.read-k-1:r.end-k;;)switch(e){case 0:if(U>=258&&y>=10&&(r.bitb=E,r.bitk=D,v.avail_in=y,v.total_in+=A-v.next_in_index,v.next_in_index=A,r.write=k,b=w(c,_,n,h,i,p,r,v),A=v.next_in_index,y=v.avail_in,E=r.bitb,D=r.bitk,U=(k=r.write)<r.read?r.read-k-1:r.end-k,0!=b)){e=1==b?7:9;break}s=c,t=n,o=h,e=1;case 1:for(x=s;D<x;){if(0===y)return r.bitb=E,r.bitk=D,v.avail_in=y,v.total_in+=A-v.next_in_index,v.next_in_index=A,r.write=k,r.inflate_flush(v,b);b=0,y--,E|=(255&v.read_byte(A++))<<D,D+=8;}if(E>>>=t[1+(m=3*(o+(E&u[x])))],D-=t[m+1],0===(g=t[m])){l=t[m+2],e=6;break}if(0!=(16&g)){f=15&g,a=t[m+2],e=2;break}if(0==(64&g)){s=g,o=m/3+t[m+2];break}if(0!=(32&g)){e=7;break}return e=9,v.msg="invalid literal/length code",b=-3,r.bitb=E,r.bitk=D,v.avail_in=y,v.total_in+=A-v.next_in_index,v.next_in_index=A,r.write=k,r.inflate_flush(v,b);case 2:for(x=f;D<x;){if(0===y)return r.bitb=E,r.bitk=D,v.avail_in=y,v.total_in+=A-v.next_in_index,v.next_in_index=A,r.write=k,r.inflate_flush(v,b);b=0,y--,E|=(255&v.read_byte(A++))<<D,D+=8;}a+=E&u[x],E>>=x,D-=x,s=_,t=i,o=p,e=3;case 3:for(x=s;D<x;){if(0===y)return r.bitb=E,r.bitk=D,v.avail_in=y,v.total_in+=A-v.next_in_index,v.next_in_index=A,r.write=k,r.inflate_flush(v,b);b=0,y--,E|=(255&v.read_byte(A++))<<D,D+=8;}if(E>>=t[1+(m=3*(o+(E&u[x])))],D-=t[m+1],0!=(16&(g=t[m]))){f=15&g,d=t[m+2],e=4;break}if(0==(64&g)){s=g,o=m/3+t[m+2];break}return e=9,v.msg="invalid distance code",b=-3,r.bitb=E,r.bitk=D,v.avail_in=y,v.total_in+=A-v.next_in_index,v.next_in_index=A,r.write=k,r.inflate_flush(v,b);case 4:for(x=f;D<x;){if(0===y)return r.bitb=E,r.bitk=D,v.avail_in=y,v.total_in+=A-v.next_in_index,v.next_in_index=A,r.write=k,r.inflate_flush(v,b);b=0,y--,E|=(255&v.read_byte(A++))<<D,D+=8;}d+=E&u[x],E>>=x,D-=x,e=5;case 5:for(z=k-d;z<0;)z+=r.end;for(;0!==a;){if(0===U&&(k==r.end&&0!==r.read&&(U=(k=0)<r.read?r.read-k-1:r.end-k),0===U&&(r.write=k,b=r.inflate_flush(v,b),U=(k=r.write)<r.read?r.read-k-1:r.end-k,k==r.end&&0!==r.read&&(U=(k=0)<r.read?r.read-k-1:r.end-k),0===U)))return r.bitb=E,r.bitk=D,v.avail_in=y,v.total_in+=A-v.next_in_index,v.next_in_index=A,r.write=k,r.inflate_flush(v,b);r.window[k++]=r.window[z++],U--,z==r.end&&(z=0),a--;}e=0;break;case 6:if(0===U&&(k==r.end&&0!==r.read&&(U=(k=0)<r.read?r.read-k-1:r.end-k),0===U&&(r.write=k,b=r.inflate_flush(v,b),U=(k=r.write)<r.read?r.read-k-1:r.end-k,k==r.end&&0!==r.read&&(U=(k=0)<r.read?r.read-k-1:r.end-k),0===U)))return r.bitb=E,r.bitk=D,v.avail_in=y,v.total_in+=A-v.next_in_index,v.next_in_index=A,r.write=k,r.inflate_flush(v,b);b=0,r.window[k++]=l,U--,e=0;break;case 7:if(D>7&&(D-=8,y++,A--),r.write=k,b=r.inflate_flush(v,b),U=(k=r.write)<r.read?r.read-k-1:r.end-k,r.read!=r.write)return r.bitb=E,r.bitk=D,v.avail_in=y,v.total_in+=A-v.next_in_index,v.next_in_index=A,r.write=k,r.inflate_flush(v,b);e=8;case 8:return b=1,r.bitb=E,r.bitk=D,v.avail_in=y,v.total_in+=A-v.next_in_index,v.next_in_index=A,r.write=k,r.inflate_flush(v,b);case 9:return b=-3,r.bitb=E,r.bitk=D,v.avail_in=y,v.total_in+=A-v.next_in_index,v.next_in_index=A,r.write=k,r.inflate_flush(v,b);default:return b=-2,r.bitb=E,r.bitk=D,v.avail_in=y,v.total_in+=A-v.next_in_index,v.next_in_index=A,r.write=k,r.inflate_flush(v,b)}},r.free=function(){};}v.inflate_trees_fixed=function(e,t,n,i){return e[0]=9,t[0]=5,n[0]=d,i[0]=c,0};var x=[16,17,18,0,8,7,9,6,10,5,11,4,12,3,13,2,14,1,15];function m(e,t){var n,i=this,r=0,a=0,o=0,s=0,l=[0],f=[0],d=new b,c=0,_=new Int32Array(4320),h=new v;i.bitk=0,i.bitb=0,i.window=new Uint8Array(t),i.end=t,i.read=0,i.write=0,i.reset=function(e,t){t&&(t[0]=0),6==r&&d.free(e),r=0,i.bitk=0,i.bitb=0,i.read=i.write=0;},i.reset(e,null),i.inflate_flush=function(e,t){var n,r,a;return r=e.next_out_index,(n=((a=i.read)<=i.write?i.write:i.end)-a)>e.avail_out&&(n=e.avail_out),0!==n&&-5==t&&(t=0),e.avail_out-=n,e.total_out+=n,e.next_out.set(i.window.subarray(a,a+n),r),r+=n,(a+=n)==i.end&&(a=0,i.write==i.end&&(i.write=0),(n=i.write-a)>e.avail_out&&(n=e.avail_out),0!==n&&-5==t&&(t=0),e.avail_out-=n,e.total_out+=n,e.next_out.set(i.window.subarray(a,a+n),r),r+=n,a+=n),e.next_out_index=r,i.read=a,t},i.proc=function(e,t){var p,w,b,m,g,y,k,U;for(m=e.next_in_index,g=e.avail_in,w=i.bitb,b=i.bitk,k=(y=i.write)<i.read?i.read-y-1:i.end-y;;)switch(r){case 0:for(;b<3;){if(0===g)return i.bitb=w,i.bitk=b,e.avail_in=g,e.total_in+=m-e.next_in_index,e.next_in_index=m,i.write=y,i.inflate_flush(e,t);t=0,g--,w|=(255&e.read_byte(m++))<<b,b+=8;}switch(c=1&(p=7&w),p>>>1){case 0:w>>>=3,w>>>=p=7&(b-=3),b-=p,r=1;break;case 1:var z=[],E=[],D=[[]],A=[[]];v.inflate_trees_fixed(z,E,D,A),d.init(z[0],E[0],D[0],0,A[0],0),w>>>=3,b-=3,r=6;break;case 2:w>>>=3,b-=3,r=3;break;case 3:return w>>>=3,b-=3,r=9,e.msg="invalid block type",t=-3,i.bitb=w,i.bitk=b,e.avail_in=g,e.total_in+=m-e.next_in_index,e.next_in_index=m,i.write=y,i.inflate_flush(e,t)}break;case 1:for(;b<32;){if(0===g)return i.bitb=w,i.bitk=b,e.avail_in=g,e.total_in+=m-e.next_in_index,e.next_in_index=m,i.write=y,i.inflate_flush(e,t);t=0,g--,w|=(255&e.read_byte(m++))<<b,b+=8;}if((~w>>>16&65535)!=(65535&w))return r=9,e.msg="invalid stored block lengths",t=-3,i.bitb=w,i.bitk=b,e.avail_in=g,e.total_in+=m-e.next_in_index,e.next_in_index=m,i.write=y,i.inflate_flush(e,t);a=65535&w,w=b=0,r=0!==a?2:0!==c?7:0;break;case 2:if(0===g)return i.bitb=w,i.bitk=b,e.avail_in=g,e.total_in+=m-e.next_in_index,e.next_in_index=m,i.write=y,i.inflate_flush(e,t);if(0===k&&(y==i.end&&0!==i.read&&(k=(y=0)<i.read?i.read-y-1:i.end-y),0===k&&(i.write=y,t=i.inflate_flush(e,t),k=(y=i.write)<i.read?i.read-y-1:i.end-y,y==i.end&&0!==i.read&&(k=(y=0)<i.read?i.read-y-1:i.end-y),0===k)))return i.bitb=w,i.bitk=b,e.avail_in=g,e.total_in+=m-e.next_in_index,e.next_in_index=m,i.write=y,i.inflate_flush(e,t);if(t=0,(p=a)>g&&(p=g),p>k&&(p=k),i.window.set(e.read_buf(m,p),y),m+=p,g-=p,y+=p,k-=p,0!=(a-=p))break;r=0!==c?7:0;break;case 3:for(;b<14;){if(0===g)return i.bitb=w,i.bitk=b,e.avail_in=g,e.total_in+=m-e.next_in_index,e.next_in_index=m,i.write=y,i.inflate_flush(e,t);t=0,g--,w|=(255&e.read_byte(m++))<<b,b+=8;}if(o=p=16383&w,(31&p)>29||(p>>5&31)>29)return r=9,e.msg="too many length or distance symbols",t=-3,i.bitb=w,i.bitk=b,e.avail_in=g,e.total_in+=m-e.next_in_index,e.next_in_index=m,i.write=y,i.inflate_flush(e,t);if(p=258+(31&p)+(p>>5&31),!n||n.length<p)n=[];else for(U=0;U<p;U++)n[U]=0;w>>>=14,b-=14,s=0,r=4;case 4:for(;s<4+(o>>>10);){for(;b<3;){if(0===g)return i.bitb=w,i.bitk=b,e.avail_in=g,e.total_in+=m-e.next_in_index,e.next_in_index=m,i.write=y,i.inflate_flush(e,t);t=0,g--,w|=(255&e.read_byte(m++))<<b,b+=8;}n[x[s++]]=7&w,w>>>=3,b-=3;}for(;s<19;)n[x[s++]]=0;if(l[0]=7,0!=(p=h.inflate_trees_bits(n,l,f,_,e)))return -3==(t=p)&&(n=null,r=9),i.bitb=w,i.bitk=b,e.avail_in=g,e.total_in+=m-e.next_in_index,e.next_in_index=m,i.write=y,i.inflate_flush(e,t);s=0,r=5;case 5:for(;!(s>=258+(31&(p=o))+(p>>5&31));){var S,R;for(p=l[0];b<p;){if(0===g)return i.bitb=w,i.bitk=b,e.avail_in=g,e.total_in+=m-e.next_in_index,e.next_in_index=m,i.write=y,i.inflate_flush(e,t);t=0,g--,w|=(255&e.read_byte(m++))<<b,b+=8;}if((R=_[3*(f[0]+(w&u[p=_[3*(f[0]+(w&u[p]))+1]]))+2])<16)w>>>=p,b-=p,n[s++]=R;else {for(U=18==R?7:R-14,S=18==R?11:3;b<p+U;){if(0===g)return i.bitb=w,i.bitk=b,e.avail_in=g,e.total_in+=m-e.next_in_index,e.next_in_index=m,i.write=y,i.inflate_flush(e,t);t=0,g--,w|=(255&e.read_byte(m++))<<b,b+=8;}if(b-=p,S+=(w>>>=p)&u[U],w>>>=U,b-=U,(U=s)+S>258+(31&(p=o))+(p>>5&31)||16==R&&U<1)return n=null,r=9,e.msg="invalid bit length repeat",t=-3,i.bitb=w,i.bitk=b,e.avail_in=g,e.total_in+=m-e.next_in_index,e.next_in_index=m,i.write=y,i.inflate_flush(e,t);R=16==R?n[U-1]:0;do{n[U++]=R;}while(0!=--S);s=U;}}f[0]=-1;var F=[],T=[],W=[],M=[];if(F[0]=9,T[0]=6,0!=(p=h.inflate_trees_dynamic(257+(31&(p=o)),1+(p>>5&31),n,F,T,W,M,_,e)))return -3==p&&(n=null,r=9),t=p,i.bitb=w,i.bitk=b,e.avail_in=g,e.total_in+=m-e.next_in_index,e.next_in_index=m,i.write=y,i.inflate_flush(e,t);d.init(F[0],T[0],_,W[0],_,M[0]),r=6;case 6:if(i.bitb=w,i.bitk=b,e.avail_in=g,e.total_in+=m-e.next_in_index,e.next_in_index=m,i.write=y,1!=(t=d.proc(i,e,t)))return i.inflate_flush(e,t);if(t=0,d.free(e),m=e.next_in_index,g=e.avail_in,w=i.bitb,b=i.bitk,k=(y=i.write)<i.read?i.read-y-1:i.end-y,0===c){r=0;break}r=7;case 7:if(i.write=y,t=i.inflate_flush(e,t),k=(y=i.write)<i.read?i.read-y-1:i.end-y,i.read!=i.write)return i.bitb=w,i.bitk=b,e.avail_in=g,e.total_in+=m-e.next_in_index,e.next_in_index=m,i.write=y,i.inflate_flush(e,t);r=8;case 8:return t=1,i.bitb=w,i.bitk=b,e.avail_in=g,e.total_in+=m-e.next_in_index,e.next_in_index=m,i.write=y,i.inflate_flush(e,t);case 9:return t=-3,i.bitb=w,i.bitk=b,e.avail_in=g,e.total_in+=m-e.next_in_index,e.next_in_index=m,i.write=y,i.inflate_flush(e,t);default:return t=-2,i.bitb=w,i.bitk=b,e.avail_in=g,e.total_in+=m-e.next_in_index,e.next_in_index=m,i.write=y,i.inflate_flush(e,t)}},i.free=function(e){i.reset(e,null),i.window=null,_=null;},i.set_dictionary=function(e,t,n){i.window.set(e.subarray(t,t+n),0),i.read=i.write=n;},i.sync_point=function(){return 1==r?1:0};}var g=[0,0,255,255];function y(){var e=this;function t(e){return e&&e.istate?(e.total_in=e.total_out=0,e.msg=null,e.istate.mode=7,e.istate.blocks.reset(e,null),0):-2}e.mode=0,e.method=0,e.was=[0],e.need=0,e.marker=0,e.wbits=0,e.inflateEnd=function(t){return e.blocks&&e.blocks.free(t),e.blocks=null,0},e.inflateInit=function(n,i){return n.msg=null,e.blocks=null,i<8||i>15?(e.inflateEnd(n),-2):(e.wbits=i,n.istate.blocks=new m(n,1<<i),t(n),0)},e.inflate=function(e,t){var n,i;if(!e||!e.istate||!e.next_in)return -2;for(t=4==t?-5:0,n=-5;;)switch(e.istate.mode){case 0:if(0===e.avail_in)return n;if(n=t,e.avail_in--,e.total_in++,8!=(15&(e.istate.method=e.read_byte(e.next_in_index++)))){e.istate.mode=13,e.msg="unknown compression method",e.istate.marker=5;break}if(8+(e.istate.method>>4)>e.istate.wbits){e.istate.mode=13,e.msg="invalid window size",e.istate.marker=5;break}e.istate.mode=1;case 1:if(0===e.avail_in)return n;if(n=t,e.avail_in--,e.total_in++,i=255&e.read_byte(e.next_in_index++),((e.istate.method<<8)+i)%31!=0){e.istate.mode=13,e.msg="incorrect header check",e.istate.marker=5;break}if(0==(32&i)){e.istate.mode=7;break}e.istate.mode=2;case 2:if(0===e.avail_in)return n;n=t,e.avail_in--,e.total_in++,e.istate.need=(255&e.read_byte(e.next_in_index++))<<24&4278190080,e.istate.mode=3;case 3:if(0===e.avail_in)return n;n=t,e.avail_in--,e.total_in++,e.istate.need+=(255&e.read_byte(e.next_in_index++))<<16&16711680,e.istate.mode=4;case 4:if(0===e.avail_in)return n;n=t,e.avail_in--,e.total_in++,e.istate.need+=(255&e.read_byte(e.next_in_index++))<<8&65280,e.istate.mode=5;case 5:return 0===e.avail_in?n:(n=t,e.avail_in--,e.total_in++,e.istate.need+=255&e.read_byte(e.next_in_index++),e.istate.mode=6,2);case 6:return e.istate.mode=13,e.msg="need dictionary",e.istate.marker=0,-2;case 7:if(-3==(n=e.istate.blocks.proc(e,n))){e.istate.mode=13,e.istate.marker=0;break}if(0==n&&(n=t),1!=n)return n;n=t,e.istate.blocks.reset(e,e.istate.was),e.istate.mode=12;case 12:return 1;case 13:return -3;default:return -2}},e.inflateSetDictionary=function(e,t,n){var i=0,r=n;return e&&e.istate&&6==e.istate.mode?(r>=1<<e.istate.wbits&&(i=n-(r=(1<<e.istate.wbits)-1)),e.istate.blocks.set_dictionary(t,i,r),e.istate.mode=7,0):-2},e.inflateSync=function(e){var n,i,r,a,o;if(!e||!e.istate)return -2;if(13!=e.istate.mode&&(e.istate.mode=13,e.istate.marker=0),0===(n=e.avail_in))return -5;for(i=e.next_in_index,r=e.istate.marker;0!==n&&r<4;)e.read_byte(i)==g[r]?r++:r=0!==e.read_byte(i)?0:4-r,i++,n--;return e.total_in+=i-e.next_in_index,e.next_in_index=i,e.avail_in=n,e.istate.marker=r,4!=r?-3:(a=e.total_in,o=e.total_out,t(e),e.total_in=a,e.total_out=o,e.istate.mode=7,0)},e.inflateSyncPoint=function(e){return e&&e.istate&&e.istate.blocks?e.istate.blocks.sync_point():-2};}function k(){}function U(){var e=new k,t=new Uint8Array(512),n=!1;e.inflateInit(),e.next_out=t,this.append=function(i,r){var a,o,s=[],l=0,f=0,u=0;if(0!==i.length){e.next_in_index=0,e.next_in=i,e.avail_in=i.length;do{if(e.next_out_index=0,e.avail_out=512,0!==e.avail_in||n||(e.next_in_index=0,n=!0),a=e.inflate(0),n&&-5===a){if(0!==e.avail_in)throw new Error("inflating: bad input")}else if(0!==a&&1!==a)throw new Error("inflating: "+e.msg);if((n||1===a)&&e.avail_in===i.length)throw new Error("inflating: bad input");e.next_out_index&&s.push(512===e.next_out_index?new Uint8Array(t):new Uint8Array(t.subarray(0,e.next_out_index))),u+=e.next_out_index,r&&e.next_in_index>0&&e.next_in_index!=l&&(r(e.next_in_index),l=e.next_in_index);}while(e.avail_in>0||0===e.avail_out);return o=new Uint8Array(u),s.forEach(function(e){o.set(e,f),f+=e.length;}),o}},this.flush=function(){e.inflateEnd();};}k.prototype={inflateInit:function(e){var t=this;return t.istate=new y,e||(e=15),t.istate.inflateInit(t,e)},inflate:function(e){var t=this;return t.istate?t.istate.inflate(t,e):-2},inflateEnd:function(){var e=this;if(!e.istate)return -2;var t=e.istate.inflateEnd(e);return e.istate=null,t},inflateSync:function(){var e=this;return e.istate?e.istate.inflateSync(e):-2},inflateSetDictionary:function(e,t){var n=this;return n.istate?n.istate.inflateSetDictionary(n,e,t):-2},read_byte:function(e){return this.next_in.subarray(e,e+1)[0]},read_buf:function(e,t){return this.next_in.subarray(e,e+t)}},self._zipjs_Inflater=U;var z,E$1="File format is not recognized.",D="Error while reading zip file.";try{z=0===new Blob([new DataView(new ArrayBuffer(0))]).size;}catch(e){}function A(){this.crc=-1;}function S(){}function R(e,t){var n,i;return n=new ArrayBuffer(e),i=new Uint8Array(n),t&&i.set(t,0),{buffer:n,array:i,view:new DataView(n)}}function F(){}function T(e){var t,n=this;n.size=0,n.init=function(i,r){var a=new Blob([e],{type:"text/plain"});(t=new M(a)).init(function(){n.size=t.size,i();},r);},n.readUint8Array=function(e,n,i,r){t.readUint8Array(e,n,i,r);};}function W(e){var t,n=this;n.size=0,n.init=function(i){for(var r=e.length;"="==e.charAt(r-1);)r--;t=e.indexOf(",")+1,n.size=Math.floor(.75*(r-t)),i();},n.readUint8Array=function(n,i,r){var a,o=R(i),s=4*Math.floor(n/3),l=4*Math.ceil((n+i)/3),f=self.atob(e.substring(s+t,l+t)),u=n-3*Math.floor(s/4);for(a=u;a<u+i;a++)o.array[a-u]=f.charCodeAt(a);r(o.array);};}function M(e){var t=this;t.size=0,t.init=function(n){t.size=e.size,n();},t.readUint8Array=function(t,n,i,r){var a=new FileReader;a.onload=function(e){i(new Uint8Array(e.target.result));},a.onerror=r;try{a.readAsArrayBuffer(function(e,t,n){if(t<0||n<0||t+n>e.size)throw new RangeError("offset:"+t+", length:"+n+", size:"+e.size);return e.slice?e.slice(t,t+n):e.webkitSlice?e.webkitSlice(t,t+n):e.mozSlice?e.mozSlice(t,t+n):e.msSlice?e.msSlice(t,t+n):void 0}(e,t,n));}catch(e){r(e);}};}function B(){}function I(e){var t,n=this;n.init=function(e){t=new Blob([],{type:"text/plain"}),e();},n.writeUint8Array=function(e,n){t=new Blob([t,z?e:e.buffer],{type:"text/plain"}),n();},n.getData=function(n,i){var r=new FileReader;r.onload=function(e){n(e.target.result);},r.onerror=i,r.readAsText(t,e);};}function C(e){var t=this,n="",i="";t.init=function(t){n+="data:"+(e||"")+";base64,",t();},t.writeUint8Array=function(e,t){var r,a=i.length,o=i;for(i="",r=0;r<3*Math.floor((a+e.length)/3)-a;r++)o+=String.fromCharCode(e[r]);for(;r<e.length;r++)i+=String.fromCharCode(e[r]);o.length>2?n+=self.btoa(o):i=o,t();},t.getData=function(e){e(n+self.btoa(i));};}function L(e){var t,n=this;n.init=function(n){t=new Blob([],{type:e}),n();},n.writeUint8Array=function(n,i){t=new Blob([t,z?n:n.buffer],{type:e}),i();},n.getData=function(e){e(t);};}function P(e,t,n,i,r,a,o,s,l,f){var u,d,c,_=0,h=t.sn;function p(){e.removeEventListener("message",w,!1),s(d,c);}function w(t){var n=t.data,r=n.data,s=n.error;if(s)return s.toString=function(){return "Error: "+this.message},void l(s);if(n.sn===h)switch("number"==typeof n.codecTime&&(e.codecTime+=n.codecTime),"number"==typeof n.crcTime&&(e.crcTime+=n.crcTime),n.type){case"append":r?(d+=r.length,i.writeUint8Array(r,function(){v();},f)):v();break;case"flush":c=n.crc,r?(d+=r.length,i.writeUint8Array(r,function(){p();},f)):p();break;case"progress":o&&o(u+n.loaded,a);break;case"importScripts":case"newTask":case"echo":break;default:console.warn("zip.js:launchWorkerProcess: unknown message: ",n);}}function v(){(u=524288*_)<=a?n.readUint8Array(r+u,Math.min(524288,a-u),function(n){o&&o(u,a);var i=0===u?t:{sn:h};i.type="append",i.data=n;try{e.postMessage(i,[n.buffer]);}catch(t){e.postMessage(i);}_++;},l):e.postMessage({sn:h,type:"flush"});}d=0,e.addEventListener("message",w,!1),v();}function Z(e,t,n,i,r,a,o,s,l,f){var u,d=0,c=0,_="input"===a,h="output"===a,p=new A;!function a(){var w;if((u=524288*d)<r)t.readUint8Array(i+u,Math.min(524288,r-u),function(t){var i;try{i=e.append(t,function(e){o&&o(u+e,r);});}catch(e){return void l(e)}i?(c+=i.length,n.writeUint8Array(i,function(){d++,setTimeout(a,1);},f),h&&p.append(i)):(d++,setTimeout(a,1)),_&&p.append(t),o&&o(u,r);},l);else {try{w=e.flush();}catch(e){return void l(e)}w?(h&&p.append(w),c+=w.length,n.writeUint8Array(w,function(){s(c,p.get());},f)):s(c,p.get());}}();}function N(e,t,n,i,r,a,o,s,l,f,u){var d="input";K.useWebWorkers&&o?P(e,{sn:t,codecClass:"_zipjs_NOOP",crcType:d},n,i,r,a,l,s,f,u):Z(new S,n,i,r,a,d,l,s,f,u);}function j(e){var t,n,i="",r=["Ç","ü","é","â","ä","à","å","ç","ê","ë","è","ï","î","ì","Ä","Å","É","æ","Æ","ô","ö","ò","û","ù","ÿ","Ö","Ü","ø","£","Ø","×","ƒ","á","í","ó","ú","ñ","Ñ","ª","º","¿","®","¬","½","¼","¡","«","»","_","_","_","¦","¦","Á","Â","À","©","¦","¦","+","+","¢","¥","+","+","-","-","+","-","+","ã","Ã","+","+","-","-","¦","-","+","¤","ð","Ð","Ê","Ë","È","i","Í","Î","Ï","+","+","_","_","¦","Ì","_","Ó","ß","Ô","Ò","õ","Õ","µ","þ","Þ","Ú","Û","Ù","ý","Ý","¯","´","­","±","_","¾","¶","§","÷","¸","°","¨","·","¹","³","²","_"," "];for(t=0;t<e.length;t++)i+=(n=255&e.charCodeAt(t))>127?r[n-128]:String.fromCharCode(n);return i}function O(e){return decodeURIComponent(escape(e))}function V(e){var t,n="";for(t=0;t<e.length;t++)n+=String.fromCharCode(e[t]);return n}function q(e,t,n,i,r){e.version=t.view.getUint16(n,!0),e.bitFlag=t.view.getUint16(n+2,!0),e.compressionMethod=t.view.getUint16(n+4,!0),e.lastModDateRaw=t.view.getUint32(n+6,!0),e.lastModDate=function(e){var t=(4294901760&e)>>16,n=65535&e;try{return new Date(1980+((65024&t)>>9),((480&t)>>5)-1,31&t,(63488&n)>>11,(2016&n)>>5,2*(31&n),0)}catch(e){}}(e.lastModDateRaw),1!=(1&e.bitFlag)?((i||8!=(8&e.bitFlag))&&(e.crc32=t.view.getUint32(n+10,!0),e.compressedSize=t.view.getUint32(n+14,!0),e.uncompressedSize=t.view.getUint32(n+18,!0)),4294967295!==e.compressedSize&&4294967295!==e.uncompressedSize?(e.filenameLength=t.view.getUint16(n+22,!0),e.extraFieldLength=t.view.getUint16(n+24,!0)):r("File is using Zip64 (4gb+ file size).")):r("File contains encrypted entry.");}function $(e){return unescape(encodeURIComponent(e))}function G(e){var t,n=[];for(t=0;t<e.length;t++)n.push(e.charCodeAt(t));return n}A.prototype.append=function(e){for(var t=0|this.crc,n=this.table,i=0,r=0|e.length;i<r;i++)t=t>>>8^n[255&(t^e[i])];this.crc=t;},A.prototype.get=function(){return ~this.crc},A.prototype.table=function(){var e,t,n,i=[];for(e=0;e<256;e++){for(n=e,t=0;t<8;t++)1&n?n=n>>>1^3988292384:n>>>=1;i[e]=n;}return i}(),S.prototype.append=function(e,t){return e},S.prototype.flush=function(){},(T.prototype=new F).constructor=T,(W.prototype=new F).constructor=W,(M.prototype=new F).constructor=M,B.prototype.getData=function(e){e(this.data);},(I.prototype=new B).constructor=I,(C.prototype=new B).constructor=C,(L.prototype=new B).constructor=L;var H={deflater:["z-worker.js","deflate.js"],inflater:["z-worker.js","inflate.js"]};function Y(e,t,n){if(null===K.workerScripts||null===K.workerScriptsPath){var i,r,a;if(K.workerScripts){if(i=K.workerScripts[e],!Array.isArray(i))return void n(new Error("zip.workerScripts."+e+" is not an array!"));r=i,a=document.createElement("a"),i=r.map(function(e){return a.href=e,a.href});}else (i=H[e].slice(0))[0]=(K.workerScriptsPath||"")+i[0];var o=new Worker(i[0]);o.codecTime=o.crcTime=0,o.postMessage({type:"importScripts",scripts:i.slice(1)}),o.addEventListener("message",function e(i){var r=i.data;if(r.error)return o.terminate(),void n(r.error);"importScripts"===r.type&&(o.removeEventListener("message",e),o.removeEventListener("error",s),t(o));}),o.addEventListener("error",s);}else n(new Error("Either zip.workerScripts or zip.workerScriptsPath may be set, not both."));function s(e){o.terminate(),n(e);}}function J(e){console.error(e);}const K={Reader:F,Writer:B,BlobReader:M,Data64URIReader:W,TextReader:T,BlobWriter:L,Data64URIWriter:C,TextWriter:I,createReader:function(e,t,n){e.init(function(){!function(e,t,n){var i=0;function r(){}r.prototype.getData=function(t,r,a,o){var s=this;function l(e,i){o&&!function(e){var t=R(4);return t.view.setUint32(0,e),s.crc32==t.view.getUint32(0)}(i)?n("CRC failed."):t.getData(function(e){r(e);});}function f(e){n(e||"Error while reading file data.");}function u(e){n(e||"Error while writing file data.");}e.readUint8Array(s.offset,30,function(r){var d,c=R(r.length,r);1347093252==c.view.getUint32(0)?(q(s,c,4,!1,n),d=s.offset+30+s.filenameLength+s.extraFieldLength,t.init(function(){0===s.compressionMethod?N(s._worker,i++,e,t,d,s.compressedSize,o,l,a,f,u):function(e,t,n,i,r,a,o,s,l,f,u){var d=o?"output":"none";K.useWebWorkers?P(e,{sn:t,codecClass:"_zipjs_Inflater",crcType:d},n,i,r,a,l,s,f,u):Z(new U,n,i,r,a,d,l,s,f,u);}(s._worker,i++,e,t,d,s.compressedSize,o,l,a,f,u);},u)):n(E$1);},f);};var a={getEntries:function(t){var i=this._worker;!function(t){function i(i,r){e.readUint8Array(e.size-i,i,function(e){for(var n=e.length-22;n>=0;n--)if(80===e[n]&&75===e[n+1]&&5===e[n+2]&&6===e[n+3])return void t(new DataView(e.buffer,n,22));r();},function(){n(D);});}e.size<22?n(E$1):i(22,function(){i(Math.min(65558,e.size),function(){n(E$1);});});}(function(a){var o,s;o=a.getUint32(16,!0),s=a.getUint16(8,!0),o<0||o>=e.size?n(E$1):e.readUint8Array(o,e.size-o,function(e){var a,o,l,f,u=0,d=[],c=R(e.length,e);for(a=0;a<s;a++){if((o=new r)._worker=i,1347092738!=c.view.getUint32(u))return void n(E$1);q(o,c,u+6,!0,n),o.commentLength=c.view.getUint16(u+32,!0),o.directory=16==(16&c.view.getUint8(u+38)),o.offset=c.view.getUint32(u+42,!0),l=V(c.array.subarray(u+46,u+46+o.filenameLength)),o.filename=2048==(2048&o.bitFlag)?O(l):j(l),o.directory||"/"!=o.filename.charAt(o.filename.length-1)||(o.directory=!0),f=V(c.array.subarray(u+46+o.filenameLength+o.extraFieldLength,u+46+o.filenameLength+o.extraFieldLength+o.commentLength)),o.comment=2048==(2048&o.bitFlag)?O(f):j(f),d.push(o),u+=46+o.filenameLength+o.extraFieldLength+o.commentLength;}t(d);},function(){n(D);});});},close:function(e){this._worker&&(this._worker.terminate(),this._worker=null),e&&e();},_worker:null};K.useWebWorkers?Y("inflater",function(e){a._worker=e,t(a);},function(e){n(e);}):t(a);}(e,t,n);},n=n||J);},createWriter:function(e,t,n,i){i=!!i,e.init(function(){!function(e,t,n,i){var r={},a=[],o=0,s=0;function l(e){n(e||"Error while writing zip file.");}function u(e){n(e||"Error while reading file data.");}var d={add:function(t,d,c,_,h){var p,w,v,b=this._worker;function x(t,n){var i=R(16);o+=t||0,i.view.setUint32(0,1347094280),void 0!==n&&(p.view.setUint32(10,n,!0),i.view.setUint32(4,n,!0)),d&&(i.view.setUint32(8,t,!0),p.view.setUint32(14,t,!0),i.view.setUint32(12,d.size,!0),p.view.setUint32(18,d.size,!0)),e.writeUint8Array(i.array,function(){o+=16,c();},l);}function m(){var c;h=h||{},t=t.trim(),h.directory&&"/"!=t.charAt(t.length-1)&&(t+="/"),r.hasOwnProperty(t)?n("File already exists."):(w=G($(t)),a.push(t),v=h.lastModDate||new Date,p=R(26),r[t]={headerArray:p.array,directory:h.directory,filename:w,offset:o,comment:G($(h.comment||""))},p.view.setUint32(0,335546376),h.version&&p.view.setUint8(0,h.version),i||0===h.level||h.directory||p.view.setUint16(4,2048),p.view.setUint16(6,(v.getHours()<<6|v.getMinutes())<<5|v.getSeconds()/2,!0),p.view.setUint16(8,(v.getFullYear()-1980<<4|v.getMonth()+1)<<5|v.getDate(),!0),p.view.setUint16(22,w.length,!0),(c=R(30+w.length)).view.setUint32(0,1347093252),c.array.set(p.array,4),c.array.set(w,30),o+=c.array.length,e.writeUint8Array(c.array,function(){d?i||0===h.level?N(b,s++,d,e,0,d.size,!0,x,_,u,l):function(e,t,n,i,r,a,o,s,l){var u="input";K.useWebWorkers?P(e,{sn:t,options:{level:r},codecClass:"_zipjs_Deflater",crcType:u},n,i,0,n.size,o,a,s,l):Z(new f,n,i,0,n.size,u,o,a,s,l);}(b,s++,d,e,h.level,x,_,u,l):x();},l));}d?d.init(m,u):m();},close:function(t){this._worker&&(this._worker.terminate(),this._worker=null);var n,i,s,f=0,u=0;for(i=0;i<a.length;i++)f+=46+(s=r[a[i]]).filename.length+s.comment.length;for(n=R(f+22),i=0;i<a.length;i++)s=r[a[i]],n.view.setUint32(u,1347092738),n.view.setUint16(u+4,5120),n.array.set(s.headerArray,u+6),n.view.setUint16(u+32,s.comment.length,!0),s.directory&&n.view.setUint8(u+38,16),n.view.setUint32(u+42,s.offset,!0),n.array.set(s.filename,u+46),n.array.set(s.comment,u+46+s.filename.length),u+=46+s.filename.length+s.comment.length;n.view.setUint32(u,1347093766),n.view.setUint16(u+8,a.length,!0),n.view.setUint16(u+10,a.length,!0),n.view.setUint32(u+12,f,!0),n.view.setUint32(u+16,o,!0),e.writeUint8Array(n.array,function(){e.getData(t);},l);},_worker:null};K.useWebWorkers?Y("deflater",function(e){d._worker=e,t(d);},function(e){n(e);}):t(d);}(e,t,n,i);},n=n||J);},useWebWorkers:!0,workerScriptsPath:null,workerScripts:null};var Q,X,ee=K.TextWriter,te=K.BlobWriter,ne=K.Data64URIWriter,ie=K.TextReader,re=K.BlobReader,ae=K.Data64URIReader,oe=K.createReader,se=K.createWriter;function le(e){var t,n=this;n.size=0,n.init=function(t){n.size=e.uncompressedSize,t();},n.readUint8Array=function(i,r,a,o){!function(i){n.data?i():e.getData(new te,function(e){n.data=e,t=new re(e),i();},null,n.checkCrc32);}(function(){t.readUint8Array(i,r,a,o);});};}function fe(e){var t=0;return function e(n){t+=n.uncompressedSize||0,n.children.forEach(e);}(e),t}function ue(e,t,n){var i=0;function r(){++i<e.children.length?a(e.children[i]):t();}function a(e){e.directory?ue(e,r,n):(e.reader=new e.Reader(e.data,n),e.reader.init(function(){e.uncompressedSize=e.reader.size,r();}));}e.children.length?a(e.children[i]):t();}function de(e){var t=e.parent.children;t.forEach(function(n,i){n.id==e.id&&t.splice(i,1);});}function ce(e){e.entries=[],e.root=new we(e);}function _e(e,t,n,i){if(e.directory)return i?new we(e.fs,t,n,e):new pe(e.fs,t,n,e);throw "Parent entry is not a directory."}function he(){}function pe(e,t,n,i){var r=this;he.prototype.init.call(r,e,t,n,i),r.Reader=n.Reader,r.Writer=n.Writer,r.data=n.data,n.getData&&(r.getData=n.getData);}function we(e,t,n,i){he.prototype.init.call(this,e,t,n,i),this.directory=!0;}function ve(){ce(this);}(le.prototype=new(K.Reader)).constructor=le,le.prototype.checkCrc32=!1,(he.prototype={init:function(e,t,n,i){var r=this;if(e.root&&i&&i.getChildByName(t))throw "Entry filename already exists.";n||(n={}),r.fs=e,r.name=t,r.id=e.entries.length,r.parent=i,r.children=[],r.zipVersion=n.zipVersion||20,r.uncompressedSize=0,e.entries.push(r),i&&r.parent.children.push(r);},getFileEntry:function(e,t,n,i,r){var a=this;ue(a,function(){!function(e,t,n,i,r,a,o){var s=0;t.directory?function e(t,n,i,r,a,l){var f=0;!function u(){var d=n.children[f];d?function(n){function i(t){s+=n.uncompressedSize||0,e(t,n,function(){f++,u();},r,a,l);}n.directory?t.getDirectory(n.name,{create:!0},i,a):t.getFile(n.name,{create:!0},function(e){n.getData(new K.FileWriter(e,K.getMimeType(n.name)),i,function(e){r&&r(s+e,l);},o);},a);}(d):i();}();}(e,t,n,i,r,a):t.getData(new K.FileWriter(e,K.getMimeType(t.name)),n,i,o);}(e,a,t,n,i,fe(a),r);},i);},moveTo:function(e){var t=this;if(!e.directory)throw "Target entry is not a directory.";if(e.isDescendantOf(t))throw "Entry is a ancestor of target entry.";if(t!=e){if(e.getChildByName(t.name))throw "Entry filename already exists.";de(t),t.parent=e,e.children.push(t);}},getFullname:function(){for(var e=this.name,t=this.parent;t;)e=(t.name?t.name+"/":"")+e,t=t.parent;return e},isDescendantOf:function(e){for(var t=this.parent;t&&t.id!=e.id;)t=t.parent;return !!t}}).constructor=he,pe.prototype=Q=new he,Q.constructor=pe,Q.getData=function(e,t,n,i){var r=this;!e||e.constructor==r.Writer&&r.data?t(r.data):(r.reader||(r.reader=new r.Reader(r.data,i)),r.reader.init(function(){e.init(function(){!function(e,t,n,i,r){var a=0;!function o(){var s=524288*a;i&&i(s,e.size),s<e.size?e.readUint8Array(s,Math.min(524288,e.size-s),function(e){t.writeUint8Array(new Uint8Array(e),function(){a++,o();});},r):t.getData(n);}();}(r.reader,e,t,n,i);},i);}));},Q.getText=function(e,t,n,i){this.getData(new ee(i),e,t,n);},Q.getBlob=function(e,t,n,i){this.getData(new te(e),t,n,i);},Q.getData64URI=function(e,t,n,i){this.getData(new ne(e),t,n,i);},we.prototype=X=new he,X.constructor=we,X.addDirectory=function(e){return _e(this,e,null,!0)},X.addText=function(e,t){return _e(this,e,{data:t,Reader:ie,Writer:ee})},X.addBlob=function(e,t){return _e(this,e,{data:t,Reader:re,Writer:te})},X.addData64URI=function(e,t){return _e(this,e,{data:t,Reader:ae,Writer:ne})},X.addFileEntry=function(e,t,n){!function(e,t,n,i){t.isDirectory?function e(t,n,r){!function(e,t){e.isDirectory&&e.createReader().readEntries(t),e.isFile&&t([]);}(n,function(n){var a=0;!function o(){var s=n[a];s?function(n){function r(t){e(t,n,function(){a++,o();});}n.isDirectory&&r(t.addDirectory(n.name)),n.isFile&&n.file(function(e){var i=t.addBlob(n.name,e);i.uncompressedSize=e.size,r(i);},i);}(s):r();}();});}(e,t,n):t.file(function(i){e.addBlob(t.name,i),n();},i);}(this,e,t,n);},X.addData=function(e,t){return _e(this,e,t)},X.importBlob=function(e,t,n){this.importZip(new re(e),t,n);},X.importText=function(e,t,n){this.importZip(new ie(e),t,n);},X.importData64URI=function(e,t,n){this.importZip(new ae(e),t,n);},X.exportBlob=function(e,t,n){this.exportZip(new te("application/zip"),e,t,n);},X.exportText=function(e,t,n){this.exportZip(new ee,e,t,n);},X.exportFileEntry=function(e,t,n,i){this.exportZip(new K.FileWriter(e,"application/zip"),t,n,i);},X.exportData64URI=function(e,t,n){this.exportZip(new ne("application/zip"),e,t,n);},X.importZip=function(e,t,n){var i=this;oe(e,function(e){e.getEntries(function(e){e.forEach(function(e){var t=i,n=e.filename.split("/"),r=n.pop();n.forEach(function(e){t=t.getChildByName(e)||new we(i.fs,e,null,t);}),e.directory||_e(t,r,{data:e,Reader:le});}),t();});},n);},X.exportZip=function(e,t,n,i){var r=this;ue(r,function(){se(e,function(e){!function(e,t,n,i,r){var a=0;!function e(t,n,i,r,o){var s=0;!function l(){var f=n.children[s];f?t.add(f.getFullname(),f.reader,function(){a+=f.uncompressedSize||0,e(t,f,function(){s++,l();},r,o);},function(e){r&&r(a+e,o);},{directory:f.directory,version:f.zipVersion}):i();}();}(e,t,n,i,r);}(e,r,function(){e.close(t);},n,fe(r));},i);},i);},X.getChildByName=function(e){var t,n;for(t=0;t<this.children.length;t++)if((n=this.children[t]).name==e)return n},ve.prototype={remove:function(e){de(e),this.entries[e.id]=null;},find:function(e){var t,n=e.split("/"),i=this.root;for(t=0;i&&t<n.length;t++)i=i.getChildByName(n[t]);return i},getById:function(e){return this.entries[e]},importBlob:function(e,t,n){ce(this),this.root.importBlob(e,t,n);},importText:function(e,t,n){ce(this),this.root.importText(e,t,n);},importData64URI:function(e,t,n){ce(this),this.root.importData64URI(e,t,n);},exportBlob:function(e,t,n){this.root.exportBlob(e,t,n);},exportText:function(e,t,n){this.root.exportText(e,t,n);},exportFileEntry:function(e,t,n,i){this.root.exportFileEntry(e,t,n,i);},exportData64URI:function(e,t,n){this.root.exportData64URI(e,t,n);}},K.getMimeType=function(){return "application/octet-stream"};var be={FS:ve,ZipDirectoryEntry:we,ZipFileEntry:pe};K.useWebWorkers=!1;var xe=/*#__PURE__*/function(){function e(e,t){this.el=e,this.inputEl=t,this.listeners={drop:[],dropstart:[],droperror:[]},this._onDragover=this._onDragover.bind(this),this._onDrop=this._onDrop.bind(this),this._onSelect=this._onSelect.bind(this),e.addEventListener("dragover",this._onDragover,!1),e.addEventListener("drop",this._onDrop,!1),t.addEventListener("change",this._onSelect);}var t=e.prototype;return t.on=function(e,t){return this.listeners[e].push(t),this},t._emit=function(e,t){return this.listeners[e].forEach(function(e){return e(t)}),this},t.destroy=function(){var e=this.el,t=this.inputEl;e.removeEventListener("dragover",this._onDragover,!1),e.removeEventListener("drop",this._onDrop,!1),t.removeEventListener("change",this._onSelect),delete this.el,delete this.inputEl,delete this.listeners;},t._onDrop=function(e){e.stopPropagation(),e.preventDefault(),this._emit("dropstart");var t=Array.from(e.dataTransfer.files||[]),n=Array.from(e.dataTransfer.items||[]);if(0!==t.length||0!==n.length)if(n.length>0){var i=n.map(function(e){return e.webkitGetAsEntry()}).filter(function(e){return null!==e});i.length>0&&(i[0].name.match(/\.zip$/)?this._loadZip(n[0].getAsFile()):this._loadNextEntry(new Map,i));}else 1===t.length&&t[0].name.match(/\.zip$/)&&this._loadZip(t[0]),this._emit("drop",{files:new Map(t.map(function(e){return [e.name,e]}))});else this._fail("Required drag-and-drop APIs are not supported in this browser.");},t._onDragover=function(e){e.stopPropagation(),e.preventDefault(),e.dataTransfer.dropEffect="copy";},t._onSelect=function(e){this._emit("dropstart");var t=[].slice.call(this.inputEl.files);if(1===t.length&&this._isZip(t[0]))this._loadZip(t[0]);else {var n=new Map;t.forEach(function(e){return n.set(e.webkitRelativePath||e.name,e)}),this._emit("drop",{files:n});}},t._loadNextEntry=function(e,t){var n=this,i=t.pop();if(i)if(i.isFile)i.file(function(r){e.set(i.fullPath,r),n._loadNextEntry(e,t);},function(){return console.error("Could not load file: %s",i.fullPath)});else if(i.isDirectory){var r=i.createReader();r.readEntries(function i(a){a.length?(t=t.concat(a),r.readEntries(i)):n._loadNextEntry(e,t);});}else console.warn("Unknown asset type: "+i.fullPath),this._loadNextEntry(e,t);else this._emit("drop",{files:e});},t._loadZip=function(e){var t=this,n=[],i=new Map,r=new be.FS,a=function e(t){t.directory?t.children.forEach(e):"."!==t.name[0]&&n.push(new Promise(function(e){t.getData(new K.BlobWriter,function(n){n.name=t.name,i.set(t.getFullname(),n),e();});}));};r.importBlob(e,function(){a(r.root),Promise.all(n).then(function(){t._emit("drop",{files:i,archive:e});});});},t._isZip=function(e){return "application/zip"===e.type||e.name.match(/\.zip$/)},t._fail=function(e){this._emit("droperror",{message:e});},e}();
-
-/**
- * Common utilities
- * @module glMatrix
- */
-// Configuration Constants
-var ARRAY_TYPE = typeof Float32Array !== 'undefined' ? Float32Array : Array;
-if (!Math.hypot) Math.hypot = function () {
-  var y = 0,
-      i = arguments.length;
-
-  while (i--) {
-    y += arguments[i] * arguments[i];
-  }
-
-  return Math.sqrt(y);
-};
-
-/**
- * 2 Dimensional Vector
- * @module vec2
- */
-
-/**
- * Creates a new, empty vec2
- *
- * @returns {vec2} a new 2D vector
- */
-
-function create() {
-  var out = new ARRAY_TYPE(2);
-
-  if (ARRAY_TYPE != Float32Array) {
-    out[0] = 0;
-    out[1] = 0;
-  }
-
-  return out;
-}
-/**
- * Creates a new vec2 initialized with the given values
- *
- * @param {Number} x X component
- * @param {Number} y Y component
- * @returns {vec2} a new 2D vector
- */
-
-function fromValues(x, y) {
-  var out = new ARRAY_TYPE(2);
-  out[0] = x;
-  out[1] = y;
-  return out;
-}
-/**
- * Calculates the euclidian distance between two vec2's
- *
- * @param {ReadonlyVec2} a the first operand
- * @param {ReadonlyVec2} b the second operand
- * @returns {Number} distance between a and b
- */
-
-function distance(a, b) {
-  var x = b[0] - a[0],
-      y = b[1] - a[1];
-  return Math.hypot(x, y);
-}
-/**
- * Alias for {@link vec2.distance}
- * @function
- */
-
-var dist = distance;
-/**
- * Perform some operation over an array of vec2s.
- *
- * @param {Array} a the array of vectors to iterate over
- * @param {Number} stride Number of elements between the start of each vec2. If 0 assumes tightly packed
- * @param {Number} offset Number of elements to skip at the beginning of the array
- * @param {Number} count Number of vec2s to iterate over. If 0 iterates over entire array
- * @param {Function} fn Function to call for each vector in the array
- * @param {Object} [arg] additional argument to pass to fn
- * @returns {Array} a
- * @function
- */
-
-(function () {
-  var vec = create();
-  return function (a, stride, offset, count, fn, arg) {
-    var i, l;
-
-    if (!stride) {
-      stride = 2;
-    }
-
-    if (!offset) {
-      offset = 0;
-    }
-
-    if (count) {
-      l = Math.min(count * stride + offset, a.length);
-    } else {
-      l = a.length;
-    }
-
-    for (i = offset; i < l; i += stride) {
-      vec[0] = a[i];
-      vec[1] = a[i + 1];
-      fn(vec, vec, arg);
-      a[i] = vec[0];
-      a[i + 1] = vec[1];
-    }
-
-    return a;
-  };
-})();
 
 function getDefaultExportFromCjs$1 (x) {
 	return x && x.__esModule && Object.prototype.hasOwnProperty.call(x, 'default') ? x['default'] : x;
@@ -71841,6 +72909,23 @@ const validateBytes = (data, options) => gltf_validator_dart.validateBytes(data,
  */
 
 const INNOWORKS_EXTENSION = "INNOWORKS_configurables";
+const UI_VISIBILITY = {
+    VISIBLE: "Visible",
+    HIDDEN: "Hidden"
+};
+
+function parseUiVisibility(value) {
+    if (typeof value !== "string") {
+        return UI_VISIBILITY.VISIBLE;
+    }
+
+    const trimmed = value.trim().toLowerCase();
+    if (trimmed === "hidden") {
+        return UI_VISIBILITY.HIDDEN;
+    }
+
+    return UI_VISIBILITY.VISIBLE;
+}
 
 var main = async () => {
     const canvas = document.getElementById("canvas");
@@ -72583,20 +73668,37 @@ function prepareInnoWorksConfigurables(state, extensionData) {
         return null;
     }
 
+    const parentLookup = buildParentIndexLookup(gltf);
+
     const runtime = new Map();
     const runtimeByPath = new Map();
+    const runtimeByPathCounts = new Map();
     const ui = [];
-    const parentLookup = buildParentLookup(gltf);
 
     const registerEntry = (entry, uiDescriptor) => {
         if (!entry) {
             return;
         }
-        entry.runtimePathKey = makeRuntimePathKey(entry.containerPath, entry.configurableType);
+
+        const baseKey = makeRuntimePathKey(entry.containerPath, entry.configurableType);
+        const instanceIndex = runtimeByPathCounts.get(baseKey) ?? 0;
+        runtimeByPathCounts.set(baseKey, instanceIndex + 1);
+
+        entry.runtimeInstanceIndex = instanceIndex;
+        entry.runtimePathKey = makeRuntimePathKey(entry.containerPath, entry.configurableType, instanceIndex);
+        entry.uiVisibility = entry.uiVisibility ?? UI_VISIBILITY.VISIBLE;
+
         runtime.set(entry.id, entry);
         runtimeByPath.set(entry.runtimePathKey, entry);
+        if (instanceIndex === 0) {
+            runtimeByPath.set(baseKey, entry);
+        }
+
         if (uiDescriptor) {
-            ui.push(uiDescriptor);
+            uiDescriptor.uiVisibility = entry.uiVisibility;
+            if (entry.uiVisibility !== UI_VISIBILITY.HIDDEN) {
+                ui.push(uiDescriptor);
+            }
         }
     };
 
@@ -72675,8 +73777,7 @@ function prepareInnoWorksConfigurables(state, extensionData) {
             container,
             containerIndex,
             gltf,
-            rootNodeIndex,
-            parentLookup
+            rootNodeIndex
         );
         if (transformEntry) {
             transformEntry.containerPath = containerPath;
@@ -72701,6 +73802,39 @@ function prepareInnoWorksConfigurables(state, extensionData) {
                 thumbnail: transformEntry.thumbnail
             };
             registerEntry(transformEntry, uiDescriptor);
+        }
+
+        const cameraEntry = createCameraRuntimeEntry(
+            state,
+            container,
+            containerIndex,
+            gltf,
+            rootNodeIndex,
+            parentLookup
+        );
+        if (cameraEntry) {
+            cameraEntry.containerPath = containerPath;
+            cameraEntry.configurableType = configurableType;
+            cameraEntry.applyOption = (optionIndex, opts = {}) =>
+                applyCameraOption(state, cameraEntry, optionIndex, opts);
+            const appliedIndex = cameraEntry.applyOption(
+                cameraEntry.currentOption,
+                { forceImmediate: true, suppressUiUpdate: true }
+            );
+            cameraEntry.appliedOptionIndex = appliedIndex;
+            const uiDescriptor = {
+                id: cameraEntry.id,
+                name: cameraEntry.name,
+                type: cameraEntry.type,
+                options: cameraEntry.options.map((option) => ({
+                    index: option.index,
+                    label: option.label,
+                    thumbnail: option.thumbnail
+                })),
+                currentOption: appliedIndex,
+                thumbnail: cameraEntry.thumbnail
+            };
+            registerEntry(cameraEntry, uiDescriptor);
         }
 
         const groupEntry = createGroupRuntimeEntry(
@@ -72767,8 +73901,12 @@ function prepareInnoWorksConfigurables(state, extensionData) {
     return { ui, runtime, runtimeByPath };
 }
 
-function makeRuntimePathKey(path, configurableType) {
-    return `${path ?? ""}|${configurableType ?? ""}`;
+function makeRuntimePathKey(path, configurableType, instanceIndex) {
+    const baseKey = `${path ?? ""}|${configurableType ?? ""}`;
+    if (instanceIndex === undefined || instanceIndex === null || instanceIndex < 0) {
+        return baseKey;
+    }
+    return `${baseKey}|${instanceIndex}`;
 }
 
 function createMaterialRuntimeEntry(container, containerIndex, gltf, rootNodeIndex) {
@@ -72851,6 +73989,8 @@ function createMaterialRuntimeEntry(container, containerIndex, gltf, rootNodeInd
         optionEntries
     );
 
+    const visibility = parseUiVisibility(materialData.UiVisibility);
+
     const runtimeEntry = {
         id: containerId,
         containerPath: container.Path ?? "",
@@ -72861,7 +74001,8 @@ function createMaterialRuntimeEntry(container, containerIndex, gltf, rootNodeInd
         options: optionEntries,
         currentOption: initialOption,
         applyOption: null,
-        thumbnail: decodeThumbnail(materialData.ThumbnailBase64)
+        thumbnail: decodeThumbnail(materialData.ThumbnailBase64),
+        uiVisibility: visibility
     };
 
     rendererBindings.forEach((binding) => {
@@ -72910,6 +74051,7 @@ function createAnimationRuntimeEntry(container, containerIndex, gltf, rootNodeIn
         container.ConfigurableType ||
         `Animation Configurable ${containerIndex + 1}`;
     const initialOption = selectInitialOption(animationData.CurrentOption, optionEntries);
+    const visibility = parseUiVisibility(animationData.UiVisibility);
 
     const animationRootPath =
         (typeof animationData.TargetAnimationPath === "string" && animationData.TargetAnimationPath.length > 0)
@@ -72948,7 +74090,8 @@ function createAnimationRuntimeEntry(container, containerIndex, gltf, rootNodeIn
         applyOption: null,
         legacyClips,
         animationRootNodeIndex,
-        animationRootPath
+        animationRootPath,
+        uiVisibility: visibility
     };
 }
 
@@ -73028,6 +74171,7 @@ function createActivationRuntimeEntry(container, containerIndex, gltf, rootNodeI
         activationData.CurrentOption,
         optionEntries
     );
+    const visibility = parseUiVisibility(activationData.UiVisibility);
 
     return {
         id: containerId,
@@ -73041,7 +74185,8 @@ function createActivationRuntimeEntry(container, containerIndex, gltf, rootNodeI
         currentOption: initialOption,
         appliedOptionIndex: null,
         applyOption: null,
-        thumbnail: decodeThumbnail(activationData.ThumbnailBase64)
+        thumbnail: decodeThumbnail(activationData.ThumbnailBase64),
+        uiVisibility: visibility
     };
 }
 
@@ -73050,8 +74195,7 @@ function createTransformRuntimeEntry(
     container,
     containerIndex,
     gltf,
-    rootNodeIndex,
-    parentLookup
+    rootNodeIndex
 ) {
     const transformData = container?.Transform;
     if (
@@ -73098,36 +74242,18 @@ function createTransformRuntimeEntry(
                 ? option.DisplayName
                 : `Option ${optionIndex}`;
 
-        const unityTranslation = option?.LocalPosition
-            ? vectorFromData(option.LocalPosition)
-            : null;
-        const translation = unityTranslation
-            ? unityVectorToGltf(unityTranslation)
-            : null;
+        const translation = option?.LocalPosition ? vectorFromData(option.LocalPosition) : null;
+        const rotation = option?.LocalRotation ? quaternionFromData(option.LocalRotation) : null;
 
-        const unityRotation = option?.LocalRotation
-            ? quaternionFromData(option.LocalRotation)
-            : null;
-        const rotation = unityRotation
-            ? unityQuaternionToGltf(unityRotation)
-            : null;
-
-        if (unityTranslation || unityRotation) {
+        if (translation || rotation) {
             console.log(
-                `InnoWorks: Transform option '${label}' Unity -> GLTF`,
+                `InnoWorks: Transform option '${label}' stored GLTF values`,
                 {
-                    unityTranslation,
-                    unityRotation,
-                    gltfTranslation: translation,
-                    gltfRotation: rotation
+                    translation,
+                    rotation
                 }
             );
         }
-        const parentPath = option?.ParentPath ?? "";
-        const parentIndex =
-            option?.ApplyParent && parentPath !== null
-                ? resolveNodeByPath(gltf, rootNodeIndex, parentPath)
-                : null;
 
         const optionThumbnail = decodeThumbnail(option?.ThumbnailBase64);
 
@@ -73136,10 +74262,8 @@ function createTransformRuntimeEntry(
             label,
             applyPosition: !!option?.ApplyPosition,
             applyRotation: !!option?.ApplyRotation,
-            applyParent: !!option?.ApplyParent,
             translation,
             rotation,
-            parentIndex,
             transitionDuration: Math.max(0, option?.TransitionDuration ?? 0),
             easeMode: option?.EaseMode ?? "Linear",
             thumbnail: optionThumbnail
@@ -73156,6 +74280,7 @@ function createTransformRuntimeEntry(
         container.ConfigurableType ||
         `Transform Configurable ${containerIndex + 1}`;
     const initialOption = selectInitialOption(transformData.CurrentOption, options);
+    const visibility = parseUiVisibility(transformData.UiVisibility);
 
     return {
         id: containerId,
@@ -73169,9 +74294,124 @@ function createTransformRuntimeEntry(
         appliedOptionIndex: initialOption,
         defaultTranslation,
         defaultRotation,
-        defaultParentIndex: parentLookup.get(nodeIndex) ?? null,
         applyOption: null,
-        thumbnail: decodeThumbnail(transformData.ThumbnailBase64)
+        thumbnail: decodeThumbnail(transformData.ThumbnailBase64),
+        uiVisibility: visibility
+    };
+}
+
+function createCameraRuntimeEntry(
+    state,
+    container,
+    containerIndex,
+    gltf,
+    rootNodeIndex,
+    parentLookup
+) {
+    const cameraData = container?.Camera;
+    if (
+        !cameraData ||
+        !Array.isArray(cameraData.Options) ||
+        cameraData.Options.length === 0
+    ) {
+        return null;
+    }
+
+    const referencePath =
+        cameraData.ReferenceTransformPath ??
+        container.Path ??
+        "";
+
+    const referenceNodeIndex = resolveNodeByPath(gltf, rootNodeIndex, referencePath);
+    if (referenceNodeIndex === null || referenceNodeIndex === undefined) {
+        console.warn(
+            `InnoWorks: Unable to resolve camera reference '${referencePath}' for configurable '${cameraData.ConfigurableName ?? container.Path ?? "<unnamed>"}'.`
+        );
+        return null;
+    }
+
+    const options = [];
+    cameraData.Options.forEach((option, optionIndex) => {
+        const label =
+            option?.DisplayName && option.DisplayName.trim().length > 0
+                ? option.DisplayName
+                : `Option ${optionIndex}`;
+
+        const translationData = option?.LocalPosition
+            ? vectorFromData(option.LocalPosition)
+            : null;
+        const translation = Array.isArray(translationData)
+            ? translationData
+            : [0, 0, 0];
+
+        const rotationData = option?.LocalRotation
+            ? quaternionFromData(option.LocalRotation)
+            : null;
+        const rotation = Array.isArray(rotationData)
+            ? rotationData
+            : [0, 0, 0, 1];
+
+        console.log(
+            `InnoWorks: Camera option '${label}' stored GLTF values`,
+            {
+                translation,
+                rotation
+            }
+        );
+
+        const fieldOfViewDeg = Number.isFinite(option?.FieldOfView)
+            ? option.FieldOfView
+            : 60;
+        const fieldOfViewRad = (fieldOfViewDeg * Math.PI) / 180;
+
+        const optionThumbnail = decodeThumbnail(option?.ThumbnailBase64);
+
+        options.push({
+            index: optionIndex,
+            label,
+            applyPosition: !!option?.ApplyPosition,
+            applyRotation: !!option?.ApplyRotation,
+            applyFieldOfView: option?.ApplyFieldOfView !== false,
+            translation,
+            rotation,
+            fieldOfViewDegrees: fieldOfViewDeg,
+            fieldOfViewRadians: fieldOfViewRad,
+            transitionDuration: Math.max(0, option?.TransitionDuration ?? 0),
+            easeMode: option?.EaseMode ?? "Linear",
+            thumbnail: optionThumbnail
+        });
+    });
+
+    if (options.length === 0) {
+        return null;
+    }
+
+    const containerId = `${container.Path || ""}|${containerIndex}|camera`;
+    const displayName =
+        cameraData.ConfigurableName ||
+        container.ConfigurableType ||
+        `Camera Configurable ${containerIndex + 1}`;
+    const initialOption = selectInitialOption(cameraData.CurrentOption, options);
+    const defaultFieldOfView =
+        state.userCamera?.perspective?.yfov ?? (Math.PI / 3);
+    const visibility = parseUiVisibility(cameraData.UiVisibility);
+
+    return {
+        id: containerId,
+        containerPath: container.Path ?? "",
+        configurableType: container.ConfigurableType ?? "",
+        name: displayName,
+        type: "Camera",
+        referenceNodeIndex,
+        parentLookup,
+        worldMatrixCache: new Map(),
+        options,
+        currentOption: initialOption,
+        appliedOptionIndex: initialOption,
+        defaultFieldOfView,
+        applyOption: null,
+        thumbnail: decodeThumbnail(cameraData.ThumbnailBase64),
+        uiVisibility: visibility
     };
 }
 
@@ -73197,6 +74437,9 @@ function createGroupRuntimeEntry(container, containerIndex) {
             ? option.Targets.map((target) => ({
                 containerPath: target?.ContainerPath ?? "",
                 containerType: target?.ContainerType ?? "",
+                containerIndex: Number.isInteger(target?.ContainerIndex)
+                    ? Math.max(0, target.ContainerIndex)
+                    : null,
                 optionIndex: Math.max(0, target?.SelectedOption ?? 0)
             }))
             : [],
@@ -73213,6 +74456,7 @@ function createGroupRuntimeEntry(container, containerIndex) {
         container.ConfigurableType ||
         `Group Configurable ${containerIndex + 1}`;
     const initialOption = selectInitialOption(groupData.CurrentOption, options);
+    const visibility = parseUiVisibility(groupData.UiVisibility);
 
     return {
         id: containerId,
@@ -73224,7 +74468,8 @@ function createGroupRuntimeEntry(container, containerIndex) {
         currentOption: initialOption,
         appliedOptionIndex: initialOption,
         applyOption: null,
-        thumbnail: decodeThumbnail(groupData.ThumbnailBase64)
+        thumbnail: decodeThumbnail(groupData.ThumbnailBase64),
+        uiVisibility: visibility
     };
 }
 
@@ -73843,12 +75088,6 @@ function applyTransformOption(state, entry, requestedIndex, options = {}) {
             node.rotation = [...entry.defaultRotation];
         }
 
-        if (targetOption.applyParent) {
-            console.warn(
-                "InnoWorks: Parent reassignment is not supported in the WebGL viewer; ignoring parent change."
-            );
-        }
-
         const scene = Array.isArray(gltf.scenes)
             ? gltf.scenes[state.sceneIndex]
             : null;
@@ -73862,6 +75101,280 @@ function applyTransformOption(state, entry, requestedIndex, options = {}) {
     entry.currentOption = targetOption.index;
     updateUiSelection(state, entry.id, entry.currentOption, suppressUiUpdate);
     return entry.currentOption;
+}
+
+function applyCameraOption(state, entry, requestedIndex, options = {}) {
+    if (!entry || !Array.isArray(entry.options) || entry.options.length === 0) {
+        return entry?.currentOption ?? 0;
+    }
+
+    const userCamera = state?.userCamera;
+    if (!userCamera) {
+        console.warn("InnoWorks: User camera is not available.");
+        return entry.currentOption ?? 0;
+    }
+
+    const { forceImmediate = false, suppressUiUpdate = false } = options ?? {};
+
+    const parsedIndex = Number(requestedIndex);
+    const numericIndex = Number.isNaN(parsedIndex)
+        ? Number(entry.currentOption ?? entry.options[0].index)
+        : parsedIndex;
+
+    const targetOption =
+        entry.options.find((option) => option.index === numericIndex) ??
+        entry.options.find((option) => option.index === entry.currentOption) ??
+        entry.options[0];
+
+    if (!targetOption) {
+        return entry.currentOption ?? 0;
+    }
+
+    const gltf = state?.gltf;
+    const referenceMatrix = getNodeWorldMatrix(
+        gltf,
+        entry.referenceNodeIndex,
+        entry.parentLookup,
+        entry.worldMatrixCache
+    );
+
+    const worldPose = computeCameraWorldPose(referenceMatrix, targetOption);
+
+    const duration = forceImmediate
+        ? 0
+        : Math.max(0, targetOption.transitionDuration ?? 0);
+
+    removeInnoWorksAnimation(state, entry.id, "camera");
+
+    if (duration > 0) {
+        scheduleCameraAnimation(
+            state,
+            entry,
+            targetOption,
+            worldPose,
+            duration,
+            targetOption.easeMode
+        );
+    } else {
+        applyCameraPoseImmediate(state, entry, targetOption, worldPose);
+        entry.appliedOptionIndex = targetOption.index;
+    }
+
+    entry.currentOption = targetOption.index;
+    updateUiSelection(state, entry.id, entry.currentOption, suppressUiUpdate);
+    return entry.currentOption;
+}
+
+function computeCameraWorldPose(referenceMatrix, option) {
+    const translation = Array.isArray(option?.translation)
+        ? option.translation
+        : [0, 0, 0];
+    const rotation = Array.isArray(option?.rotation)
+        ? option.rotation
+        : [0, 0, 0, 1];
+
+    const localMatrix = create$4();
+    const rotationQuat = normalize(
+        create$1(),
+        fromValues$1(rotation[0], rotation[1], rotation[2], rotation[3])
+    );
+    const translationVec = fromValues$3(translation[0], translation[1], translation[2]);
+    fromRotationTranslation(localMatrix, rotationQuat, translationVec);
+
+    const worldMatrix = create$4();
+    if (referenceMatrix) {
+        multiply(worldMatrix, referenceMatrix, localMatrix);
+    } else {
+        copy(worldMatrix, localMatrix);
+    }
+
+    const adjustmentMatrix = create$4();
+    fromRotation(adjustmentMatrix, Math.PI, fromValues$3(0, 1, 0));
+    multiply(worldMatrix, worldMatrix, adjustmentMatrix);
+
+    const worldPositionVec = create$3();
+    getTranslation(worldPositionVec, worldMatrix);
+    const worldRotationQuat = create$1();
+    getRotation(worldRotationQuat, worldMatrix);
+
+    return {
+        position: [worldPositionVec[0], worldPositionVec[1], worldPositionVec[2]],
+        rotation: [
+            worldRotationQuat[0],
+            worldRotationQuat[1],
+            worldRotationQuat[2],
+            worldRotationQuat[3]
+        ],
+        fieldOfView: option.applyFieldOfView ? option.fieldOfViewRadians : null
+    };
+}
+
+function applyCameraPoseImmediate(state, entry, option, worldPose) {
+    const camera = state?.userCamera;
+    if (!camera) {
+        return;
+    }
+
+    const currentPosition = Array.from(camera.getPosition() ?? [0, 0, 0]);
+    const currentRotation = Array.from(camera.getRotation() ?? [0, 0, 0, 1]);
+    const targetPosition = option.applyPosition && worldPose.position
+        ? Array.from(worldPose.position)
+        : currentPosition;
+    const targetRotation = option.applyRotation && worldPose.rotation
+        ? Array.from(worldPose.rotation)
+        : currentRotation;
+
+    setCameraTransform(camera, targetPosition, targetRotation);
+
+    if (option.applyFieldOfView && worldPose.fieldOfView !== null) {
+        camera.setVerticalFoV(worldPose.fieldOfView);
+    }
+
+    if (camera.sceneExtents?.min && camera.sceneExtents?.max) {
+        camera.fitCameraPlanesToExtents(camera.sceneExtents.min, camera.sceneExtents.max);
+    }
+
+    entry.appliedOptionIndex = option.index;
+}
+
+function setCameraTransform(camera, position, rotation) {
+    const previousDistance = Number.isFinite(camera.distance) && camera.distance > 0
+        ? camera.distance
+        : 1;
+    const previousYaw = Number.isFinite(camera.rotAroundY) ? camera.rotAroundY : 0;
+    const previousPitch = Number.isFinite(camera.rotAroundX) ? camera.rotAroundX : 0;
+
+    const positionVec = fromValues$3(position[0], position[1], position[2]);
+    const rotationQuat = normalize(
+        create$1(),
+        fromValues$1(rotation[0], rotation[1], rotation[2], rotation[3])
+    );
+    const rotationMatrix = create$4();
+    fromQuat(rotationMatrix, rotationQuat);
+
+    const lookDirection = fromValues$3(
+        -rotationMatrix[8],
+        -rotationMatrix[9],
+        -rotationMatrix[10]
+    );
+    if (!Number.isFinite(lookDirection[0]) || !Number.isFinite(lookDirection[1]) || !Number.isFinite(lookDirection[2])) {
+        lookDirection[0] = 0;
+        lookDirection[1] = 0;
+        lookDirection[2] = -1;
+    } else {
+        normalize$2(lookDirection, lookDirection);
+    }
+
+    const rotAroundXMax = Math.PI / 2 - 0.01;
+    const clampedY = Math.max(-1, Math.min(1, lookDirection[1]));
+    let pitch = Math.asin(clampedY);
+    pitch = Math.max(-rotAroundXMax, Math.min(rotAroundXMax, pitch));
+    if (!Number.isFinite(pitch)) {
+        pitch = previousPitch;
+    }
+
+    const cosPitch = Math.sqrt(Math.max(0, 1 - clampedY * clampedY));
+
+    let yaw = previousYaw;
+    if (cosPitch > 1e-6) {
+        yaw = Math.atan2(-lookDirection[0], -lookDirection[2]);
+    } else {
+        const rightVector = fromValues$3(rotationMatrix[0], rotationMatrix[1], rotationMatrix[2]);
+        if (Number.isFinite(rightVector[0]) && Number.isFinite(rightVector[2])) {
+            normalize$2(rightVector, rightVector);
+            const yawFromRight = Math.atan2(-rightVector[2], rightVector[0]);
+            if (Number.isFinite(yawFromRight)) {
+                yaw = yawFromRight;
+            }
+        }
+    }
+
+    if (Number.isFinite(previousYaw)) {
+        const delta = yaw - previousYaw;
+        const wrappedDelta = ((delta + Math.PI) % (2 * Math.PI)) - Math.PI;
+        yaw = previousYaw + wrappedDelta;
+    }
+
+    if (!Number.isFinite(yaw)) {
+        yaw = previousYaw;
+    }
+
+    camera.transform = create$4();
+    camera.setPosition(positionVec);
+    camera.rotAroundY = yaw;
+    camera.rotAroundX = pitch;
+    camera.setRotation(camera.rotAroundY, camera.rotAroundX);
+
+    const orbitLookDirection = camera.getLookDirection();
+    let adjustedDistance = previousDistance;
+
+    const minExtents = camera.sceneExtents?.min;
+    const maxExtents = camera.sceneExtents?.max;
+    if (minExtents && maxExtents) {
+        const center = create$3();
+        add$1(center, minExtents, maxExtents);
+        scale(center, center, 0.5);
+
+        const toCenter = create$3();
+        subtract(toCenter, center, positionVec);
+
+        const projected = dot(toCenter, orbitLookDirection);
+        if (Number.isFinite(projected) && Math.abs(projected) > 0.0001) {
+            adjustedDistance = Math.abs(projected);
+        } else {
+            const directDistance = length(toCenter);
+            if (Number.isFinite(directDistance) && directDistance > 0.0001) {
+                adjustedDistance = directDistance;
+            }
+        }
+    }
+
+    if (!Number.isFinite(adjustedDistance) || adjustedDistance <= 0.0001) {
+        adjustedDistance = Math.max(0.0001, previousDistance);
+    }
+
+    camera.distance = adjustedDistance;
+    camera.baseDistance = adjustedDistance;
+}
+
+function scheduleCameraAnimation(state, entry, option, worldPose, duration, easeMode) {
+    ensureAnimationState(state);
+    const camera = state?.userCamera;
+    if (!camera) {
+        return;
+    }
+
+    const fromPosition = Array.from(camera.getPosition() ?? [0, 0, 0]);
+    const fromRotation = Array.from(camera.getRotation() ?? [0, 0, 0, 1]);
+    const fromFov = camera.perspective?.yfov ?? entry.defaultFieldOfView ?? (Math.PI / 3);
+
+    const toPosition = option.applyPosition && worldPose.position
+        ? Array.from(worldPose.position)
+        : Array.from(fromPosition);
+    const toRotation = option.applyRotation && worldPose.rotation
+        ? Array.from(worldPose.rotation)
+        : Array.from(fromRotation);
+    const toFov = option.applyFieldOfView && worldPose.fieldOfView !== null
+        ? worldPose.fieldOfView
+        : fromFov;
+
+    state.innoWorksActiveAnimations.push({
+        type: "camera",
+        entry,
+        option,
+        duration: Math.max(0.0001, duration),
+        elapsed: 0,
+        easeMode: easeMode ?? "Linear",
+        applyPosition: option.applyPosition,
+        applyRotation: option.applyRotation,
+        applyFieldOfView: option.applyFieldOfView,
+        fromPosition,
+        toPosition,
+        fromRotation,
+        toRotation,
+        fromFov,
+        toFov
+    });
 }
 
 function applyGroupOption(state, entry, requestedIndex, options = {}) {
@@ -73944,48 +75457,71 @@ function quaternionFromData(data) {
     return [x, y, z, w];
 }
 
-function unityVectorToGltf(vec) {
-    if (!Array.isArray(vec)) {
-        return vec;
-    }
-    return [-vec[0], vec[1], vec[2]];
-}
-
-function unityQuaternionToGltf(quat) {
-    if (!Array.isArray(quat) || quat.length !== 4) {
-        return Array.isArray(quat) ? [...quat] : [0, 0, 0, 1];
-    }
-    return [quat[0], -quat[1], -quat[2], quat[3]];
-}
-
-function buildParentLookup(gltf) {
+function buildParentIndexLookup(gltf) {
     const lookup = new Map();
     if (!gltf || !Array.isArray(gltf.nodes)) {
         return lookup;
-    }
-
-    if (Array.isArray(gltf.scenes)) {
-        gltf.scenes.forEach((scene) => {
-            if (!scene || !Array.isArray(scene.nodes)) {
-                return;
-            }
-            scene.nodes.forEach((rootNode) => {
-                lookup.set(rootNode, null);
-            });
-        });
     }
 
     gltf.nodes.forEach((node, index) => {
         if (!node || !Array.isArray(node.children)) {
             return;
         }
-
-        node.children.forEach((child) => {
-            lookup.set(child, index);
+        node.children.forEach((childIndex) => {
+            if (Number.isInteger(childIndex)) {
+                lookup.set(childIndex, index);
+            }
         });
     });
 
     return lookup;
+}
+
+function getNodeWorldMatrix(gltf, nodeIndex, parentLookup, cache) {
+    if (!Number.isInteger(nodeIndex) || nodeIndex < 0) {
+        return null;
+    }
+
+    const matrices = cache instanceof Map ? cache : new Map();
+    if (matrices.has(nodeIndex)) {
+        return matrices.get(nodeIndex);
+    }
+
+    const node = gltf?.nodes?.[nodeIndex];
+    if (!node) {
+        return null;
+    }
+
+    let localMatrix = create$4();
+    if (Array.isArray(node.matrix) && node.matrix.length === 16) {
+        localMatrix = fromValues$4(
+            node.matrix[0], node.matrix[1], node.matrix[2], node.matrix[3],
+            node.matrix[4], node.matrix[5], node.matrix[6], node.matrix[7],
+            node.matrix[8], node.matrix[9], node.matrix[10], node.matrix[11],
+            node.matrix[12], node.matrix[13], node.matrix[14], node.matrix[15]
+        );
+    } else {
+        const translation = Array.isArray(node.translation) ? node.translation : [0, 0, 0];
+        const rotation = Array.isArray(node.rotation) ? node.rotation : [0, 0, 0, 1];
+        const scale = Array.isArray(node.scale) ? node.scale : [1, 1, 1];
+        fromRotationTranslationScale(localMatrix, rotation, translation, scale);
+    }
+
+    const parentIndex = parentLookup instanceof Map ? parentLookup.get(nodeIndex) : undefined;
+    if (parentIndex !== undefined) {
+        const parentMatrix = getNodeWorldMatrix(gltf, parentIndex, parentLookup, matrices);
+        const worldMatrix = create$4();
+        if (parentMatrix) {
+            multiply(worldMatrix, parentMatrix, localMatrix);
+        } else {
+            copy(worldMatrix, localMatrix);
+        }
+        matrices.set(nodeIndex, worldMatrix);
+        return worldMatrix;
+    }
+
+    matrices.set(nodeIndex, localMatrix);
+    return localMatrix;
 }
 
 function ensureAnimationState(state) {
@@ -74218,8 +75754,17 @@ function findRuntimeEntryByTarget(state, target) {
         return null;
     }
 
-    const pathKey = makeRuntimePathKey(target.containerPath, target.containerType);
-    return findRuntimeEntryByKey(state, pathKey);
+    const hasIndex = Number.isInteger(target.containerIndex) && target.containerIndex >= 0;
+    if (hasIndex) {
+        const indexedKey = makeRuntimePathKey(target.containerPath, target.containerType, target.containerIndex);
+        const indexedEntry = findRuntimeEntryByKey(state, indexedKey);
+        if (indexedEntry) {
+            return indexedEntry;
+        }
+    }
+
+    const fallbackKey = makeRuntimePathKey(target.containerPath, target.containerType);
+    return findRuntimeEntryByKey(state, fallbackKey);
 }
 
 function updateInnoWorksAnimations(state, deltaSeconds) {
@@ -74292,6 +75837,39 @@ function updateInnoWorksAnimations(state, deltaSeconds) {
                 animations.splice(i, 1);
                 changed = true;
                 needsHierarchyRefresh = true;
+                continue;
+            }
+        } else if (animation.type === "camera") {
+            const camera = state.userCamera;
+            if (!camera) {
+                animations.splice(i, 1);
+                continue;
+            }
+
+            const position = animation.applyPosition
+                ? lerpVector(animation.fromPosition, animation.toPosition, eased)
+                : animation.fromPosition;
+            const rotation = animation.applyRotation
+                ? slerp(animation.fromRotation, animation.toRotation, eased)
+                : animation.fromRotation;
+
+            setCameraTransform(camera, position, rotation);
+
+            if (animation.applyFieldOfView) {
+                const fov = lerp(animation.fromFov, animation.toFov, eased);
+                camera.setVerticalFoV(fov);
+            }
+
+            if (camera.sceneExtents?.min && camera.sceneExtents?.max) {
+                camera.fitCameraPlanesToExtents(camera.sceneExtents.min, camera.sceneExtents.max);
+            }
+
+            changed = true;
+
+            if (progress >= 1) {
+                animation.entry.appliedOptionIndex = animation.option.index;
+                updateUiSelection(state, animation.entry.id, animation.option.index);
+                animations.splice(i, 1);
                 continue;
             }
         } else if (animation.type === "material") {

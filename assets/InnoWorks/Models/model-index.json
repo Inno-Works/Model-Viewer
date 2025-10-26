@@ -1,8 +1,15 @@
 [
+
     {
       "name": "Helicopter",
       "variants": {
         "glTF-Binary": "H125.glb"
+      }
+    },
+    {
+      "name": "Car",
+      "variants": {
+        "glTF-Binary": "Car.glb"
       }
     }
   ]
