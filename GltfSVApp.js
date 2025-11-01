@@ -1,6 +1,6 @@
 /**
  * Bundle of gltf-sample-viewer-example
- * Generated: 2025-11-01
+ * Generated: 2025-11-02
  * Version: 1.0.0
  * License: Apache-2.0
  * Dependencies:
@@ -1091,7 +1091,7 @@
 
 /**
  * Bundle of @khronosgroup/gltf-viewer
- * Generated: 2025-11-01
+ * Generated: 2025-11-02
  * Version: 1.1.0
  * License: Apache-2.0
  * Dependencies:
@@ -2997,23 +2997,72 @@ class gltfCamera extends GltfObject
 
     sortPrimitivesByDepth(gltf, drawables)
     {
+        const viewMatrix = this.getViewMatrix(gltf);
+        const sortedDrawables = [];
+
         // Precompute the distances to avoid their computation during sorting.
         for (const drawable of drawables)
         {
             const modelView = create$3$1();
-            multiply$1(modelView, this.getViewMatrix(gltf), drawable.node.worldTransform);
+            multiply$1(modelView, viewMatrix, drawable.node.worldTransform);
 
-            // Transform primitive centroid to find the primitive's depth.
-            const pos = transformMat4(create$2$1(), clone(drawable.primitive.centroid), modelView);
+            let minDepth = Number.POSITIVE_INFINITY;
+            let maxDepth = Number.NEGATIVE_INFINITY;
+            let usedBoundingBox = false;
 
-            drawable.depth = pos[2];
+            const boundingMin = drawable.primitive.boundingBoxMin;
+            const boundingMax = drawable.primitive.boundingBoxMax;
+
+            if (boundingMin !== undefined && boundingMax !== undefined)
+            {
+                usedBoundingBox = true;
+                const corners = [
+                    fromValues$2$1(boundingMin[0], boundingMin[1], boundingMin[2]),
+                    fromValues$2$1(boundingMin[0], boundingMin[1], boundingMax[2]),
+                    fromValues$2$1(boundingMin[0], boundingMax[1], boundingMin[2]),
+                    fromValues$2$1(boundingMin[0], boundingMax[1], boundingMax[2]),
+                    fromValues$2$1(boundingMax[0], boundingMin[1], boundingMin[2]),
+                    fromValues$2$1(boundingMax[0], boundingMin[1], boundingMax[2]),
+                    fromValues$2$1(boundingMax[0], boundingMax[1], boundingMin[2]),
+                    fromValues$2$1(boundingMax[0], boundingMax[1], boundingMax[2])
+                ];
+
+                for (const corner of corners)
+                {
+                    const projected = transformMat4(create$2$1(), corner, modelView);
+                    minDepth = Math.min(minDepth, projected[2]);
+                    maxDepth = Math.max(maxDepth, projected[2]);
+                }
+
+                drawable.depth = minDepth;
+            }
+            else
+            {
+                // Transform primitive centroid to find the primitive's depth.
+                const centroid = drawable.primitive.centroid ?? create$2$1();
+                const pos = transformMat4(create$2$1(), clone(centroid), modelView);
+                minDepth = pos[2];
+                maxDepth = pos[2];
+                drawable.depth = pos[2];
+            }
+
+            drawable.minDepth = minDepth;
+            drawable.maxDepth = maxDepth;
+
+            // Only cull primitives that are fully behind the camera if we could evaluate the bounding box.
+            if (usedBoundingBox && minDepth > 0)
+            {
+                continue;
+            }
+
+            sortedDrawables.push(drawable);
         }
 
         // 1. Remove primitives that are behind the camera.
         //    --> They will never be visible and it is cheap to discard them here.
         // 2. Sort primitives so that the furthest nodes are rendered first.
         //    This is required for correct transparency rendering.
-        return drawables
+        return sortedDrawables
             .sort((a, b) => a.depth - b.depth);
     }
 
@@ -6685,7 +6734,7 @@ class gltfRenderer
 
         // filter materials with transmission extension
         this.transmissionDrawables = currentCamera.sortPrimitivesByDepth(state.gltf, this.transmissionDrawables);
-        for (const drawable of this.transmissionDrawables.filter((a) => a.depth <= 0))
+        for (const drawable of this.transmissionDrawables.filter((a) => (a.minDepth ?? a.depth) <= 0))
         {
             let renderpassConfiguration = {};
             renderpassConfiguration.linearOutput = false;
@@ -6701,7 +6750,7 @@ class gltfRenderer
 
 
         this.transparentDrawables = currentCamera.sortPrimitivesByDepth(state.gltf, this.transparentDrawables);
-        for (const drawable of this.transparentDrawables.filter((a) => a.depth <= 0))
+        for (const drawable of this.transparentDrawables.filter((a) => (a.minDepth ?? a.depth) <= 0))
         {
             let renderpassConfiguration = {};
             renderpassConfiguration.linearOutput = false;
@@ -14420,6 +14469,8 @@ class gltfPrimitive extends GltfObject
 
         // The primitive centroid is used for depth sorting.
         this.centroid = undefined;
+        this.boundingBoxMin = undefined;
+        this.boundingBoxMax = undefined;
     }
 
     initGl(gltf, webGlContext)
@@ -14675,6 +14726,32 @@ class gltfPrimitive extends GltfObject
         const positionsAccessor = gltf.accessors[this.attributes.POSITION];
         const positions = positionsAccessor.getNormalizedTypedView(gltf);
 
+        if (positions === undefined || positions.length === 0)
+        {
+            return;
+        }
+
+        const min = [Number.POSITIVE_INFINITY, Number.POSITIVE_INFINITY, Number.POSITIVE_INFINITY];
+        const max = [Number.NEGATIVE_INFINITY, Number.NEGATIVE_INFINITY, Number.NEGATIVE_INFINITY];
+        const acc = new Float32Array(3);
+        let count = 0;
+
+        const accumulate = (x, y, z) =>
+        {
+            acc[0] += x;
+            acc[1] += y;
+            acc[2] += z;
+
+            if (x < min[0]) min[0] = x;
+            if (y < min[1]) min[1] = y;
+            if (z < min[2]) min[2] = z;
+            if (x > max[0]) max[0] = x;
+            if (y > max[1]) max[1] = y;
+            if (z > max[2]) max[2] = z;
+
+            count++;
+        };
+
         if(this.indices !== undefined)
         {
             // Primitive has indices.
@@ -14683,45 +14760,37 @@ class gltfPrimitive extends GltfObject
 
             const indices = indicesAccessor.getTypedView(gltf);
 
-            const acc = new Float32Array(3);
-
             for(let i = 0; i < indices.length; i++) {
                 const offset = 3 * indices[i];
-                acc[0] += positions[offset];
-                acc[1] += positions[offset + 1];
-                acc[2] += positions[offset + 2];
+                const x = positions[offset];
+                const y = positions[offset + 1];
+                const z = positions[offset + 2];
+                accumulate(x, y, z);
             }
-
-            const centroid = new Float32Array([
-                acc[0] / indices.length,
-                acc[1] / indices.length,
-                acc[2] / indices.length,
-            ]);
-
-            this.centroid = centroid;
         }
         else
         {
             // Primitive does not have indices.
 
-            const acc = new Float32Array(3);
-
             for(let i = 0; i < positions.length; i += 3) {
-                acc[0] += positions[i];
-                acc[1] += positions[i + 1];
-                acc[2] += positions[i + 2];
+                accumulate(positions[i], positions[i + 1], positions[i + 2]);
             }
-
-            const positionVectors = positions.length / 3;
-
-            const centroid = new Float32Array([
-                acc[0] / positionVectors,
-                acc[1] / positionVectors,
-                acc[2] / positionVectors,
-            ]);
-
-            this.centroid = centroid;
         }
+
+        if (count === 0)
+        {
+            return;
+        }
+
+        const centroid = new Float32Array([
+            acc[0] / count,
+            acc[1] / count,
+            acc[2] / count,
+        ]);
+
+        this.centroid = centroid;
+        this.boundingBoxMin = new Float32Array(min);
+        this.boundingBoxMax = new Float32Array(max);
     }
 
     fromJson(jsonPrimitive)
