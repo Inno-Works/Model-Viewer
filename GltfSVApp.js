@@ -1,6 +1,6 @@
 /**
  * Bundle of gltf-sample-viewer-example
- * Generated: 2025-10-26
+ * Generated: 2025-11-01
  * Version: 1.0.0
  * License: Apache-2.0
  * Dependencies:
@@ -1091,7 +1091,7 @@
 
 /**
  * Bundle of @khronosgroup/gltf-viewer
- * Generated: 2025-10-26
+ * Generated: 2025-11-01
  * Version: 1.1.0
  * License: Apache-2.0
  * Dependencies:
@@ -3567,27 +3567,7 @@ class gltfAccessor extends GltfObject
                 console.warn("Count in accessor '" + (this.name ? this.name : "") + "' is too large.");
             }
 
-            switch (this.componentType)
-            {
-            case GL.BYTE:
-                this.typedView = new Int8Array(buffer.buffer, byteOffset, arrayLength);
-                break;
-            case GL.UNSIGNED_BYTE:
-                this.typedView = new Uint8Array(buffer.buffer, byteOffset, arrayLength);
-                break;
-            case GL.SHORT:
-                this.typedView = new Int16Array(buffer.buffer, byteOffset, arrayLength);
-                break;
-            case GL.UNSIGNED_SHORT:
-                this.typedView = new Uint16Array(buffer.buffer, byteOffset, arrayLength);
-                break;
-            case GL.UNSIGNED_INT:
-                this.typedView = new Uint32Array(buffer.buffer, byteOffset, arrayLength);
-                break;
-            case GL.FLOAT:
-                this.typedView = new Float32Array(buffer.buffer, byteOffset, arrayLength);
-                break;
-            }
+            this.typedView = gltfAccessor.createTypedArray(this.componentType, componentSize, buffer.buffer, byteOffset, arrayLength);
         }
         else
         {
@@ -3744,19 +3724,13 @@ class gltfAccessor extends GltfObject
 
         const indicesArrayLength = this.sparse.count * indicesComponentCount;
 
-        let indicesTypedView;
-        switch (this.sparse.indices.componentType)
-        {
-        case GL.UNSIGNED_BYTE:
-            indicesTypedView = new Uint8Array(indicesBuffer.buffer, indicesByteOffset, indicesArrayLength);
-            break;
-        case GL.UNSIGNED_SHORT:
-            indicesTypedView = new Uint16Array(indicesBuffer.buffer, indicesByteOffset, indicesArrayLength);
-            break;
-        case GL.UNSIGNED_INT:
-            indicesTypedView = new Uint32Array(indicesBuffer.buffer, indicesByteOffset, indicesArrayLength);
-            break;
-        }
+        const indicesTypedView = gltfAccessor.createTypedArray(
+            this.sparse.indices.componentType,
+            indicesComponentSize,
+            indicesBuffer.buffer,
+            indicesByteOffset,
+            indicesArrayLength
+        );
 
         // Gather values.
 
@@ -3774,28 +3748,13 @@ class gltfAccessor extends GltfObject
 
         const valuesArrayLength = this.sparse.count * valuesComponentCount;
 
-        let valuesTypedView;
-        switch (this.componentType)
-        {
-        case GL.BYTE:
-            valuesTypedView = new Int8Array(valuesBuffer.buffer, valuesByteOffset, valuesArrayLength);
-            break;
-        case GL.UNSIGNED_BYTE:
-            valuesTypedView = new Uint8Array(valuesBuffer.buffer, valuesByteOffset, valuesArrayLength);
-            break;
-        case GL.SHORT:
-            valuesTypedView = new Int16Array(valuesBuffer.buffer, valuesByteOffset, valuesArrayLength);
-            break;
-        case GL.UNSIGNED_SHORT:
-            valuesTypedView = new Uint16Array(valuesBuffer.buffer, valuesByteOffset, valuesArrayLength);
-            break;
-        case GL.UNSIGNED_INT:
-            valuesTypedView = new Uint32Array(valuesBuffer.buffer, valuesByteOffset, valuesArrayLength);
-            break;
-        case GL.FLOAT:
-            valuesTypedView = new Float32Array(valuesBuffer.buffer, valuesByteOffset, valuesArrayLength);
-            break;
-        }
+        const valuesTypedView = gltfAccessor.createTypedArray(
+            this.componentType,
+            valuesComponentSize,
+            valuesBuffer.buffer,
+            valuesByteOffset,
+            valuesArrayLength
+        );
 
         // Overwrite values.
 
@@ -3847,6 +3806,43 @@ class gltfAccessor extends GltfObject
             return 4;
         default:
             return 0;
+        }
+    }
+
+    static createTypedArray(componentType, componentSize, sourceBuffer, byteOffset, elementCount)
+    {
+        if (componentSize === 0)
+        {
+            return undefined;
+        }
+
+        let buffer = sourceBuffer;
+        let offset = byteOffset;
+
+        if (componentSize > 1 && (offset % componentSize) !== 0)
+        {
+            const byteLength = elementCount * componentSize;
+            const end = Math.min(offset + byteLength, sourceBuffer.byteLength);
+            buffer = sourceBuffer.slice(offset, end);
+            offset = 0;
+        }
+
+        switch (componentType)
+        {
+        case GL.BYTE:
+            return new Int8Array(buffer, offset, elementCount);
+        case GL.UNSIGNED_BYTE:
+            return new Uint8Array(buffer, offset, elementCount);
+        case GL.SHORT:
+            return new Int16Array(buffer, offset, elementCount);
+        case GL.UNSIGNED_SHORT:
+            return new Uint16Array(buffer, offset, elementCount);
+        case GL.UNSIGNED_INT:
+            return new Uint32Array(buffer, offset, elementCount);
+        case GL.FLOAT:
+            return new Float32Array(buffer, offset, elementCount);
+        default:
+            return undefined;
         }
     }
 
@@ -17176,7 +17172,20 @@ class GlbParser
 {
     constructor(data)
     {
-        this.data = data;
+        if (data instanceof ArrayBuffer)
+        {
+            this.data = data;
+        }
+        else if (ArrayBuffer.isView(data))
+        {
+            // Ensure we operate on a zero-offset buffer view
+            this.data = data.buffer.slice(data.byteOffset, data.byteOffset + data.byteLength);
+        }
+        else
+        {
+            throw new TypeError("GlbParser expects an ArrayBuffer or a typed array view");
+        }
+
         this.glbHeaderInts = 3;
         this.glbChunkHeaderInts = 2;
         this.glbMagic = 0x46546C67;
@@ -17231,12 +17240,14 @@ class GlbParser
     getAllChunkInfos()
     {
         let infos = [];
-        let chunkStart = this.glbHeaderInts * 4;
-        while (chunkStart < this.data.byteLength)
+        let headerStart = this.glbHeaderInts * 4;
+        const headerSizeBytes = this.glbChunkHeaderInts * 4;
+        while (headerStart + headerSizeBytes <= this.data.byteLength)
         {
-            const chunkInfo = this.getChunkInfo(chunkStart);
+            const chunkInfo = this.getChunkInfo(headerStart);
             infos.push(chunkInfo);
-            chunkStart += chunkInfo.length + this.glbChunkHeaderInts * 4;
+            const paddedChunkLength = (chunkInfo.length + 3) & ~3;
+            headerStart = chunkInfo.start + paddedChunkLength;
         }
         return infos;
     }
@@ -17253,8 +17264,7 @@ class GlbParser
     getJsonFromChunk(chunkInfo)
     {
         const chunkLength = chunkInfo.length;
-        const jsonStart = (this.glbHeaderInts + this.glbChunkHeaderInts) * 4;
-        const jsonSlice = new Uint8Array(this.data, jsonStart, chunkLength);
+        const jsonSlice = new Uint8Array(this.data, chunkInfo.start, chunkLength);
         const stringBuffer = new TextDecoder("utf-8").decode(jsonSlice);
         return JSON.parse(stringBuffer);
     }
